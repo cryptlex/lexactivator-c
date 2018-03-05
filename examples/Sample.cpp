@@ -1,85 +1,160 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../lib/LexActivator.h"
 
 #if _WIN32
-	#if _WIN64
-	#pragma comment(lib,"../lib/x64/LexActivator")
-	#else
-	#pragma comment(lib,"../lib/x86/LexActivator")
-	#endif
+#if _WIN64
+#pragma comment(lib, "../lib/x64/LexActivator")
+#else
+#pragma comment(lib, "../lib/x86/LexActivator")
 #endif
+#endif
+
+void init()
+{
+	int status;
+#if _WIN32
+	status = SetProductData(L"PASTE_CONTENT_OF_PRODUC.DAT_FILE");
+#else
+	status = SetProductData("PASTE_CONTENT_OF_PRODUC.DAT_FILE");
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+#if _WIN32
+	status = SetProductVersionGuid(L"PASTE_PRODUCT_VERSION_GUID", LA_USER);
+#else
+	status = SetProductVersionGuid("PASTE_PRODUCT_VERSION_GUID", LA_USER);
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+}
+
+// Ideally on a button click inside a dialog
+void activate()
+{
+	int status;
+#if _WIN32
+	status = SetProductKey(L"PASTE_PRODUCT_KEY");
+#else
+	status = SetProductKey("PASTE_PRODUCT_KEY");
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+#if _WIN32
+	status = SetActivationExtraData(L"SAMPLE DATA");
+#else
+	status = SetActivationExtraData("SAMPLE DATA");
+	status = SetActivationExtraData("SAMPLE DATA");
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+	status = ActivateProduct();
+	if (LA_OK == status || LA_EXPIRED == status || LA_REVOKED == status)
+	{
+		printf("Product activated successfully: %d", status);
+	}
+	else
+	{
+		printf("Product activation failed: %d", status);
+	}
+}
+
+// Ideally on a button click inside a dialog
+void activateTrial()
+{
+	int status;
+#if _WIN32
+	status = SetTrialActivationExtraData(L"SAMPLE DATA");
+#else
+	status = SetTrialActivationExtraData("SAMPLE DATA");
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+	status = ActivateTrial();
+	if (LA_OK == status)
+	{
+		printf("Product trial activated successfully!");
+	}
+	else if (LA_EXPIRED == status)
+	{
+		printf("Product trial has expired!");
+	}
+	else
+	{
+		printf("Product trial activation failed: %d", status);
+	}
+}
 
 int main()
 {
-	int status;
-	status = SetProductFile("Product.dat");
-	if(LA_OK != status) {
-		printf("Error code: %d",status); 
-		getchar();
-		return status;
+	init();
+	int status = IsProductGenuine();
+	if (LA_OK == status)
+	{
+		unsigned int expiryDate = 0;
+		GetProductKeyExpiryDate(&expiryDate);
+		unsigned int daysLeft = (expiryDate - time(NULL)) / 86500;
+		printf("Days left: %d\n", daysLeft);
+		printf("Product is genuinely activated!"); 
 	}
-	status = SetProductVersionGuid("59A44CE9-5415-8CF3-BD54-EA73A64E9A1B", LA_USER);
-	if(LA_OK != status) {
-		printf("Error code: %d",status); 
-		getchar();
-		return status;
+	else if (LA_EXPIRED == status)
+	{
+		printf("Product is genuinely activated, but license validity has expired!");
 	}
-	status = IsProductGenuine();
-	if(LA_OK == status) {
-		printf("Product is genuinely activated!");  
+	else if (LA_REVOKED == status)
+	{
+		printf("Product is genuinely activated, but product key has been revoked!");
 	}
-	else if(LA_EXPIRED == status) {
-		printf("Product is genuinely activated, but license validity has expired!");  
+	else if (LA_GP_OVER == status)
+	{
+		printf("Product is genuinely activated, but grace period is over!");
 	}
-	else if(LA_GP_OVER == status) {
-		printf("Product is genuinely activated, but grace period is over!");  
-	}
-	else {
+	else
+	{
 		int trialStatus;
 		trialStatus = IsTrialGenuine();
 		if (LA_OK == trialStatus)
 		{
-			unsigned int daysLeft = 0;
-			//GetTrialDaysLeft(&daysLeft,LA_V_TRIAL);
+			unsigned int trialExpiryDate = 0;
+			GetTrialExpiryDate(&trialExpiryDate);
+			unsigned int daysLeft = (trialExpiryDate - time(NULL)) / 86500;
 			printf("Trial days left: %d", daysLeft);
-		} 
+		}
 		else if (LA_T_EXPIRED == trialStatus)
 		{
 			printf("Trial has expired!");
+
 			// Time to buy the product key and activate the app
-			status = SetProductKey("986D8-DE8AF-C2B37-50BF5-03EA1");
-			if(LA_OK != status) {
-				printf("Error code: %d",status);  
-				getchar();
-				return status;
-			}
-			SetActivationExtraData("sample data ");
-			// Activating the product
-			status = ActivateProduct();    // Ideally on a button click inside a dialog
-			if (LA_OK == status){
-				printf("Product activated successfully!");
-			}
-			else {
-				printf("Product activation failed: %d" , status);
-			}
-		} 
+			activate();
+		}
 		else
 		{
 			printf("Either trial has not started or has been tampered!");
 			// Activating the trial
-			trialStatus = ActivateTrial();   // Ideally on a button click inside a dialog
-			if (LA_OK == trialStatus){
-				unsigned int daysLeft = 0;
-				// GetTrialDaysLeft(&daysLeft,LA_V_TRIAL);
-				printf("Trial started, days left: %d",daysLeft);
-			}
-			else {
-				//Trial was tampered or has expired
-				printf("Trial activation failed: %d", trialStatus);
-			}
+			activateTrial();
 		}
-	}     
+	}
 	getchar();
 	return 0;
 }
