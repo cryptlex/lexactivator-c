@@ -114,7 +114,7 @@ int main()
 	{
 		unsigned int expiryDate = 0;
 		GetProductKeyExpiryDate(&expiryDate);
-		unsigned int daysLeft = (expiryDate - time(NULL)) / 86500;
+		int daysLeft = (expiryDate - time(NULL)) / 86500;
 		printf("Days left: %d\n", daysLeft);
 		printf("Product is genuinely activated!"); 
 	}
@@ -138,7 +138,7 @@ int main()
 		{
 			unsigned int trialExpiryDate = 0;
 			GetTrialExpiryDate(&trialExpiryDate);
-			unsigned int daysLeft = (trialExpiryDate - time(NULL)) / 86500;
+			int daysLeft = (trialExpiryDate - time(NULL)) / 86500;
 			printf("Trial days left: %d", daysLeft);
 		}
 		else if (LA_T_EXPIRED == trialStatus)
