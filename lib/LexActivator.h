@@ -500,7 +500,7 @@ LEXACTIVATOR_API int LA_CC ExtendTrial(CSTRTYPE trialExtensionKey);
     the user's computer, ideally on a button click.
 
     PARAMETERS:
-    * trialLength - trial length as set in the dashboard for the product version
+    * trialLength - trial length in days
 
     RETURN CODES: LA_OK, LA_LT_EXPIRED, LA_FAIL, LA_E_GUID, LA_E_TIME
 
@@ -524,13 +524,11 @@ LEXACTIVATOR_API int LA_CC ActivateLocalTrial(uint32_t trialLength);
 
 LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 
-
-
 /*** Return Codes ***/
 
-#define LA_OK           ((int)0)
+#define LA_OK ((int)0)
 
-#define LA_FAIL         ((int)1)
+#define LA_FAIL ((int)1)
 
 /*
     CODE: LA_EXPIRED
@@ -539,7 +537,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     with. Ensure your date and time settings are correct.
 */
 
-#define LA_EXPIRED      ((int)2)
+#define LA_EXPIRED ((int)2)
 
 /*
     CODE: LA_REVOKED
@@ -547,7 +545,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: The product key has been revoked.
 */
 
-#define LA_REVOKED      ((int)3)
+#define LA_REVOKED ((int)3)
 
 /*
     CODE: LA_GP_OVER
@@ -555,23 +553,25 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: The grace period is over.
 */
 
-#define LA_GP_OVER      ((int)4)
+#define LA_GP_OVER ((int)4)
 
 /*
-    CODE: LA_E_INET
+    CODE: LA_T_EXPIRED
 
-    MESSAGE: Failed to connect to the server due to network error.
+    MESSAGE: The trial has expired or system time has been tampered
+    with. Ensure your date and time settings are correct.
 */
 
-#define LA_E_INET		((int)5)
+#define LA_T_EXPIRED ((int)5)
 
 /*
-    CODE: LA_E_PKEY
+    CODE: LA_LT_EXPIRED
 
-    MESSAGE: Invalid product key.
+    MESSAGE: The local trial has expired or system time has been tampered
+    with. Ensure your date and time settings are correct.
 */
 
-#define LA_E_PKEY		((int)6)
+#define LA_LT_EXPIRED ((int)6)
 
 /*
     CODE: LA_E_PFILE
@@ -579,7 +579,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Invalid or corrupted product file.
 */
 
-#define LA_E_PFILE		((int)7)
+#define LA_E_PFILE ((int)7)
 
 /*
     CODE: LA_E_FPATH
@@ -587,7 +587,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Invalid product file path.
 */
 
-#define LA_E_FPATH		((int)8)
+#define LA_E_FPATH ((int)8)
 
 /*
     CODE: LA_E_GUID
@@ -595,7 +595,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: The version GUID doesn't match that of the product file.
 */
 
-#define LA_E_GUID		((int)9)
+#define LA_E_GUID ((int)9)
 
 /*
     CODE: LA_E_OFILE
@@ -603,7 +603,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Invalid offline activation response file.
 */
 
-#define LA_E_OFILE		((int)10)
+#define LA_E_OFILE ((int)10)
 
 /*
     CODE: LA_E_PERMISSION
@@ -620,7 +620,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Extra activation data length is more than 256 characters.
 */
 
-#define LA_E_EDATA_LEN  ((int)12)
+#define LA_E_EDATA_LEN ((int)12)
 
 /*
     CODE: LA_E_PKEY_TYPE
@@ -628,7 +628,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Invalid product key type.
 */
 
-#define LA_E_PKEY_TYPE  ((int)13)
+#define LA_E_PKEY_TYPE ((int)13)
 
 /*
     CODE: LA_E_TIME
@@ -637,7 +637,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     and time settings are correct.
 */
 
-#define LA_E_TIME       ((int)14)
+#define LA_E_TIME ((int)14)
 
 /*
     CODE: LA_E_VM
@@ -647,7 +647,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     but
 */
 
-#define LA_E_VM         ((int)15)
+#define LA_E_VM ((int)15)
 
 /*
     CODE: LA_E_WMIC
@@ -657,7 +657,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     to Windows only.
 */
 
-#define LA_E_WMIC       ((int)16)
+#define LA_E_WMIC ((int)16)
 
 /*
     CODE: LA_E_TEXT_KEY
@@ -665,7 +665,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Invalid trial extension key.
 */
 
-#define LA_E_TEXT_KEY   ((int)17)
+#define LA_E_TEXT_KEY ((int)17)
 
 /*
     CODE: LA_E_OFILE_EXPIRED
@@ -673,25 +673,23 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: The offline activation response has expired.
 */
 
-#define LA_E_OFILE_EXPIRED  ((int)18)
+#define LA_E_OFILE_EXPIRED ((int)18)
 
 /*
-    CODE: LA_T_EXPIRED
+    CODE: LA_E_INET
 
-    MESSAGE: The trial has expired or system time has been tampered
-    with. Ensure your date and time settings are correct.
+    MESSAGE: Failed to connect to the server due to network error.
 */
 
-#define LA_T_EXPIRED     ((int)19)
+#define LA_E_INET ((int)19)
 
 /*
-    CODE: LA_LT_EXPIRED
+    CODE: LA_E_PKEY
 
-    MESSAGE: The local trial has expired or system time has been tampered
-    with. Ensure your date and time settings are correct.
+    MESSAGE: Invalid product key.
 */
 
-#define LA_LT_EXPIRED    ((int)20)
+#define LA_E_PKEY ((int)20)
 
 /*
     CODE: LA_E_BUFFER_SIZE
@@ -699,7 +697,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: The buffer size was smaller than required.
 */
 
-#define LA_E_BUFFER_SIZE  ((int)21)
+#define LA_E_BUFFER_SIZE ((int)21)
 
 /*
     CODE: LA_E_CUSTOM_FIELD_ID
@@ -715,7 +713,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Invalid network proxy.
 */
 
-#define LA_E_NET_PROXY  ((int)23)
+#define LA_E_NET_PROXY ((int)23)
 
 /*
     CODE: LA_E_HOST_URL
@@ -731,7 +729,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Deactivation limit for key has reached
 */
 
-#define LA_E_DEACT_LIMIT  ((int)25)
+#define LA_E_DEACT_LIMIT ((int)25)
 
 /*
     CODE: LA_E_ACT_LIMIT
@@ -739,60 +737,60 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Activation limit for key has reached
 */
 
-#define LA_E_ACT_LIMIT   ((int)26)
+#define LA_E_ACT_LIMIT ((int)26)
 
 /*
-CODE: LA_E_PDATA
+    CODE: LA_E_PDATA
 
-MESSAGE: Invalid product data
+    MESSAGE: Invalid product data
 */
 
-#define LA_E_PDATA   ((int)27)
+#define LA_E_PDATA ((int)27)
 
 /*
-CODE: LA_E_TRIAL_NOT_EXPIRED
+    CODE: LA_E_TRIAL_NOT_EXPIRED
 
-MESSAGE: Trial has not expired.
+    MESSAGE: Trial has not expired.
 */
 
 #define LA_E_TRIAL_NOT_EXPIRED ((int)28)
 
 /*
-CODE: LA_E_COUNTRY
+    CODE: LA_E_COUNTRY
 
-MESSAGE: Country is not allowed
+    MESSAGE: Country is not allowed
 */
 
-#define LA_E_COUNTRY  ((int)29)
+#define LA_E_COUNTRY ((int)29)
 
 /*
-CODE: LA_E_IP
+    CODE: LA_E_IP
 
-MESSAGE: IP address is not allowed
+    MESSAGE: IP address is not allowed
 */
 
-#define LA_E_IP  ((int)30)
+#define LA_E_IP ((int)30)
 
 /*
-CODE: LA_E_FILE_PERMISSION
+    CODE: LA_E_FILE_PERMISSION
 
-MESSAGE: No permission to write to file
+    MESSAGE: No permission to write to file
 */
 
 #define LA_E_FILE_PERMISSION ((int)31)
 
 /*
-CODE: LA_E_SERVER
+    CODE: LA_E_SERVER
 
-MESSAGE: Server error
+    MESSAGE: Server error
 */
 
 #define LA_E_SERVER ((int)32)
 
 /*
-CODE: LA_E_CLIENT
+    CODE: LA_E_CLIENT
 
-MESSAGE: Client error
+    MESSAGE: Client error
 */
 
-#define LA_E_CLIENT    ((int)33)
+#define LA_E_CLIENT ((int)33)
