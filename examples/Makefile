@@ -5,7 +5,7 @@ CXX = g++
 #  -Wall turns on most, but not all, compiler warnings
 CXXFLAGS  = -Wall
 
-LDFLAGS = "-Wl,-rpath,../lib" -L../lib -lLexActivator
+LDFLAGS = "-Wl,-rpath,." -L. -lLexActivator
 
 # the build target executable:
 TARGET = Sample

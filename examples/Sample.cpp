@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../lib/LexActivator.h"
+#include "LexActivator.h"
 
 #if _WIN32
 #if _WIN64
-#pragma comment(lib, "../lib/x64/LexActivator")
+#pragma comment(lib, "x64/LexActivator")
 #else
-#pragma comment(lib, "../lib/x86/LexActivator")
+#pragma comment(lib, "x86/LexActivator")
 #endif
 #endif
 
