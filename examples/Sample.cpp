@@ -15,9 +15,9 @@ void init()
 {
 	int status;
 #if _WIN32
-	status = SetProductData(L"PASTE_CONTENT_OF_PRODUC.DAT_FILE");
+	status = SetProductData(L"PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
 #else
-	status = SetProductData("PASTE_CONTENT_OF_PRODUC.DAT_FILE");
+	status = SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
 #endif
 	if (LA_OK != status)
 	{

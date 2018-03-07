@@ -524,6 +524,23 @@ LEXACTIVATOR_API int LA_CC ActivateLocalTrial(uint32_t trialLength);
 
 LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 
+/*
+	FUNCTION: ExtendLocalTrial()
+
+	PURPOSE: Extends the local trial
+
+	PARAMETERS:
+	* trialExtensionLength - number of days to extend the trial
+
+	RETURN CODES: LA_OK, LA_FAIL, LA_E_GUID, LA_E_TIME, LA_E_LOCAL_TRIAL_NOT_EXPIRED
+
+	NOTE: The function is only meant for unverified trials.
+*/
+
+LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
+
+
+
 /*** Return Codes ***/
 
 #define LA_OK ((int)0)
@@ -652,7 +669,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 /*
     CODE: LA_E_WMIC
 
-    MESSAGE: Fingerprint couldn't be generated because Windows Management 
+    MESSAGE: Fingerprint couldn't be generated because Windows Management
     Instrumentation (WMI) service has been disabled. This error is specific
     to Windows only.
 */
@@ -780,12 +797,20 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 #define LA_E_FILE_PERMISSION ((int)31)
 
 /*
+    CODE: LA_E_LOCAL_TRIAL_NOT_EXPIRED
+
+    MESSAGE: Trial has not expired.
+*/
+
+#define LA_E_LOCAL_TRIAL_NOT_EXPIRED ((int)32)
+
+/*
     CODE: LA_E_SERVER
 
     MESSAGE: Server error
 */
 
-#define LA_E_SERVER ((int)32)
+#define LA_E_SERVER ((int)33)
 
 /*
     CODE: LA_E_CLIENT
@@ -793,4 +818,4 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     MESSAGE: Client error
 */
 
-#define LA_E_CLIENT ((int)33)
+#define LA_E_CLIENT ((int)34)
