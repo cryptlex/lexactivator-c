@@ -7,6 +7,12 @@ CXXFLAGS  = -Wall
 
 LDFLAGS = "-Wl,-rpath,." -L. -lLexActivator
 
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
+    LDFLAGS += -lssl
+endif
+
 # the build target executable:
 TARGET = Sample
 

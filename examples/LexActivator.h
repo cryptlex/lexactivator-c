@@ -173,6 +173,22 @@ LEXACTIVATOR_API int LA_CC SetActivationExtraData(CSTRTYPE extraData);
 LEXACTIVATOR_API int LA_CC SetTrialActivationExtraData(CSTRTYPE extraData);
 
 /*
+    FUNCTION: SetAppVersion()
+
+    PURPOSE: Sets the current app version of your application.
+
+    The app version appears along with the activation details in dashboard. It
+    is also used to generate app analytics.
+
+    PARAMETERS:
+    * appVersion - string of maximum length 256 characters with utf-8 encoding.
+
+    RETURN CODES: LA_OK, LA_E_GUID, LA_E_APP_VERSION_LEN
+*/
+
+LEXACTIVATOR_API int LA_CC SetAppVersion(CSTRTYPE appVersion);
+
+/*
     FUNCTION: SetNetworkProxy()
 
     PURPOSE: Sets the network proxy to be used when contacting Cryptlex servers.
@@ -199,6 +215,8 @@ LEXACTIVATOR_API int LA_CC SetNetworkProxy(CSTRTYPE proxy);
     FUNCTION: GetAppVersion()
 
     PURPOSE: Gets the app version of the product as set in the dashboard.
+
+    This can be used to detect software updates in your app.
 
     PARAMETERS:
     * appVersion - pointer to a buffer that receives the value of the string
@@ -539,6 +557,20 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 
 LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
 
+/*
+    FUNCTION: Reset()
+
+    PURPOSE: Resets the activation and trial data stored in the machine.
+
+    This function is meant for developer testing only.
+
+    RETURN CODES: LA_OK, LA_E_GUID
+
+    NOTE: The function does not reset unverified (local) trial data.
+*/
+
+LEXACTIVATOR_API int LA_CC Reset();
+
 
 
 /*** Return Codes ***/
@@ -634,7 +666,7 @@ LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
 /*
     CODE: LA_E_EDATA_LEN
 
-    MESSAGE: Extra activation data length is more than 256 characters.
+    MESSAGE: Extra activation data length is more than 1024 characters.
 */
 
 #define LA_E_EDATA_LEN ((int)12)
@@ -797,25 +829,49 @@ LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
 #define LA_E_FILE_PERMISSION ((int)31)
 
 /*
-    CODE: LA_E_LOCAL_TRIAL_NOT_EXPIRED
+	CODE: LA_E_LOCAL_TRIAL_NOT_EXPIRED
 
-    MESSAGE: Trial has not expired.
+	MESSAGE: Trial has not expired.
 */
 
 #define LA_E_LOCAL_TRIAL_NOT_EXPIRED ((int)32)
 
 /*
-    CODE: LA_E_SERVER
+    CODE: LA_E_MACHINE_FINGERPRINT
 
-    MESSAGE: Server error
+    MESSAGE: Machine fingerprint has changed since activation.
 */
 
-#define LA_E_SERVER ((int)33)
+#define LA_E_MACHINE_FINGERPRINT ((int)33)
+
+/*
+    CODE: LA_E_APP_VERSION_LEN
+
+    MESSAGE: App version length is more than 256 characters.
+*/
+
+#define LA_E_APP_VERSION_LEN ((int)34)
+
+/*
+    CODE: LA_E_RATE_LIMIT
+
+    MESSAGE: Rate limit for API has reached, try again later.
+*/
+
+#define LA_E_RATE_LIMIT ((int)35)
+
+/*
+    CODE: LA_E_SERVER
+
+    MESSAGE: Server error.
+*/
+
+#define LA_E_SERVER ((int)36)
 
 /*
     CODE: LA_E_CLIENT
 
-    MESSAGE: Client error
+    MESSAGE: Client error.
 */
 
-#define LA_E_CLIENT ((int)34)
+#define LA_E_CLIENT ((int)37)

@@ -14,11 +14,12 @@
 void init()
 {
 	int status;
+
 #if _WIN32
 	// status = SetProductFile(L"ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE");
 	status = SetProductData(L"PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
 #else
-	// status = SetProductFile("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE")
+	//  status = SetProductFile("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE");
 	status = SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
 #endif
 	if (LA_OK != status)
@@ -27,10 +28,23 @@ void init()
 		getchar();
 		exit(status);
 	}
+
 #if _WIN32
 	status = SetProductVersionGuid(L"PASTE_PRODUCT_VERSION_GUID", LA_USER);
 #else
-	status = SetProductVersionGuid("PASTE_PRODUCT_VERSION_GUID", LA_USER);
+	status = SetProductVersionGuid("PASTE_PRODUCT_VERSION_GUID", LA_SYSTEM);
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+
+#if _WIN32
+	status = SetAppVersion(L"2.4.0");
+#else
+	status = SetAppVersion("2.4.0");
 #endif
 	if (LA_OK != status)
 	{
@@ -55,10 +69,10 @@ void activate()
 		getchar();
 		exit(status);
 	}
+
 #if _WIN32
 	status = SetActivationExtraData(L"SAMPLE DATA");
 #else
-	status = SetActivationExtraData("SAMPLE DATA");
 	status = SetActivationExtraData("SAMPLE DATA");
 #endif
 	if (LA_OK != status)
@@ -67,6 +81,7 @@ void activate()
 		getchar();
 		exit(status);
 	}
+
 	status = ActivateProduct();
 	if (LA_OK == status || LA_EXPIRED == status || LA_REVOKED == status)
 	{
@@ -82,6 +97,7 @@ void activate()
 void activateTrial()
 {
 	int status;
+
 #if _WIN32
 	status = SetTrialActivationExtraData(L"SAMPLE DATA");
 #else
@@ -93,6 +109,7 @@ void activateTrial()
 		getchar();
 		exit(status);
 	}
+
 	status = ActivateTrial();
 	if (LA_OK == status)
 	{
