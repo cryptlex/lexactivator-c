@@ -1,4 +1,3 @@
-/* LexActivator.h */
 #pragma once
 
 #include <stdint.h>
@@ -10,13 +9,13 @@
     #include <windows.h>
 
     #ifdef LEXACTIVATOR_EXPORTS
-    	#ifdef LEXACTIVATOR__STATIC
+        #ifdef LEXACTIVATOR__STATIC
             #define LEXACTIVATOR_API extern "C"
         #else
             #define LEXACTIVATOR_API extern "C" __declspec(dllexport)
         #endif
     #else
-    	#ifdef __cplusplus
+        #ifdef __cplusplus
             #ifdef LEXACTIVATOR_STATIC
                 #define LEXACTIVATOR_API extern "C"
             #else
@@ -59,7 +58,6 @@
 
 #define LA_USER ((uint32_t)1)
 #define LA_SYSTEM ((uint32_t)2)
-
 
 /*
     FUNCTION: SetProductFile()
@@ -556,12 +554,12 @@ LEXACTIVATOR_API int LA_CC ActivateLocalTrial(uint32_t trialLength);
 LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 
 /*
-	FUNCTION: ExtendLocalTrial()
+    FUNCTION: ExtendLocalTrial()
 
     PURPOSE: Extends the local trial.
 
-	PARAMETERS:
-	* trialExtensionLength - number of days to extend the trial
+    PARAMETERS:
+    * trialExtensionLength - number of days to extend the trial
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_LOCAL_TRIAL_NOT_EXPIRED
 
