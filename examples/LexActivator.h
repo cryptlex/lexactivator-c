@@ -580,5 +580,4 @@ LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
 
     NOTE: The function does not reset local(unverified) trial data.
 */
-
 LEXACTIVATOR_API int LA_CC Reset();
