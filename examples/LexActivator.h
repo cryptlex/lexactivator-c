@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "LexErrorCodes.h"
 #ifdef _WIN32
     /*
     Make sure you're using the MSVC or Intel compilers on Windows.
@@ -71,12 +72,11 @@
     PARAMETERS:
     * filePath - absolute path of the product file (Product.dat)
 
-    RETURN CODES: LA_OK, LA_E_FPATH, LA_E_PFILE
+    RETURN CODES: LA_OK, LA_E_FILE_PATH, LA_E_PRODUCT_FILE
 
     NOTE: If this function fails to set the path of product file, none of the
     other functions will work.
 */
-
 LEXACTIVATOR_API int LA_CC SetProductFile(CSTRTYPE filePath);
 
 /*
@@ -93,84 +93,83 @@ LEXACTIVATOR_API int LA_CC SetProductFile(CSTRTYPE filePath);
     PARAMETERS:
     * productData - content of the Product.dat file
 
-    RETURN CODES: LA_OK, LA_E_PDATA
+    RETURN CODES: LA_OK, LA_E_PRODUCT_DATA
 
     NOTE: If this function fails to set the product data, none of the
     other functions will work.
 */
-
 LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
 
 /*
-    FUNCTION: SetProductVersionGuid()
+    FUNCTION: SetProductId()
 
-    PURPOSE: Sets the version GUID of your application.
+    PURPOSE: Sets the product id of your application.
 
     This function must be called on every start of your program before
     any other functions are called, with the exception of SetProductFile()
     or SetProductData() function.
 
     PARAMETERS:
-    * versionGuid - the unique version GUID of your application as mentioned
-      on the product version page of your application in the dashboard.
+    * productId - the unique product id of your application as mentioned
+      on the product page of your application in the dashboard.
 
     * flags - depending upon whether your application requires admin/root
       permissions to run or not, this parameter can have one of the following
       values: LA_SYSTEM, LA_USER
 
-    RETURN CODES: LA_OK, LA_E_WMIC, LA_E_PFILE, LA_E_PDATA, LA_E_GUID, LA_E_PERMISSION
+    RETURN CODES: LA_OK, LA_E_WMIC, LA_E_PRODUCT_FILE, LA_E_PRODUCT_DATA, LA_E_PRODUCT_ID,
+    LA_E_SYSTEM_PERMISSION
 
-    NOTE: If this function fails to set the version GUID, none of the other
+    NOTE: If this function fails to set the product id, none of the other
     functions will work.
 */
-
-LEXACTIVATOR_API int LA_CC SetProductVersionGuid(CSTRTYPE versionGuid, uint32_t flags);
+LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flags);
 
 /*
-    FUNCTION: SetProductKey()
+    FUNCTION: SetLicenseKey()
 
-    PURPOSE: Sets the product key required to activate the application.
+    PURPOSE: Sets the license key required to activate the license.
 
     PARAMETERS:
-    * productKey - a valid product key generated for the application.
+    * licenseKey - a valid license key.
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_E_PKEY
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY
 */
-
-LEXACTIVATOR_API int LA_CC SetProductKey(CSTRTYPE productKey);
+LEXACTIVATOR_API int LA_CC SetLicenseKey(CSTRTYPE licenseKey);
 
 /*
-    FUNCTION: SetActivationExtraData()
+    FUNCTION: SetActivationMetadata()
 
-    PURPOSE: Sets the extra data which you may want to fetch from the user
-    at the time of activation.
+    PURPOSE: Sets the activation metadata.
 
-    The extra data appears along with the activation details of the product key
+    The  metadata appears along with the activation details of the license
     in dashboard.
 
     PARAMETERS:
-    * extraData - string of maximum length 1024 characters with utf-8 encoding.
+    * key - string of maximum length 256 characters with utf-8 encoding.
+    * value - string of maximum length 256 characters with utf-8 encoding.
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_E_EDATA_LEN
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_METADATA_KEY_LENGTH,
+    LA_E_METADATA_VALUE_LENGTH, LA_E_ACTIVATION_METADATA_LIMIT
 */
-
-LEXACTIVATOR_API int LA_CC SetActivationExtraData(CSTRTYPE extraData);
+LEXACTIVATOR_API int LA_CC SetActivationMetadata(CSTRTYPE key, CSTRTYPE value);
 
 /*
-    FUNCTION: SetTrialActivationExtraData()
+    FUNCTION: SetTrialActivationMetadata()
 
-    PURPOSE: Sets the extra data which you may want to fetch from the user
-    at the time of trial activation.
+    PURPOSE: Sets the trial activation metadata.
 
-    The extra data appears along with the trial activation details in dashboard.
+    The  metadata appears along with the trial activation details of the product
+    in dashboard.
 
     PARAMETERS:
-    * extraData - string of maximum length 1024 characters with utf-8 encoding.
+    * key - string of maximum length 256 characters with utf-8 encoding.
+    * value - string of maximum length 256 characters with utf-8 encoding.
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_E_EDATA_LEN
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_LENGTH,
+    LA_E_METADATA_VALUE_LENGTH, LA_E_TRIAL_ACTIVATION_METADATA_LIMIT
 */
-
-LEXACTIVATOR_API int LA_CC SetTrialActivationExtraData(CSTRTYPE extraData);
+LEXACTIVATOR_API int LA_CC SetTrialActivationMetadata(CSTRTYPE key, CSTRTYPE value);
 
 /*
     FUNCTION: SetAppVersion()
@@ -183,9 +182,8 @@ LEXACTIVATOR_API int LA_CC SetTrialActivationExtraData(CSTRTYPE extraData);
     PARAMETERS:
     * appVersion - string of maximum length 256 characters with utf-8 encoding.
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_E_APP_VERSION_LEN
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_APP_VERSION_LENGTH
 */
-
 LEXACTIVATOR_API int LA_CC SetAppVersion(CSTRTYPE appVersion);
 
 /*
@@ -203,114 +201,134 @@ LEXACTIVATOR_API int LA_CC SetAppVersion(CSTRTYPE appVersion);
     PARAMETERS:
     * proxy - proxy string having correct proxy format
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_E_NET_PROXY
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_NET_PROXY
 
     NOTE: Proxy settings of the computer are automatically detected. So, in most of the
     cases you don't need to care whether your user is behind a proxy server or not.
 */
-
 LEXACTIVATOR_API int LA_CC SetNetworkProxy(CSTRTYPE proxy);
 
 /*
-    FUNCTION: GetAppVersion()
+    FUNCTION: GetProductMetadata()
 
-    PURPOSE: Gets the app version of the product as set in the dashboard.
+    PURPOSE: Gets the product metadata as set in the dashboard.
 
-    This can be used to detect software updates in your app.
+    This is available for trial as well as license activations.
 
     PARAMETERS:
-    * appVersion - pointer to a buffer that receives the value of the string
-    * length - size of the buffer pointed to by the appVersion parameter
+    * key - key to retrieve the value
+    * value - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the value parameter
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
 */
-
-LEXACTIVATOR_API int LA_CC GetAppVersion(STRTYPE appVersion, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetProductMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*
-    FUNCTION: GetProductKey()
+    FUNCTION: GetLicenseMetadata()
 
-    PURPOSE: Gets the stored product key which was used for activation.
+    PURPOSE: Gets the license metadata as set in the dashboard.
 
     PARAMETERS:
-    * productKey - pointer to a buffer that receives the value of the string
+    * key - key to retrieve the value
+    * value - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the value parameter
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
+
+/*
+    FUNCTION: GetLicenseKey()
+
+    PURPOSE: Gets the license key used for activation.
+
+    PARAMETERS:
+    * licenseKey - pointer to a buffer that receives the value of the string
     * length - size of the buffer pointed to by the productKey parameter
 
-    RETURN CODES: LA_OK, LA_E_PKEY, LA_E_GUID, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_BUFFER_SIZE
 */
-
-LEXACTIVATOR_API int LA_CC GetProductKey(STRTYPE productKey, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetLicenseKey(STRTYPE licenseKey, uint32_t length);
 
 /*
-    FUNCTION: GetProductKeyEmail()
+    FUNCTION: GetLicenseExpiryDate()
 
-    PURPOSE: Gets the email associated with product key used for activation.
-
-    PARAMETERS:
-    * productKey - pointer to a buffer that receives the value of the string
-    * length - size of the buffer pointed to by the productKeyEmail parameter
-
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME, LA_E_BUFFER_SIZE
-*/
-
-LEXACTIVATOR_API int LA_CC GetProductKeyEmail(STRTYPE productKeyEmail, uint32_t length);
-
-/*
-    FUNCTION: GetProductKeyExpiryDate()
-
-    PURPOSE: Gets the product key expiry date timestamp.
+    PURPOSE: Gets the license expiry date timestamp.
 
     PARAMETERS:
     * expiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
 */
-
-LEXACTIVATOR_API int LA_CC GetProductKeyExpiryDate(uint32_t *expiryDate);
+LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
 
 /*
-    FUNCTION: GetProductKeyCustomField()
+    FUNCTION: GetLicenseUsageCount()
 
-    PURPOSE: Get the value of the custom field associated with the product key.
+    PURPOSE: Gets the license usage count.
 
     PARAMETERS:
-    * fieldId - id of the custom field whose value you want to get
-    * fieldValue - pointer to a buffer that receives the value of the string
-    * length - size of the buffer pointed to by the fieldValue parameter
+    * totalUses - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME, LA_E_CUSTOM_FIELD_ID,
-    LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
 */
-
-LEXACTIVATOR_API int LA_CC GetProductKeyCustomField(uint32_t fieldId, STRTYPE fieldValue, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetLicenseUsageCount(uint32_t *totalUses);
 
 /*
-    FUNCTION: GetActivationExtraData()
+    FUNCTION: GetUserEmail()
 
-    PURPOSE: Gets the value of the activation extra data.
+    PURPOSE: Gets the email associated with license user.
 
     PARAMETERS:
-    * extraData - pointer to a buffer that receives the value of the string
-    * length - size of the buffer pointed to by the fieldValue parameter
+    * email - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the productKeyEmail parameter
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
 */
-
-LEXACTIVATOR_API int LA_CC GetActivationExtraData(STRTYPE extraData, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetUserEmail(STRTYPE email, uint32_t length);
 
 /*
-    FUNCTION: GetTrialActivationExtraData()
+    FUNCTION: GetUserName()
 
-    PURPOSE: Gets the value of the trial activation extra data.
+    PURPOSE: Gets the name associated with license user.
 
     PARAMETERS:
-    * extraData - pointer to a buffer that receives the value of the string
-    * length - size of the buffer pointed to by the fieldValue parameter
+    * name - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the productKeyEmail parameter
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetUserName(STRTYPE name, uint32_t length);
+
+/*
+    FUNCTION: GetActivationMetadata()
+
+    PURPOSE: Gets the activation metadata.
+
+    PARAMETERS:
+    * key - key to retrieve the value
+    * value - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the value parameter
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetActivationMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
+
+/*
+    FUNCTION: GetTrialActivationMetadata()
+
+    PURPOSE: Gets the trial activation metadata.
+
+    PARAMETERS:
+    * key - key to retrieve the value
+    * value - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the value parameter
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
 */
 
-LEXACTIVATOR_API int LA_CC GetTrialActivationExtraData(STRTYPE extraData, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetTrialActivationMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*
     FUNCTION: GetTrialExpiryDate()
@@ -320,10 +338,22 @@ LEXACTIVATOR_API int LA_CC GetTrialActivationExtraData(STRTYPE extraData, uint32
     PARAMETERS:
     * trialExpiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
 */
-
 LEXACTIVATOR_API int LA_CC GetTrialExpiryDate(uint32_t *trialExpiryDate);
+
+/*
+    FUNCTION: GetTrialId()
+
+    PURPOSE: Gets the trial activation id. Used in case of trial extension.
+
+    PARAMETERS:
+    * trialId - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the value parameter
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetTrialId(STRTYPE trialId, uint32_t length);
 
 /*
     FUNCTION: GetLocalTrialExpiryDate()
@@ -333,42 +363,38 @@ LEXACTIVATOR_API int LA_CC GetTrialExpiryDate(uint32_t *trialExpiryDate);
     PARAMETERS:
     * trialExpiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_E_GUID, LA_FAIL, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
 */
-
 LEXACTIVATOR_API int LA_CC GetLocalTrialExpiryDate(uint32_t *trialExpiryDate);
 
 /*
-    FUNCTION: ActivateProduct()
+    FUNCTION: ActivateLicense()
 
-    PURPOSE: Activates your application by contacting the Cryptlex servers. It
+    PURPOSE: Activates the license by contacting the Cryptlex servers. It
     validates the key and returns with encrypted and digitally signed token
     which it stores and uses to activate your application.
 
     This function should be executed at the time of registration, ideally on
     a button click.
 
-    RETURN CODES: LA_OK, LA_EXPIRED, LA_REVOKED, LA_FAIL, LA_E_GUID, LA_E_PKEY,
-    LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACT_LIMIT, LA_E_SERVER, LA_E_CLIENT,
-    LA_E_PKEY_TYPE, LA_E_COUNTRY, LA_E_IP
+    RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY,
+    LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACTIVATION_LIMIT, LA_E_SERVER, LA_E_CLIENT, LA_USAGE_LIMIT_REACHED
+    LA_E_LICENSE_KEY_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT
 */
-
-LEXACTIVATOR_API int LA_CC ActivateProduct();
+LEXACTIVATOR_API int LA_CC ActivateLicense();
 
 /*
-    FUNCTION: ActivateProductOffline()
+    FUNCTION: ActivateLicenseOffline()
 
-    PURPOSE: Activates your application using the offline activation response
-    file.
+    PURPOSE: Activates your licenses using the offline activation response file.
 
     PARAMETERS:
     * filePath - path of the offline activation response file.
 
-    RETURN CODES: LA_OK, LA_EXPIRED, LA_FAIL, LA_E_GUID, LA_E_PKEY, LA_E_OFILE
-    LA_E_VM, LA_E_TIME, LA_E_FPATH, LA_E_OFILE_EXPIRED
+    RETURN CODES: LA_OK, LA_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_OFFLINE_RESPONSE_FILE
+    LA_E_VM, LA_E_TIME, LA_E_FILE_PATH, LA_E_OFFLINE_RESPONSE_FILE_EXPIRED
 */
-
-LEXACTIVATOR_API int LA_CC ActivateProductOffline(CSTRTYPE filePath);
+LEXACTIVATOR_API int LA_CC ActivateLicenseOffline(CSTRTYPE filePath);
 
 /*
     FUNCTION: GenerateOfflineActivationRequest()
@@ -379,46 +405,43 @@ LEXACTIVATOR_API int LA_CC ActivateProductOffline(CSTRTYPE filePath);
     PARAMETERS:
     * filePath - path of the file for the offline request.
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_GUID, LA_E_PKEY, LA_E_FILE_PERMISSION
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_FILE_PERMISSION
 */
-
 LEXACTIVATOR_API int LA_CC GenerateOfflineActivationRequest(CSTRTYPE filePath);
 
 /*
-    FUNCTION: DeactivateProduct()
+    FUNCTION: DeactivateLicense()
 
-    PURPOSE: Deactivates the application and frees up the corresponding activation
+    PURPOSE: Deactivates the license activation and frees up the corresponding activation
     slot by contacting the Cryptlex servers.
 
     This function should be executed at the time of de-registration, ideally on
     a button click.
 
-    RETURN CODES: LA_OK, LA_E_DEACT_LIMIT, LA_FAIL, LA_E_GUID, LA_E_TIME
-    LA_E_PKEY, LA_E_INET, LA_E_SERVER, LA_E_CLIENT
+    RETURN CODES: LA_OK, LA_E_DEACTIVATION_LIMIT, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    LA_E_LICENSE_KEY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT
 */
-
-LEXACTIVATOR_API int LA_CC DeactivateProduct();
+LEXACTIVATOR_API int LA_CC DeactivateLicense();
 
 /*
     FUNCTION: GenerateOfflineDeactivationRequest()
 
     PURPOSE: Generates the offline deactivation request needed for deactivation of
-    the product key in the dashboard and deactivates the application.
+    the license in the dashboard and deactivates the license locally.
 
-    A valid offline deactivation file confirms that the application has been successfully
+    A valid offline deactivation file confirms that the license has been successfully
     deactivated on the user's machine.
 
     PARAMETERS:
     * filePath - path of the file for the offline request.
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_GUID, LA_E_PKEY, LA_E_FILE_PERMISSION,
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_FILE_PERMISSION,
     LA_E_TIME
 */
-
 LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath);
 
 /*
-    FUNCTION: IsProductGenuine()
+    FUNCTION: IsLicenseGenuine()
 
     PURPOSE: It verifies whether your app is genuinely activated or not. The verification is
     done locally by verifying the cryptographic digital signature fetched at the time of
@@ -429,22 +452,21 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath)
     key.
 
     In case server sync fails due to network error, and it continues to fail for fixed
-    number of days (grace period), the function returns LA_GP_OVER instead of LA_OK.
+    number of days (grace period), the function returns LA_GRACE_PERIOD_OVER instead of LA_OK.
 
     This function must be called on every start of your program to verify the activation
     of your app.
 
-    RETURN CODES: LA_OK, LA_EXPIRED, LA_REVOKED, LA_GP_OVER, LA_FAIL, LA_E_GUID, LA_E_PKEY,
-    LA_E_TIME
+    RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_USAGE_LIMIT_REACHED
 
     NOTE: If application was activated offline using ActivateProductOffline() function, you
     may want to set grace period to 0 to ignore grace period.
 */
-
-LEXACTIVATOR_API int LA_CC IsProductGenuine();
+LEXACTIVATOR_API int LA_CC IsLicenseGenuine();
 
 /*
-    FUNCTION: IsProductActivated()
+    FUNCTION: IsLicenseValid()
 
     PURPOSE: It verifies whether your app is genuinely activated or not. The verification is
     done locally by verifying the cryptographic digital signature fetched at the time of
@@ -453,13 +475,26 @@ LEXACTIVATOR_API int LA_CC IsProductGenuine();
     This is just an auxiliary function which you may use in some specific cases, when you
     want to skip the server sync.
 
-    RETURN CODES: LA_OK, LA_EXPIRED, LA_REVOKED, LA_GP_OVER, LA_FAIL, LA_E_GUID, LA_E_PKEY,
-    LA_E_TIME
+    RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_USAGE_LIMIT_REACHED
 
     NOTE: You may want to set grace period to 0 to ignore grace period.
 */
+LEXACTIVATOR_API int LA_CC IsLicenseValid();
 
-LEXACTIVATOR_API int LA_CC IsProductActivated();
+/*
+    FUNCTION: IncrementLicenseUsage()
+
+    PURPOSE: Increments the usage count of the license.
+
+    If increment is more than allowed uses it has no effect.
+
+    PARAMETERS:
+    * increment - the increment to add to the usage count
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+*/
+LEXACTIVATOR_API int LA_CC IncrementLicenseUsage(uint32_t increment);
 
 /*
     FUNCTION: ActivateTrial()
@@ -470,10 +505,9 @@ LEXACTIVATOR_API int LA_CC IsProductActivated();
     This function should be executed when your application starts first time on
     the user's computer, ideally on a button click.
 
-    RETURN CODES: LA_OK, LA_T_EXPIRED, LA_FAIL, LA_E_GUID, LA_E_INET,
-    LA_E_VM, LA_E_TIME, LA_E_SERVER, LA_E_CLIENT, LA_E_COUNTRY, LA_E_IP
+    RETURN CODES: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_INET,
+    LA_E_VM, LA_E_TIME, LA_E_SERVER, LA_E_CLIENT, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT
 */
-
 LEXACTIVATOR_API int LA_CC ActivateTrial();
 
 /*
@@ -485,29 +519,10 @@ LEXACTIVATOR_API int LA_CC ActivateTrial();
 
     This function must be called on every start of your program during the trial period.
 
-    RETURN CODES: LA_OK, LA_T_EXPIRED, LA_FAIL, LA_E_TIME, LA_E_GUID
+    RETURN CODES: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL, LA_E_TIME, LA_E_PRODUCT_ID
 
 */
-
 LEXACTIVATOR_API int LA_CC IsTrialGenuine();
-
-/*
-    FUNCTION: ExtendTrial()
-
-    PURPOSE: Extends the trial using the trial extension key generated in the dashboard
-    for the product version.
-
-    PARAMETERS:
-    * trialExtensionKey - trial extension key generated for the product version
-
-    RETURN CODES: LA_OK, LA_T_EXPIRED, LA_FAIL, LA_E_GUID, LA_E_INET,
-    LA_E_VM, LA_E_TIME, LA_E_TEXT_KEY, LA_E_SERVER, LA_E_CLIENT,
-    LA_E_TRIAL_NOT_EXPIRED
-
-    NOTE: The function is only meant for verified trials.
-*/
-
-LEXACTIVATOR_API int LA_CC ExtendTrial(CSTRTYPE trialExtensionKey);
 
 /*
     FUNCTION: ActivateLocalTrial()
@@ -515,16 +530,15 @@ LEXACTIVATOR_API int LA_CC ExtendTrial(CSTRTYPE trialExtensionKey);
     PURPOSE: Starts the local(unverified) trial.
 
     This function should be executed when your application starts first time on
-    the user's computer, ideally on a button click.
+    the user's computer.
 
     PARAMETERS:
     * trialLength - trial length in days
 
-    RETURN CODES: LA_OK, LA_LT_EXPIRED, LA_FAIL, LA_E_GUID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
 
-    NOTE: The function is only meant for unverified trials.
+    NOTE: The function is only meant for local(unverified) trials.
 */
-
 LEXACTIVATOR_API int LA_CC ActivateLocalTrial(uint32_t trialLength);
 
 /*
@@ -535,26 +549,24 @@ LEXACTIVATOR_API int LA_CC ActivateLocalTrial(uint32_t trialLength);
 
     This function must be called on every start of your program during the trial period.
 
-    RETURN CODES: LA_OK, LA_LT_EXPIRED, LA_FAIL, LA_E_GUID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
 
-    NOTE: The function is only meant for unverified trials.
+    NOTE: The function is only meant for local(unverified) trials.
 */
-
 LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
 
 /*
 	FUNCTION: ExtendLocalTrial()
 
-	PURPOSE: Extends the local trial
+    PURPOSE: Extends the local trial.
 
 	PARAMETERS:
 	* trialExtensionLength - number of days to extend the trial
 
-	RETURN CODES: LA_OK, LA_FAIL, LA_E_GUID, LA_E_TIME, LA_E_LOCAL_TRIAL_NOT_EXPIRED
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_LOCAL_TRIAL_NOT_EXPIRED
 
-	NOTE: The function is only meant for unverified trials.
+    NOTE: The function is only meant for local(unverified) trials.
 */
-
 LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
 
 /*
@@ -564,314 +576,9 @@ LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
 
     This function is meant for developer testing only.
 
-    RETURN CODES: LA_OK, LA_E_GUID
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID
 
-    NOTE: The function does not reset unverified (local) trial data.
+    NOTE: The function does not reset local(unverified) trial data.
 */
 
 LEXACTIVATOR_API int LA_CC Reset();
-
-
-
-/*** Return Codes ***/
-
-#define LA_OK ((int)0)
-
-#define LA_FAIL ((int)1)
-
-/*
-    CODE: LA_EXPIRED
-
-    MESSAGE: The product key has expired or system time has been tampered
-    with. Ensure your date and time settings are correct.
-*/
-
-#define LA_EXPIRED ((int)2)
-
-/*
-    CODE: LA_REVOKED
-
-    MESSAGE: The product key has been revoked.
-*/
-
-#define LA_REVOKED ((int)3)
-
-/*
-    CODE: LA_GP_OVER
-
-    MESSAGE: The grace period is over.
-*/
-
-#define LA_GP_OVER ((int)4)
-
-/*
-    CODE: LA_T_EXPIRED
-
-    MESSAGE: The trial has expired or system time has been tampered
-    with. Ensure your date and time settings are correct.
-*/
-
-#define LA_T_EXPIRED ((int)5)
-
-/*
-    CODE: LA_LT_EXPIRED
-
-    MESSAGE: The local trial has expired or system time has been tampered
-    with. Ensure your date and time settings are correct.
-*/
-
-#define LA_LT_EXPIRED ((int)6)
-
-/*
-    CODE: LA_E_PFILE
-
-    MESSAGE: Invalid or corrupted product file.
-*/
-
-#define LA_E_PFILE ((int)7)
-
-/*
-    CODE: LA_E_FPATH
-
-    MESSAGE: Invalid product file path.
-*/
-
-#define LA_E_FPATH ((int)8)
-
-/*
-    CODE: LA_E_GUID
-
-    MESSAGE: The version GUID doesn't match that of the product file.
-*/
-
-#define LA_E_GUID ((int)9)
-
-/*
-    CODE: LA_E_OFILE
-
-    MESSAGE: Invalid offline activation response file.
-*/
-
-#define LA_E_OFILE ((int)10)
-
-/*
-    CODE: LA_E_PERMISSION
-
-    MESSAGE: Insufficent system permissions. Occurs when LA_SYSTEM flag is used
-    but application is not run with admin privileges.
-*/
-
-#define LA_E_PERMISSION ((int)11)
-
-/*
-    CODE: LA_E_EDATA_LEN
-
-    MESSAGE: Extra activation data length is more than 1024 characters.
-*/
-
-#define LA_E_EDATA_LEN ((int)12)
-
-/*
-    CODE: LA_E_PKEY_TYPE
-
-    MESSAGE: Invalid product key type.
-*/
-
-#define LA_E_PKEY_TYPE ((int)13)
-
-/*
-    CODE: LA_E_TIME
-
-    MESSAGE: The system time has been tampered with. Ensure your date
-    and time settings are correct.
-*/
-
-#define LA_E_TIME ((int)14)
-
-/*
-    CODE: LA_E_VM
-
-    MESSAGE: Application is being run inside a virtual machine / hypervisor,
-    and activation has been disallowed in the VM.
-    but
-*/
-
-#define LA_E_VM ((int)15)
-
-/*
-    CODE: LA_E_WMIC
-
-    MESSAGE: Fingerprint couldn't be generated because Windows Management
-    Instrumentation (WMI) service has been disabled. This error is specific
-    to Windows only.
-*/
-
-#define LA_E_WMIC ((int)16)
-
-/*
-    CODE: LA_E_TEXT_KEY
-
-    MESSAGE: Invalid trial extension key.
-*/
-
-#define LA_E_TEXT_KEY ((int)17)
-
-/*
-    CODE: LA_E_OFILE_EXPIRED
-
-    MESSAGE: The offline activation response has expired.
-*/
-
-#define LA_E_OFILE_EXPIRED ((int)18)
-
-/*
-    CODE: LA_E_INET
-
-    MESSAGE: Failed to connect to the server due to network error.
-*/
-
-#define LA_E_INET ((int)19)
-
-/*
-    CODE: LA_E_PKEY
-
-    MESSAGE: Invalid product key.
-*/
-
-#define LA_E_PKEY ((int)20)
-
-/*
-    CODE: LA_E_BUFFER_SIZE
-
-    MESSAGE: The buffer size was smaller than required.
-*/
-
-#define LA_E_BUFFER_SIZE ((int)21)
-
-/*
-    CODE: LA_E_CUSTOM_FIELD_ID
-
-    MESSAGE: Invalid custom field id.
-*/
-
-#define LA_E_CUSTOM_FIELD_ID ((int)22)
-
-/*
-    CODE: LA_E_NET_PROXY
-
-    MESSAGE: Invalid network proxy.
-*/
-
-#define LA_E_NET_PROXY ((int)23)
-
-/*
-    CODE: LA_E_HOST_URL
-
-    MESSAGE: Invalid Cryptlex host url.
-*/
-
-#define LA_E_HOST_URL ((int)24)
-
-/*
-    CODE: LA_E_DEACT_LIMIT
-
-    MESSAGE: Deactivation limit for key has reached
-*/
-
-#define LA_E_DEACT_LIMIT ((int)25)
-
-/*
-    CODE: LA_E_ACT_LIMIT
-
-    MESSAGE: Activation limit for key has reached
-*/
-
-#define LA_E_ACT_LIMIT ((int)26)
-
-/*
-    CODE: LA_E_PDATA
-
-    MESSAGE: Invalid product data
-*/
-
-#define LA_E_PDATA ((int)27)
-
-/*
-    CODE: LA_E_TRIAL_NOT_EXPIRED
-
-    MESSAGE: Trial has not expired.
-*/
-
-#define LA_E_TRIAL_NOT_EXPIRED ((int)28)
-
-/*
-    CODE: LA_E_COUNTRY
-
-    MESSAGE: Country is not allowed
-*/
-
-#define LA_E_COUNTRY ((int)29)
-
-/*
-    CODE: LA_E_IP
-
-    MESSAGE: IP address is not allowed
-*/
-
-#define LA_E_IP ((int)30)
-
-/*
-    CODE: LA_E_FILE_PERMISSION
-
-    MESSAGE: No permission to write to file
-*/
-
-#define LA_E_FILE_PERMISSION ((int)31)
-
-/*
-	CODE: LA_E_LOCAL_TRIAL_NOT_EXPIRED
-
-	MESSAGE: Trial has not expired.
-*/
-
-#define LA_E_LOCAL_TRIAL_NOT_EXPIRED ((int)32)
-
-/*
-    CODE: LA_E_MACHINE_FINGERPRINT
-
-    MESSAGE: Machine fingerprint has changed since activation.
-*/
-
-#define LA_E_MACHINE_FINGERPRINT ((int)33)
-
-/*
-    CODE: LA_E_APP_VERSION_LEN
-
-    MESSAGE: App version length is more than 256 characters.
-*/
-
-#define LA_E_APP_VERSION_LEN ((int)34)
-
-/*
-    CODE: LA_E_RATE_LIMIT
-
-    MESSAGE: Rate limit for API has reached, try again later.
-*/
-
-#define LA_E_RATE_LIMIT ((int)35)
-
-/*
-    CODE: LA_E_SERVER
-
-    MESSAGE: Server error.
-*/
-
-#define LA_E_SERVER ((int)36)
-
-/*
-    CODE: LA_E_CLIENT
-
-    MESSAGE: Client error.
-*/
-
-#define LA_E_CLIENT ((int)37)

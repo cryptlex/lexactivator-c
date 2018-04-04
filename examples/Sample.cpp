@@ -30,9 +30,9 @@ void init()
 	}
 
 #if _WIN32
-	status = SetProductVersionGuid(L"PASTE_PRODUCT_VERSION_GUID", LA_USER);
+	status = SetProductId(L"PASTE_PRODUCT_ID", LA_USER);
 #else
-	status = SetProductVersionGuid("PASTE_PRODUCT_VERSION_GUID", LA_SYSTEM);
+	status = SetProductId("PASTE_PRODUCT_VERSION_GUID", LA_SYSTEM);
 #endif
 	if (LA_OK != status)
 	{
@@ -59,9 +59,9 @@ void activate()
 {
 	int status;
 #if _WIN32
-	status = SetProductKey(L"PASTE_PRODUCT_KEY");
+	status = SetLicenseKey(L"PASTE_PRODUCT_KEY");
 #else
-	status = SetProductKey("PASTE_PRODUCT_KEY");
+	status = SetLicenseKey("PASTE_PRODUCT_KEY");
 #endif
 	if (LA_OK != status)
 	{
@@ -71,9 +71,9 @@ void activate()
 	}
 
 #if _WIN32
-	status = SetActivationExtraData(L"SAMPLE DATA");
+	status = SetActivationMetadata(L"key1", L"value1");
 #else
-	status = SetActivationExtraData("SAMPLE DATA");
+	status = SetActivationMetadata("key1", "value1");
 #endif
 	if (LA_OK != status)
 	{
@@ -82,8 +82,8 @@ void activate()
 		exit(status);
 	}
 
-	status = ActivateProduct();
-	if (LA_OK == status || LA_EXPIRED == status || LA_REVOKED == status)
+	status = ActivateLicense();
+	if (LA_OK == status || LA_EXPIRED == status || LA_SUSPENDED == status || LA_USAGE_LIMIT_REACHED == status)
 	{
 		printf("Product activated successfully: %d", status);
 	}
@@ -99,9 +99,9 @@ void activateTrial()
 	int status;
 
 #if _WIN32
-	status = SetTrialActivationExtraData(L"SAMPLE DATA");
+	status = SetTrialActivationMetadata(L"key1", L"value1");
 #else
-	status = SetTrialActivationExtraData("SAMPLE DATA");
+	status = SetTrialActivationMetadata("key1", "value1");
 #endif
 	if (LA_OK != status)
 	{
@@ -128,24 +128,28 @@ void activateTrial()
 int main()
 {
 	init();
-	int status = IsProductGenuine();
+	int status = IsLicenseGenuine();
 	if (LA_OK == status)
 	{
 		unsigned int expiryDate = 0;
-		GetProductKeyExpiryDate(&expiryDate);
+		GetLicenseExpiryDate(&expiryDate);
 		int daysLeft = (expiryDate - time(NULL)) / 86500;
 		printf("Days left: %d\n", daysLeft);
 		printf("Product is genuinely activated!"); 
 	}
 	else if (LA_EXPIRED == status)
 	{
-		printf("Product is genuinely activated, but license validity has expired!");
+		printf("Product is genuinely activated, but license has expired!");
 	}
-	else if (LA_REVOKED == status)
+	else if (LA_SUSPENDED == status)
 	{
-		printf("Product is genuinely activated, but product key has been revoked!");
+		printf("Product is genuinely activated, but license has been suspended!");
 	}
-	else if (LA_GP_OVER == status)
+	else if (LA_USAGE_LIMIT_REACHED == status)
+	{
+		printf("Product is genuinely activated, but license has reached it's usage limit!");
+	}
+	else if (LA_GRACE_PERIOD_OVER == status)
 	{
 		printf("Product is genuinely activated, but grace period is over!");
 	}
@@ -160,11 +164,11 @@ int main()
 			int daysLeft = (trialExpiryDate - time(NULL)) / 86500;
 			printf("Trial days left: %d", daysLeft);
 		}
-		else if (LA_T_EXPIRED == trialStatus)
+		else if (LA_TRIAL_EXPIRED == trialStatus)
 		{
 			printf("Trial has expired!");
 
-			// Time to buy the product key and activate the app
+			// Time to buy the license and activate the app
 			activate();
 		}
 		else

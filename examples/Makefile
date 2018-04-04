@@ -10,7 +10,7 @@ LDFLAGS = "-Wl,-rpath,." -L. -lLexActivator
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
-    LDFLAGS += -lssl
+    LDFLAGS += -lcurl
 endif
 
 # the build target executable:
