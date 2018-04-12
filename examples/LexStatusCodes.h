@@ -1,7 +1,7 @@
-#ifndef LEX_ERROR_CODES_H
-#define LEX_ERROR_CODES_H
+#ifndef LEX_STATUS_CODES_H
+#define LEX_STATUS_CODES_H
 
-enum LexErrorCodes
+enum LexStatusCodes
 {
     /*
         CODE: LA_OK
@@ -307,4 +307,4 @@ enum LexErrorCodes
     LA_E_CLIENT = 73,
 };
 
-#endif // LEX_ERROR_CODES_H
+#endif // LEX_STATUS_CODES_H

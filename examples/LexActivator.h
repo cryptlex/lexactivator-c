@@ -2,7 +2,7 @@
 #pragma once
 
 #include <stdint.h>
-#include "LexErrorCodes.h"
+#include "LexStatusCodes.h"
 #ifdef _WIN32
     /*
     Make sure you're using the MSVC or Intel compilers on Windows.
