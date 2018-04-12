@@ -1,3 +1,4 @@
+/* LexActivator.h */
 #pragma once
 
 #include <stdint.h>
@@ -58,6 +59,7 @@
 
 #define LA_USER ((uint32_t)1)
 #define LA_SYSTEM ((uint32_t)2)
+
 
 /*
     FUNCTION: SetProductFile()
@@ -274,7 +276,7 @@ LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
 LEXACTIVATOR_API int LA_CC GetLicenseUsageCount(uint32_t *totalUses);
 
 /*
-    FUNCTION: GetUserEmail()
+    FUNCTION: GetLicenseUserEmail()
 
     PURPOSE: Gets the email associated with license user.
 
@@ -284,10 +286,10 @@ LEXACTIVATOR_API int LA_CC GetLicenseUsageCount(uint32_t *totalUses);
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
 */
-LEXACTIVATOR_API int LA_CC GetUserEmail(STRTYPE email, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetLicenseUserEmail(STRTYPE email, uint32_t length);
 
 /*
-    FUNCTION: GetUserName()
+    FUNCTION: GetLicenseUserName()
 
     PURPOSE: Gets the name associated with license user.
 
@@ -297,7 +299,7 @@ LEXACTIVATOR_API int LA_CC GetUserEmail(STRTYPE email, uint32_t length);
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
 */
-LEXACTIVATOR_API int LA_CC GetUserName(STRTYPE name, uint32_t length);
+LEXACTIVATOR_API int LA_CC GetLicenseUserName(STRTYPE name, uint32_t length);
 
 /*
     FUNCTION: GetActivationMetadata()
