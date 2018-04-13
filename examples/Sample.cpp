@@ -42,9 +42,9 @@ void init()
 	}
 
 #if _WIN32
-	status = SetAppVersion(L"2.4.0");
+	status = SetAppVersion(L"PASTE_YOUR_APP_VERION");
 #else
-	status = SetAppVersion("2.4.0");
+	status = SetAppVersion("PASTE_YOUR_APP_VERION");
 #endif
 	if (LA_OK != status)
 	{
@@ -139,19 +139,19 @@ int main()
 	}
 	else if (LA_EXPIRED == status)
 	{
-		printf("License has expired!");
+		printf("License is genuinely activated but has expired!");
 	}
 	else if (LA_SUSPENDED == status)
 	{
-		printf("License has been suspended!");
+		printf("License is genuinely activated but has been suspended!");
 	}
 	else if (LA_USAGE_LIMIT_REACHED == status)
 	{
-		printf("License has reached it's usage limit!");
+		printf("License is genuinely activated but has reached it's usage limit!");
 	}
 	else if (LA_GRACE_PERIOD_OVER == status)
 	{
-		printf("Grace period is over!");
+		printf("License is genuinely activated but grace period is over!");
 	}
 	else
 	{
