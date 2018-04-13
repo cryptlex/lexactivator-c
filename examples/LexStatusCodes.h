@@ -172,7 +172,7 @@ enum LexStatusCodes
     LA_E_LICENSE_KEY = 54,
 
     /*
-        CODE: LA_E_LICENSE_KEY_TYPE
+        CODE: LA_E_LICENSE_TYPE
 
         MESSAGE: Invalid license type. Make sure floating license
         is not being used.
