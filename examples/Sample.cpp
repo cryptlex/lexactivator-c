@@ -32,7 +32,7 @@ void init()
 #if _WIN32
 	status = SetProductId(L"PASTE_PRODUCT_ID", LA_USER);
 #else
-	status = SetProductId("PASTE_PRODUCT_VERSION_GUID", LA_SYSTEM);
+	status = SetProductId("PASTE_PRODUCT_ID", LA_USER);
 #endif
 	if (LA_OK != status)
 	{
@@ -59,9 +59,9 @@ void activate()
 {
 	int status;
 #if _WIN32
-	status = SetLicenseKey(L"PASTE_PRODUCT_KEY");
+	status = SetLicenseKey(L"PASTE_LICENCE_KEY");
 #else
-	status = SetLicenseKey("PASTE_PRODUCT_KEY");
+	status = SetLicenseKey("PASTE_LICENCE_KEY");
 #endif
 	if (LA_OK != status)
 	{
@@ -85,11 +85,11 @@ void activate()
 	status = ActivateLicense();
 	if (LA_OK == status || LA_EXPIRED == status || LA_SUSPENDED == status || LA_USAGE_LIMIT_REACHED == status)
 	{
-		printf("Product activated successfully: %d", status);
+		printf("License activated successfully: %d", status);
 	}
 	else
 	{
-		printf("Product activation failed: %d", status);
+		printf("License activation failed: %d", status);
 	}
 }
 
@@ -135,23 +135,23 @@ int main()
 		GetLicenseExpiryDate(&expiryDate);
 		int daysLeft = (expiryDate - time(NULL)) / 86500;
 		printf("Days left: %d\n", daysLeft);
-		printf("Product is genuinely activated!"); 
+		printf("License is genuinely activated!"); 
 	}
 	else if (LA_EXPIRED == status)
 	{
-		printf("Product is genuinely activated, but license has expired!");
+		printf("License has expired!");
 	}
 	else if (LA_SUSPENDED == status)
 	{
-		printf("Product is genuinely activated, but license has been suspended!");
+		printf("License has been suspended!");
 	}
 	else if (LA_USAGE_LIMIT_REACHED == status)
 	{
-		printf("Product is genuinely activated, but license has reached it's usage limit!");
+		printf("License has reached it's usage limit!");
 	}
 	else if (LA_GRACE_PERIOD_OVER == status)
 	{
-		printf("Product is genuinely activated, but grace period is over!");
+		printf("Grace period is over!");
 	}
 	else
 	{
