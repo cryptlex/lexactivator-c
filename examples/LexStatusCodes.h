@@ -276,42 +276,42 @@ enum LexStatusCodes
         MESSAGE: Application is being run inside a virtual machine / hypervisor,
         and activation has been disallowed in the VM.
     */
-    LA_E_VM = 69,
+    LA_E_VM = 80,
 
     /*
         CODE: LA_E_COUNTRY
 
         MESSAGE: Country is not allowed.
     */
-    LA_E_COUNTRY = 70,
+    LA_E_COUNTRY = 81,
 
     /*
         CODE: LA_E_IP
 
         MESSAGE: IP address is not allowed.
     */
-    LA_E_IP = 71,
+    LA_E_IP = 82,
 
     /*
         CODE: LA_E_RATE_LIMIT
 
         MESSAGE: Rate limit for API has reached, try again later.
     */
-    LA_E_RATE_LIMIT = 72,
+    LA_E_RATE_LIMIT = 90,
 
     /*
         CODE: LA_E_SERVER
 
         MESSAGE: Server error.
     */
-    LA_E_SERVER = 73,
+    LA_E_SERVER = 91,
 
     /*
         CODE: LA_E_CLIENT
 
         MESSAGE: Client error.
     */
-    LA_E_CLIENT = 74,
+    LA_E_CLIENT = 92
 };
 
 #endif // LEX_STATUS_CODES_H
