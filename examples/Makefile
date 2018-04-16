@@ -6,12 +6,8 @@ CXX = g++
 CXXFLAGS  = -Wall
 
 LDFLAGS = "-Wl,-rpath,." -L. -lLexActivator
+#LDFLAGS += -Wl,-Bstatic -lLexActivator
 
-UNAME_S := $(shell uname -s)
-
-ifeq ($(UNAME_S),Linux)
-    LDFLAGS += -lcurl
-endif
 
 # the build target executable:
 TARGET = Sample
@@ -19,7 +15,7 @@ TARGET = Sample
 all: $(TARGET)
 
 $(TARGET): $(TARGET).cpp
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) $(TARGET).cpp
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(TARGET).cpp $(LDFLAGS)
 
 clean:
 	$(RM) $(TARGET)

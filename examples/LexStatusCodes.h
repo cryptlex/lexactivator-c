@@ -201,67 +201,74 @@ enum LexStatusCodes
     LA_E_ACTIVATION_LIMIT = 58,
 
     /*
+        CODE: LA_E_ACTIVATION_NOT_FOUND
+
+        MESSAGE: The license activation was deleted on the server.
+    */
+    LA_E_ACTIVATION_NOT_FOUND = 59,
+
+    /*
         CODE: LA_E_DEACTIVATION_LIMIT
 
         MESSAGE: The license has reached it's allowed deactivations limit.
     */
-    LA_E_DEACTIVATION_LIMIT = 59,
+    LA_E_DEACTIVATION_LIMIT = 60,
 
     /*
         CODE: LA_E_TRAIL_NOT_ALLOWED
 
         MESSAGE: Trial not allowed for the product.
     */
-    LA_E_TRAIL_NOT_ALLOWED = 60,
+    LA_E_TRAIL_NOT_ALLOWED = 61,
 
     /*
         CODE: LA_E_TRIAL_ACTIVATION_LIMIT
 
         MESSAGE: Your account has reached it's trial activations limit.
     */
-    LA_E_TRIAL_ACTIVATION_LIMIT = 61,
+    LA_E_TRIAL_ACTIVATION_LIMIT = 62,
 
     /*
         CODE: LA_E_MACHINE_FINGERPRINT
 
         MESSAGE: Machine fingerprint has changed since activation.
     */
-    LA_E_MACHINE_FINGERPRINT = 62,
+    LA_E_MACHINE_FINGERPRINT = 63,
 
     /*
         CODE: LA_E_METADATA_KEY_LENGTH
 
         MESSAGE: Metadata key length is more than 256 characters.
     */
-    LA_E_METADATA_KEY_LENGTH = 63,
+    LA_E_METADATA_KEY_LENGTH = 64,
 
     /*
         CODE: LA_E_METADATA_VALUE_LENGTH
 
         MESSAGE: Metadata value length is more than 256 characters.
     */
-    LA_E_METADATA_VALUE_LENGTH = 64,
+    LA_E_METADATA_VALUE_LENGTH = 65,
 
     /*
         CODE: LA_E_ACTIVATION_METADATA_LIMIT
 
         MESSAGE: The license has reached it's metadata fields limit.
     */
-    LA_E_ACTIVATION_METADATA_LIMIT = 65,
+    LA_E_ACTIVATION_METADATA_LIMIT = 66,
 
     /*
         CODE: LA_E_TRIAL_ACTIVATION_METADATA_LIMIT
 
         MESSAGE: The trial has reached it's metadata fields limit.
     */
-    LA_E_TRIAL_ACTIVATION_METADATA_LIMIT = 66,
+    LA_E_TRIAL_ACTIVATION_METADATA_LIMIT = 67,
 
     /*
         CODE: LA_E_METADATA_KEY_NOT_FOUND
 
         MESSAGE: The metadata key does not exist.
     */
-    LA_E_METADATA_KEY_NOT_FOUND = 67,
+    LA_E_METADATA_KEY_NOT_FOUND = 68,
 
     /*
         CODE: LA_E_VM
@@ -269,42 +276,42 @@ enum LexStatusCodes
         MESSAGE: Application is being run inside a virtual machine / hypervisor,
         and activation has been disallowed in the VM.
     */
-    LA_E_VM = 68,
+    LA_E_VM = 69,
 
     /*
         CODE: LA_E_COUNTRY
 
         MESSAGE: Country is not allowed.
     */
-    LA_E_COUNTRY = 69,
+    LA_E_COUNTRY = 70,
 
     /*
         CODE: LA_E_IP
 
         MESSAGE: IP address is not allowed.
     */
-    LA_E_IP = 70,
+    LA_E_IP = 71,
 
     /*
         CODE: LA_E_RATE_LIMIT
 
         MESSAGE: Rate limit for API has reached, try again later.
     */
-    LA_E_RATE_LIMIT = 71,
+    LA_E_RATE_LIMIT = 72,
 
     /*
         CODE: LA_E_SERVER
 
         MESSAGE: Server error.
     */
-    LA_E_SERVER = 72,
+    LA_E_SERVER = 73,
 
     /*
         CODE: LA_E_CLIENT
 
         MESSAGE: Client error.
     */
-    LA_E_CLIENT = 73,
+    LA_E_CLIENT = 74,
 };
 
 #endif // LEX_STATUS_CODES_H

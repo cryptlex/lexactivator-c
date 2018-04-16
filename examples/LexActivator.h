@@ -57,6 +57,8 @@
     typedef char* STRTYPE;
 #endif
 
+typedef void (LA_CC *CallbackType)(uint32_t);
+
 #define LA_USER ((uint32_t)1)
 #define LA_SYSTEM ((uint32_t)2)
 
@@ -137,6 +139,23 @@ LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flags);
 */
 LEXACTIVATOR_API int LA_CC SetLicenseKey(CSTRTYPE licenseKey);
 
+/*
+    FUNCTION: SetLicenseCallback()
+
+    PURPOSE: Sets server sync callback function.
+
+    Whenever the server sync occurs in a separate thread, and server returns the response,
+    license callback function gets invoked with the following status codes:
+    LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_USAGE_LIMIT_REACHED,
+    LA_E_REVOKED, LA_E_ACTIVATION_NOT_FOUND, LA_E_MACHINE_FINGERPRINT
+    LA_E_COUNTRY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_IP
+
+    PARAMETERS:
+    * callback - name of the callback function
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY
+*/
+LEXACTIVATOR_API int LA_CC SetLicenseCallback(CallbackType callback);
 /*
     FUNCTION: SetActivationMetadata()
 
