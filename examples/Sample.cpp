@@ -115,7 +115,7 @@ void activateTrial()
 	{
 		printf("Product trial activated successfully!");
 	}
-	else if (LA_EXPIRED == status)
+	else if (LA_TRIAL_EXPIRED == status)
 	{
 		printf("Product trial has expired!");
 	}
