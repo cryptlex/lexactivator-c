@@ -40,19 +40,12 @@ enum LexStatusCodes
     LA_GRACE_PERIOD_OVER = 22,
 
     /*
-        CODE: LA_USAGE_LIMIT_REACHED
-
-        MESSAGE: The license has reached it's allowed usage limit.
-    */
-    LA_USAGE_LIMIT_REACHED = 23,
-
-    /*
         CODE: LA_TRIAL_EXPIRED
 
         MESSAGE: The trial has expired or system time has been tampered
         with. Ensure your date and time settings are correct.
     */
-    LA_TRIAL_EXPIRED = 24,
+    LA_TRIAL_EXPIRED = 25,
 
     /*
         CODE: LA_LOCAL_TRIAL_EXPIRED
@@ -60,7 +53,7 @@ enum LexStatusCodes
         MESSAGE: The local trial has expired or system time has been tampered
         with. Ensure your date and time settings are correct.
     */
-    LA_LOCAL_TRIAL_EXPIRED = 25,
+    LA_LOCAL_TRIAL_EXPIRED = 26,
 
     /*
         CODE: LA_E_FILE_PATH

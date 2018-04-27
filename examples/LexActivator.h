@@ -146,7 +146,7 @@ LEXACTIVATOR_API int LA_CC SetLicenseKey(CSTRTYPE licenseKey);
 
     Whenever the server sync occurs in a separate thread, and server returns the response,
     license callback function gets invoked with the following status codes:
-    LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_USAGE_LIMIT_REACHED,
+    LA_OK, LA_EXPIRED, LA_SUSPENDED,
     LA_E_REVOKED, LA_E_ACTIVATION_NOT_FOUND, LA_E_MACHINE_FINGERPRINT
     LA_E_COUNTRY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_IP
 
@@ -283,18 +283,6 @@ LEXACTIVATOR_API int LA_CC GetLicenseKey(STRTYPE licenseKey, uint32_t length);
 LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
 
 /*
-    FUNCTION: GetLicenseUsageCount()
-
-    PURPOSE: Gets the license usage count.
-
-    PARAMETERS:
-    * totalUses - pointer to the integer that receives the value
-
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
-*/
-LEXACTIVATOR_API int LA_CC GetLicenseUsageCount(uint32_t *totalUses);
-
-/*
     FUNCTION: GetLicenseUserEmail()
 
     PURPOSE: Gets the email associated with license user.
@@ -396,9 +384,9 @@ LEXACTIVATOR_API int LA_CC GetLocalTrialExpiryDate(uint32_t *trialExpiryDate);
     This function should be executed at the time of registration, ideally on
     a button click.
 
-    RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY,
-    LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACTIVATION_LIMIT, LA_E_SERVER, LA_E_CLIENT, LA_USAGE_LIMIT_REACHED
-    LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT
+    RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED, LA_FAIL, LA_E_PRODUCT_ID,
+    LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACTIVATION_LIMIT, LA_E_SERVER, LA_E_CLIENT,
+    LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY
 */
 LEXACTIVATOR_API int LA_CC ActivateLicense();
 
@@ -411,7 +399,7 @@ LEXACTIVATOR_API int LA_CC ActivateLicense();
     * filePath - path of the offline activation response file.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_OFFLINE_RESPONSE_FILE
-    LA_E_VM, LA_E_TIME, LA_E_FILE_PATH, LA_E_OFFLINE_RESPONSE_FILE_EXPIRED, LA_USAGE_LIMIT_REACHED
+    LA_E_VM, LA_E_TIME, LA_E_FILE_PATH, LA_E_OFFLINE_RESPONSE_FILE_EXPIRED
 */
 LEXACTIVATOR_API int LA_CC ActivateLicenseOffline(CSTRTYPE filePath);
 
@@ -476,7 +464,7 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath)
     of your app.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_USAGE_LIMIT_REACHED
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME
 
     NOTE: If application was activated offline using ActivateLicenseOffline() function, you
     may want to set grace period to 0 to ignore grace period.
@@ -494,25 +482,11 @@ LEXACTIVATOR_API int LA_CC IsLicenseGenuine();
     want to skip the server sync.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_USAGE_LIMIT_REACHED
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME
 
     NOTE: You may want to set grace period to 0 to ignore grace period.
 */
 LEXACTIVATOR_API int LA_CC IsLicenseValid();
-
-/*
-    FUNCTION: IncrementLicenseUsage()
-
-    PURPOSE: Increments the usage count of the license.
-
-    If increment is more than allowed uses it has no effect.
-
-    PARAMETERS:
-    * increment - the increment to add to the usage count
-
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
-*/
-LEXACTIVATOR_API int LA_CC IncrementLicenseUsage(uint32_t increment);
 
 /*
     FUNCTION: ActivateTrial()
