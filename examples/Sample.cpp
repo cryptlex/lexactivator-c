@@ -83,7 +83,7 @@ void activate()
 	}
 
 	status = ActivateLicense();
-	if (LA_OK == status || LA_EXPIRED == status || LA_SUSPENDED == status || LA_USAGE_LIMIT_REACHED == status)
+	if (LA_OK == status || LA_EXPIRED == status || LA_SUSPENDED == status)
 	{
 		printf("License activated successfully: %d", status);
 	}
@@ -144,10 +144,6 @@ int main()
 	else if (LA_SUSPENDED == status)
 	{
 		printf("License is genuinely activated but has been suspended!");
-	}
-	else if (LA_USAGE_LIMIT_REACHED == status)
-	{
-		printf("License is genuinely activated but has reached it's usage limit!");
 	}
 	else if (LA_GRACE_PERIOD_OVER == status)
 	{
