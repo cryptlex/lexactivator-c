@@ -6,8 +6,12 @@ CXX = g++
 CXXFLAGS  = -Wall
 
 LDFLAGS = "-Wl,-rpath,." -L. -lLexActivator
-#LDFLAGS += -Wl,-Bstatic -lLexActivator
 
+# Uncomment for static linking on Linux
+#LDFLAGS += -Wl,-Bstatic -L. -lLexActivator -Wl,-Bdynamic -lpthread -lssl3 -lnss3 -lnspr4
+
+# Uncomment for static linking on MacOS
+#LDFLAGS += -Wl,-Bstatic -L. -lLexActivator
 
 # the build target executable:
 TARGET = Sample
