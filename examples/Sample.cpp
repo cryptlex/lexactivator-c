@@ -3,6 +3,17 @@
 #include <time.h>
 #include "LexActivator.h"
 
+/* Uncomment for Windows static build 
+#if _WIN32
+#pragma comment(lib, "winhttp")
+#if _WIN64
+#pragma comment(lib, "x86/libcurl_MD")
+#else
+#pragma comment(lib, "x86/libcurl_MD")
+#endif
+#endif
+*/
+
 #if _WIN32
 #if _WIN64
 #pragma comment(lib, "x64/LexActivator")
