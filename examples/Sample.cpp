@@ -1,15 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "LexActivator.h"
 
-/* Uncomment for Windows static build 
+// Uncomment following for Windows static build
+/*
 #if _WIN32
+#define LEXACTIVATOR_STATIC
 #pragma comment(lib, "winhttp")
 #if _WIN64
 #pragma comment(lib, "x64/libcurl_MD")
+#pragma comment(lib, "x64/LexActivator")
 #else
 #pragma comment(lib, "x86/libcurl_MD")
+#pragma comment(lib, "x86/LexActivator")
 #endif
 #endif
 */
@@ -21,6 +24,8 @@
 #pragma comment(lib, "x86/LexActivator")
 #endif
 #endif
+
+#include "LexActivator.h"
 
 void init()
 {
