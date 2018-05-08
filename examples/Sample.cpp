@@ -7,7 +7,7 @@
 #if _WIN32
 #pragma comment(lib, "winhttp")
 #if _WIN64
-#pragma comment(lib, "x86/libcurl_MD")
+#pragma comment(lib, "x64/libcurl_MD")
 #else
 #pragma comment(lib, "x86/libcurl_MD")
 #endif
