@@ -208,11 +208,11 @@ enum LexStatusCodes
     LA_E_DEACTIVATION_LIMIT = 60,
 
     /*
-        CODE: LA_E_TRAIL_NOT_ALLOWED
+        CODE: LA_E_TRIAL_NOT_ALLOWED
 
         MESSAGE: Trial not allowed for the product.
     */
-    LA_E_TRAIL_NOT_ALLOWED = 61,
+    LA_E_TRIAL_NOT_ALLOWED = 61,
 
     /*
         CODE: LA_E_TRIAL_ACTIVATION_LIMIT
