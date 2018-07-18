@@ -70,6 +70,12 @@ void init()
 	}
 }
 
+// License callback is invoked when IsProductGenuine() completes a server sync
+void LA_CC LicenseCallback(uint32_t status)
+{
+	printf("License status: %d", status);
+}
+
 // Ideally on a button click inside a dialog
 void activate()
 {
@@ -144,6 +150,7 @@ void activateTrial()
 int main()
 {
 	init();
+	// SetLicenseCallback(LicenseCallback);
 	int status = IsLicenseGenuine();
 	if (LA_OK == status)
 	{
