@@ -73,6 +73,7 @@ void init()
 // License callback is invoked when IsProductGenuine() completes a server sync
 void LA_CC LicenseCallback(uint32_t status)
 {
+	// NOTE: Don't invoke IsProductGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
 	printf("License status: %d", status);
 }
 
@@ -150,6 +151,7 @@ void activateTrial()
 int main()
 {
 	init();
+	// Setting license callback is recommended for floating licenses
 	// SetLicenseCallback(LicenseCallback);
 	int status = IsLicenseGenuine();
 	if (LA_OK == status)
