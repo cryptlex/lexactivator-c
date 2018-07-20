@@ -70,10 +70,10 @@ void init()
 	}
 }
 
-// License callback is invoked when IsProductGenuine() completes a server sync
+// License callback is invoked when IsLicenseGenuine() completes a server sync
 void LA_CC LicenseCallback(uint32_t status)
 {
-	// NOTE: Don't invoke IsProductGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
+	// NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
 	printf("License status: %d", status);
 }
 
