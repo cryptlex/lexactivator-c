@@ -278,7 +278,7 @@ LEXACTIVATOR_API int LA_CC GetLicenseKey(STRTYPE licenseKey, uint32_t length);
     PARAMETERS:
     * expiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
 
@@ -291,7 +291,8 @@ LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
     * email - pointer to a buffer that receives the value of the string
     * length - size of the buffer pointed to by the email parameter
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
 */
 LEXACTIVATOR_API int LA_CC GetLicenseUserEmail(STRTYPE email, uint32_t length);
 
@@ -304,7 +305,8 @@ LEXACTIVATOR_API int LA_CC GetLicenseUserEmail(STRTYPE email, uint32_t length);
     * name - pointer to a buffer that receives the value of the string
     * length - size of the buffer pointed to by the name parameter
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
 */
 LEXACTIVATOR_API int LA_CC GetLicenseUserName(STRTYPE name, uint32_t length);
 
@@ -345,7 +347,7 @@ LEXACTIVATOR_API int LA_CC GetTrialActivationMetadata(CSTRTYPE key, STRTYPE valu
     PARAMETERS:
     * trialExpiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GetTrialExpiryDate(uint32_t *trialExpiryDate);
 
@@ -358,7 +360,8 @@ LEXACTIVATOR_API int LA_CC GetTrialExpiryDate(uint32_t *trialExpiryDate);
     * trialId - pointer to a buffer that receives the value of the string
     * length - size of the buffer pointed to by the value parameter
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
 */
 LEXACTIVATOR_API int LA_CC GetTrialId(STRTYPE trialId, uint32_t length);
 
@@ -370,7 +373,7 @@ LEXACTIVATOR_API int LA_CC GetTrialId(STRTYPE trialId, uint32_t length);
     PARAMETERS:
     * trialExpiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GetLocalTrialExpiryDate(uint32_t *trialExpiryDate);
 
@@ -426,7 +429,7 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineActivationRequest(CSTRTYPE filePath);
     a button click.
 
     RETURN CODES: LA_OK, LA_E_DEACTIVATION_LIMIT, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
-    LA_E_LICENSE_KEY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT
+    LA_E_LICENSE_KEY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC DeactivateLicense();
 
@@ -443,7 +446,7 @@ LEXACTIVATOR_API int LA_CC DeactivateLicense();
     * filePath - path of the file for the offline request.
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_FILE_PERMISSION,
-    LA_E_TIME
+    LA_E_TIME, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath);
 
@@ -464,7 +467,7 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath)
     of your app.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
 
     NOTE: If application was activated offline using ActivateLicenseOffline() function, you
     may want to set grace period to 0 to ignore grace period.
@@ -482,7 +485,7 @@ LEXACTIVATOR_API int LA_CC IsLicenseGenuine();
     want to skip the server sync.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
 
     NOTE: You may want to set grace period to 0 to ignore grace period.
 */
@@ -511,7 +514,7 @@ LEXACTIVATOR_API int LA_CC ActivateTrial();
 
     This function must be called on every start of your program during the trial period.
 
-    RETURN CODES: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL, LA_E_TIME, LA_E_PRODUCT_ID
+    RETURN CODES: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL, LA_E_TIME, LA_E_PRODUCT_ID, LA_E_TIME_MODIFIED
 
 */
 LEXACTIVATOR_API int LA_CC IsTrialGenuine();
@@ -527,7 +530,7 @@ LEXACTIVATOR_API int LA_CC IsTrialGenuine();
     PARAMETERS:
     * trialLength - trial length in days
 
-    RETURN CODES: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME_MODIFIED
 
     NOTE: The function is only meant for local(unverified) trials.
 */
@@ -541,7 +544,8 @@ LEXACTIVATOR_API int LA_CC ActivateLocalTrial(uint32_t trialLength);
 
     This function must be called on every start of your program during the trial period.
 
-    RETURN CODES: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_LOCAL_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID,
+    LA_E_TIME_MODIFIED
 
     NOTE: The function is only meant for local(unverified) trials.
 */
@@ -555,7 +559,7 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     PARAMETERS:
     * trialExtensionLength - number of days to extend the trial
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME_MODIFIED
 
     NOTE: The function is only meant for local(unverified) trials.
 */
