@@ -373,7 +373,7 @@ LEXACTIVATOR_API int LA_CC GetTrialId(STRTYPE trialId, uint32_t length);
     PARAMETERS:
     * trialExpiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GetLocalTrialExpiryDate(uint32_t *trialExpiryDate);
 
