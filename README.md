@@ -1,5 +1,5 @@
 # lexactivator-c
-LexActivator API for C, C++, and Objective-C
+LexActivator - C/C++ licensing library
 
 Refer to following for documentation:
 
