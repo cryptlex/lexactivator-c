@@ -520,6 +520,32 @@ LEXACTIVATOR_API int LA_CC IsLicenseValid();
 LEXACTIVATOR_API int LA_CC ActivateTrial();
 
 /*
+    FUNCTION: ActivateTrialOffline()
+
+    PURPOSE: Activates your trial using the offline activation response file.
+
+    PARAMETERS:
+    * filePath - path of the offline activation response file.
+
+    RETURN CODES: LA_OK, LA_TRIAL_EXPIRED, LA_FAIL, LA_E_PRODUCT_ID, LA_E_OFFLINE_RESPONSE_FILE
+    LA_E_VM, LA_E_TIME, LA_E_FILE_PATH, LA_E_OFFLINE_RESPONSE_FILE_EXPIRED
+*/
+LEXACTIVATOR_API int LA_CC ActivateTrialOffline(CSTRTYPE filePath);
+
+/*
+    FUNCTION: GenerateOfflineTrialActivationRequest()
+
+    PURPOSE: Generates the offline trial activation request needed for generating
+    offline trial activation response in the dashboard.
+
+    PARAMETERS:
+    * filePath - path of the file for the offline request.
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_FILE_PERMISSION
+*/
+LEXACTIVATOR_API int LA_CC GenerateOfflineTrialActivationRequest(CSTRTYPE filePath);
+
+/*
     FUNCTION: IsTrialGenuine()
 
     PURPOSE: It verifies whether trial has started and is genuine or not. The
