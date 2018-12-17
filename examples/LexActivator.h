@@ -10,7 +10,7 @@
     #include <windows.h>
 
     #ifdef LEXACTIVATOR_EXPORTS
-        #ifdef LEXACTIVATOR__STATIC
+        #ifdef LEXACTIVATOR_STATIC
             #define LEXACTIVATOR_API extern "C"
         #else
             #define LEXACTIVATOR_API extern "C" __declspec(dllexport)
