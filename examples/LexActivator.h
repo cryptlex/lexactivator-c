@@ -228,6 +228,19 @@ LEXACTIVATOR_API int LA_CC SetAppVersion(CSTRTYPE appVersion);
 LEXACTIVATOR_API int LA_CC SetNetworkProxy(CSTRTYPE proxy);
 
 /*
+    FUNCTION: SetCryptlexHost()
+
+    PURPOSE: In case you are running Cryptlex on-premise, you can set the
+    host for your on-premise server.
+
+    PARAMETERS:
+    * host - the address of the Cryptlex on-premise server
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_HOST_URL
+*/
+LEXACTIVATOR_API int LA_CC SetCryptlexHost(CSTRTYPE host);
+
+/*
     FUNCTION: GetProductMetadata()
 
     PURPOSE: Gets the product metadata as set in the dashboard.
