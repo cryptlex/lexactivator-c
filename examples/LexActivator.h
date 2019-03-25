@@ -61,7 +61,7 @@ typedef void (LA_CC *CallbackType)(uint32_t);
 
 #define LA_USER ((uint32_t)1)
 #define LA_SYSTEM ((uint32_t)2)
-
+#define LA_IN_MEMORY ((uint32_t)4)
 
 /*
     FUNCTION: SetProductFile()
@@ -117,7 +117,7 @@ LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
 
     * flags - depending upon whether your application requires admin/root
       permissions to run or not, this parameter can have one of the following
-      values: LA_SYSTEM, LA_USER
+      values: LA_SYSTEM, LA_USER, LA_IN_MEMORY
 
     RETURN CODES: LA_OK, LA_E_WMIC, LA_E_PRODUCT_FILE, LA_E_PRODUCT_DATA, LA_E_PRODUCT_ID,
     LA_E_SYSTEM_PERMISSION
