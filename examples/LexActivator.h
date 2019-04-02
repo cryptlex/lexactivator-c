@@ -266,7 +266,7 @@ LEXACTIVATOR_API int LA_CC GetProductMetadata(CSTRTYPE key, STRTYPE value, uint3
     * value - pointer to a buffer that receives the value of the string
     * length - size of the buffer pointed to by the value parameter
 
-    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
 */
 LEXACTIVATOR_API int LA_CC GetLicenseMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
@@ -312,7 +312,7 @@ LEXACTIVATOR_API int LA_CC GetLicenseUserEmail(STRTYPE email, uint32_t length);
 /*
     FUNCTION: GetLicenseUserName()
 
-    PURPOSE: Gets the name associated with license user.
+    PURPOSE: Gets the name associated with the license user.
 
     PARAMETERS:
     * name - pointer to a buffer that receives the value of the string
@@ -322,6 +322,34 @@ LEXACTIVATOR_API int LA_CC GetLicenseUserEmail(STRTYPE email, uint32_t length);
     LA_E_BUFFER_SIZE
 */
 LEXACTIVATOR_API int LA_CC GetLicenseUserName(STRTYPE name, uint32_t length);
+
+/*
+    FUNCTION: GetLicenseUserCompany()
+
+    PURPOSE: Gets the company associated with the license user.
+
+    PARAMETERS:
+    * company - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the company parameter
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseUserCompany(STRTYPE company, uint32_t length);
+
+/*
+    FUNCTION: GetLicenseUserMetadata()
+
+    PURPOSE: Gets the metadata associated with the license user.
+
+    PARAMETERS:
+    * key - key to retrieve the value
+    * value - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the value parameter
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseUserMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*
     FUNCTION: GetLicenseType()
@@ -350,6 +378,18 @@ LEXACTIVATOR_API int LA_CC GetLicenseType(STRTYPE licenseType, uint32_t length);
     RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
 */
 LEXACTIVATOR_API int LA_CC GetActivationMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
+
+/*
+    FUNCTION: GetServerSyncGracePeriodExpiryDate()
+
+    PURPOSE: Gets the server sync grace period expiry date timestamp.
+
+    PARAMETERS:
+    * expiryDate - pointer to the integer that receives the value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
+*/
+LEXACTIVATOR_API int LA_CC GetServerSyncGracePeriodExpiryDate(uint32_t *expiryDate);
 
 /*
     FUNCTION: GetTrialActivationMetadata()
@@ -403,6 +443,24 @@ LEXACTIVATOR_API int LA_CC GetTrialId(STRTYPE trialId, uint32_t length);
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GetLocalTrialExpiryDate(uint32_t *trialExpiryDate);
+
+/*
+    FUNCTION: CheckForReleaseUpdate()
+
+    PURPOSE: Checks whether a new release is available for the product.
+
+    This function should only be used if you manage your releases through
+    Cryptlex release management API.
+
+    PARAMETERS:
+    * platform - release platform e.g. windows, macos, linux
+    * version - current release version
+    * channel - release channel e.g. stable
+    * releaseUpdateCallback - name of the callback function.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_RELEASE_VERSION_FORMAT
+*/
+LEXACTIVATOR_API int LA_CC CheckForReleaseUpdate(CSTRTYPE platform, CSTRTYPE version, CSTRTYPE channel, CallbackType releaseUpdateCallback);
 
 /*
     FUNCTION: ActivateLicense()
