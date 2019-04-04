@@ -77,6 +77,12 @@ void LA_CC LicenseCallback(uint32_t status)
 	printf("License status: %d", status);
 }
 
+// Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
+void LA_CC SoftwareReleaseUpdateCallback(uint32_t status)
+{
+	printf("Release status: %d", status);
+}
+
 // Ideally on a button click inside a dialog
 void activate()
 {
@@ -160,7 +166,14 @@ int main()
 		GetLicenseExpiryDate(&expiryDate);
 		int daysLeft = (expiryDate - time(NULL)) / 86500;
 		printf("Days left: %d\n", daysLeft);
-		printf("License is genuinely activated!"); 
+		printf("License is genuinely activated!");
+
+		// Checking for software release update
+		// status = CheckForReleaseUpdate("windows", "1.0.0", "stable", SoftwareReleaseUpdateCallback);
+		// if (LA_OK != status)
+		// {
+		// 	printf("Error checking for software release update: %d", status);
+		// }
 	}
 	else if (LA_EXPIRED == status)
 	{
