@@ -74,13 +74,13 @@ void init()
 void LA_CC LicenseCallback(uint32_t status)
 {
 	// NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
-	printf("License status: %d", status);
+	printf("\nLicense status: %d\n", status);
 }
 
 // Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
 void LA_CC SoftwareReleaseUpdateCallback(uint32_t status)
 {
-	printf("Release status: %d", status);
+	printf("\nRelease status: %d\n", status);
 }
 
 // Ideally on a button click inside a dialog
