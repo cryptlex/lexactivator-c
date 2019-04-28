@@ -293,6 +293,13 @@ enum LexStatusCodes
     LA_E_RELEASE_VERSION_FORMAT = 70,
 
     /*
+        CODE: LA_E_AUTHENTICATION_FAILED
+
+        MESSAGE: Incorrect email or password.
+    */
+    LA_E_AUTHENTICATION_FAILED = 71,
+
+    /*
         CODE: LA_E_VM
 
         MESSAGE: Application is being run inside a virtual machine / hypervisor,

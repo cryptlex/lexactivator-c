@@ -140,6 +140,19 @@ LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flags);
 LEXACTIVATOR_API int LA_CC SetLicenseKey(CSTRTYPE licenseKey);
 
 /*
+    FUNCTION: SetLicenseUserCredential()
+
+    PURPOSE: Sets the license user email and password for authentication.
+
+    PARAMETERS:
+    * email - user email address.
+    * password - user password.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY
+*/
+LEXACTIVATOR_API int LA_CC SetLicenseUserCredential(CSTRTYPE email, CSTRTYPE password);
+
+/*
     FUNCTION: SetLicenseCallback()
 
     PURPOSE: Sets server sync callback function.
