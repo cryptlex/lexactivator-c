@@ -144,6 +144,9 @@ LEXACTIVATOR_API int LA_CC SetLicenseKey(CSTRTYPE licenseKey);
 
     PURPOSE: Sets the license user email and password for authentication.
 
+    This function must be called before ActivateLicense() or IsLicenseGenuine()
+    function if 'requireAuthentication' property of the license is set to true.
+
     PARAMETERS:
     * email - user email address.
     * password - user password.
