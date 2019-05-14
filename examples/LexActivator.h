@@ -164,7 +164,8 @@ LEXACTIVATOR_API int LA_CC SetLicenseUserCredential(CSTRTYPE email, CSTRTYPE pas
     license callback function gets invoked with the following status codes:
     LA_OK, LA_EXPIRED, LA_SUSPENDED,
     LA_E_REVOKED, LA_E_ACTIVATION_NOT_FOUND, LA_E_MACHINE_FINGERPRINT
-    LA_E_COUNTRY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_IP
+    LA_E_AUTHENTICATION_FAILED, LA_E_COUNTRY, LA_E_INET, LA_E_SERVER,
+    LA_E_RATE_LIMIT, LA_E_IP
 
     PARAMETERS:
     * callback - name of the callback function
@@ -287,6 +288,20 @@ LEXACTIVATOR_API int LA_CC GetProductMetadata(CSTRTYPE key, STRTYPE value, uint3
 LEXACTIVATOR_API int LA_CC GetLicenseMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*
+    FUNCTION: GetLicenseMeterAttribute()
+
+    PURPOSE: Gets the license meter attribute allowed uses and total uses.
+
+    PARAMETERS:
+    * name - name of the meter attribute
+    * allowedUses - pointer to the integer that receives the value
+    * totalUses - pointer to the integer that receives the value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseMeterAttribute(CSTRTYPE name, uint32_t *allowedUses, uint32_t *totalUses);
+
+/*
     FUNCTION: GetLicenseKey()
 
     PURPOSE: Gets the license key used for activation.
@@ -396,6 +411,19 @@ LEXACTIVATOR_API int LA_CC GetLicenseType(STRTYPE licenseType, uint32_t length);
 LEXACTIVATOR_API int LA_CC GetActivationMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*
+    FUNCTION: GetActivationMeterAttributeUses()
+
+    PURPOSE: Gets the meter attribute uses consumed by the activation.
+
+    PARAMETERS:
+    * name - name of the meter attribute
+    * allowedUses - pointer to the integer that receives the value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND
+*/
+LEXACTIVATOR_API int LA_CC GetActivationMeterAttributeUses(CSTRTYPE name, uint32_t *uses);
+
+/*
     FUNCTION: GetServerSyncGracePeriodExpiryDate()
 
     PURPOSE: Gets the server sync grace period expiry date timestamp.
@@ -490,7 +518,7 @@ LEXACTIVATOR_API int LA_CC CheckForReleaseUpdate(CSTRTYPE platform, CSTRTYPE ver
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED, LA_FAIL, LA_E_PRODUCT_ID,
     LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACTIVATION_LIMIT, LA_E_SERVER, LA_E_CLIENT,
-    LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY
+    LA_E_AUTHENTICATION_FAILED, LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY
 */
 LEXACTIVATOR_API int LA_CC ActivateLicense();
 
@@ -691,6 +719,54 @@ LEXACTIVATOR_API int LA_CC IsLocalTrialGenuine();
     NOTE: The function is only meant for local(unverified) trials.
 */
 LEXACTIVATOR_API int LA_CC ExtendLocalTrial(uint32_t trialExtensionLength);
+
+/*
+    FUNCTION: IncrementActivationMeterAttributeUses()
+
+    PURPOSE: Increments the meter attribute uses of the activation.
+
+    PARAMETERS:
+    * name - name of the meter attribute
+    * increment - the increment value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND,
+    LA_E_INET, LA_E_TIME, LA_E_SERVER, LA_E_CLIENT, LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED,
+    LA_E_AUTHENTICATION_FAILED, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY
+
+*/
+LEXACTIVATOR_API int LA_CC IncrementActivationMeterAttributeUses(CSTRTYPE name, uint32_t increment);
+
+/*
+    FUNCTION: DecrementActivationMeterAttributeUses()
+
+    PURPOSE: Decrements the meter attribute uses of the activation.
+
+    PARAMETERS:
+    * name - name of the meter attribute
+    * decrement - the decrement value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND,
+    LA_E_INET, LA_E_TIME, LA_E_SERVER, LA_E_CLIENT, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY,
+    LA_E_AUTHENTICATION_FAILED, LA_E_COUNTRY, LA_E_IP, LA_E_ACTIVATION_NOT_FOUND
+
+    NOTE: If the decrement is more than the current uses, it resets the uses to 0.
+*/
+LEXACTIVATOR_API int LA_CC DecrementActivationMeterAttributeUses(CSTRTYPE name, uint32_t decrement);
+
+/*
+    FUNCTION: ResetActivationMeterAttributeUses()
+
+    PURPOSE: Resets the meter attribute uses consumed by the activation.
+
+    PARAMETERS:
+    * name - name of the meter attribute
+    * decrement - the decrement value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND,
+    LA_E_INET, LA_E_TIME, LA_E_SERVER, LA_E_CLIENT, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY,
+    LA_E_AUTHENTICATION_FAILED, LA_E_COUNTRY, LA_E_IP, LA_E_ACTIVATION_NOT_FOUND
+*/
+LEXACTIVATOR_API int LA_CC ResetActivationMeterAttributeUses(CSTRTYPE name);
 
 /*
     FUNCTION: Reset()

@@ -300,6 +300,20 @@ enum LexStatusCodes
     LA_E_AUTHENTICATION_FAILED = 71,
 
     /*
+        CODE: LA_E_METER_ATTRIBUTE_NOT_FOUND
+
+        MESSAGE: The meter attribute does not exist.
+    */
+    LA_E_METER_ATTRIBUTE_NOT_FOUND = 72,
+
+    /*
+        CODE: LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED
+
+        MESSAGE: The meter attribute has reached it's usage limit.
+    */
+    LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED = 73,
+
+    /*
         CODE: LA_E_VM
 
         MESSAGE: Application is being run inside a virtual machine / hypervisor,
