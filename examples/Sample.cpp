@@ -164,7 +164,7 @@ int main()
 	{
 		unsigned int expiryDate = 0;
 		GetLicenseExpiryDate(&expiryDate);
-		int daysLeft = (expiryDate - time(NULL)) / 86500;
+		int daysLeft = (expiryDate - time(NULL)) / 86400;
 		printf("Days left: %d\n", daysLeft);
 		printf("License is genuinely activated!");
 
@@ -195,7 +195,7 @@ int main()
 		{
 			unsigned int trialExpiryDate = 0;
 			GetTrialExpiryDate(&trialExpiryDate);
-			int daysLeft = (trialExpiryDate - time(NULL)) / 86500;
+			int daysLeft = (trialExpiryDate - time(NULL)) / 86400;
 			printf("Trial days left: %d", daysLeft);
 		}
 		else if (LA_TRIAL_EXPIRED == trialStatus)
