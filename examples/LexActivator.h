@@ -328,7 +328,7 @@ LEXACTIVATOR_API int LA_CC GetLicenseMetadata(CSTRTYPE key, STRTYPE value, uint3
 /*
     FUNCTION: GetLicenseMeterAttribute()
 
-    PURPOSE: Gets the license meter attribute allowed uses and total uses.
+    PURPOSE: Gets the license meter attribute allowed, total and gross uses.
 
     PARAMETERS:
     * name - name of the meter attribute
