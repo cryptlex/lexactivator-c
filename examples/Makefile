@@ -9,7 +9,7 @@ CXXFLAGS  = -Wall
 LDFLAGS = "-Wl,-rpath,." -L. -lLexActivator
 
 # Uncomment following line for static linking on Linux
-#LDFLAGS += -Wl,-Bstatic -L. -lLexActivator -Wl,-Bdynamic -lpthread -lssl3 -lnss3 -lnspr4
+#LDFLAGS += -Wl,-Bstatic -L. -lLexActivator -Wl,-Bdynamic -lpthread
 
 # Uncomment following line for static linking on MacOS
 #LDFLAGS += -L. -lLexActivator -framework CoreFoundation -framework SystemConfiguration -framework Security
