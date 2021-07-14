@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "LexStatusCodes.h"
+#if __ANDROID__
+#include <jni.h>
+#endif
 #ifdef _WIN32
     /*
     Make sure you're using the MSVC or Intel compilers on Windows.
@@ -127,6 +130,46 @@ LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
     functions will work.
 */
 LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flags);
+
+/*
+    FUNCTION: SetDataDirectory()
+
+    PURPOSE: In case you want to change the default directory used by LexActivator to
+    store the activation data on Linux and macOS, this function can be used to
+    set a different directory.
+
+    If you decide to use this function, then it must be called on every start of
+    your program before calling SetProductFile() or SetProductData() function.
+
+    Please ensure that the directory exists and your app has read and write
+    permissions in the directory.
+
+    PARAMETERS:
+    * directoryPath - absolute path of the directory.
+
+    RETURN CODES: LA_OK, LA_E_FILE_PERMISSION
+
+*/
+LEXACTIVATOR_API int LA_CC SetDataDirectory(CSTRTYPE directoryPath);
+
+#if __ANDROID__
+/*
+    FUNCTION: SetJniEnv()
+
+    PURPOSE: Sets the current thread's JNIEnv pointer. This is needed by LexActivator to
+    call Android specific functions.
+
+    This function must be called on every start of your Android app before calling the
+    SetProductId() function.
+
+    PARAMETERS:
+    * env - pointer to the JNIEnv.
+
+    RETURN CODES: LA_OK
+
+*/
+LEXACTIVATOR_API int LA_CC SetJniEnv(JNIEnv* env);
+#endif
 
 /*
     FUNCTION: SetCustomDeviceFingerprint()
@@ -338,7 +381,7 @@ LEXACTIVATOR_API int LA_CC GetLicenseMetadata(CSTRTYPE key, STRTYPE value, uint3
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND
 */
-LEXACTIVATOR_API int LA_CC GetLicenseMeterAttribute(CSTRTYPE name, uint32_t *allowedUses, uint32_t *totalUses, uint32_t *grossUses = NULL);
+LEXACTIVATOR_API int LA_CC GetLicenseMeterAttribute(CSTRTYPE name, uint32_t *allowedUses, uint32_t *totalUses, uint32_t *grossUses);
 
 /*
     FUNCTION: GetLicenseKey()
@@ -672,7 +715,7 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath)
     of your app.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT
 
     NOTE: If application was activated offline using ActivateLicenseOffline() function, you
     may want to set grace period to 0 to ignore grace period.
@@ -690,7 +733,7 @@ LEXACTIVATOR_API int LA_CC IsLicenseGenuine();
     want to skip the server sync.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT
 
     NOTE: You may want to set grace period to 0 to ignore grace period.
 */
