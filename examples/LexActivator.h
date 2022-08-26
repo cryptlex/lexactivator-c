@@ -119,7 +119,7 @@ LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
     * productId - the unique product id of your application as mentioned
       on the product page in the dashboard.
 
-    * flags - depending upon whether your application requires admin/root
+    * flag - depending upon whether your application requires admin/root
       permissions to run or not, this parameter can have one of the following
       values: LA_SYSTEM, LA_USER, LA_IN_MEMORY
 
@@ -129,7 +129,7 @@ LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
     NOTE: If this function fails to set the product id, none of the other
     functions will work.
 */
-LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flags);
+LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flag);
 
 /*
     FUNCTION: SetDataDirectory()
