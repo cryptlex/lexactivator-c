@@ -58,9 +58,9 @@ void init()
 	}
 
 #if _WIN32
-	status = SetAppVersion(L"PASTE_YOUR_APP_VERION");
+	status = SetReleaseVersion(L"1.2.3");
 #else
-	status = SetAppVersion("PASTE_YOUR_APP_VERION");
+	status = SetReleaseVersion("1.2.3");
 #endif
 	if (LA_OK != status)
 	{
