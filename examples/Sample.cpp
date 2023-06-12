@@ -56,6 +56,35 @@ void init()
 		getchar();
 		exit(status);
 	}
+}
+
+void setReleaseParams()
+{
+	int status;
+	// Ensure that platform, channel and release actually exist for the release.
+#if _WIN32
+	status = SetReleasePlatform(L"RELEASE_PLATFORM");
+#else
+	status = SetReleasePlatform("RELEASE_PLATFORM"); // set the actual platform of the release e.g windows, macos, linux
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
+
+#if _WIN32
+	status = SetReleaseChannel(L"RELEASE_CHANNEL");
+#else
+	status = SetReleaseChannel("RELEASE_CHANNEL"); // set the actual channel of the release e.g stable
+#endif
+	if (LA_OK != status)
+	{
+		printf("Error code: %d", status);
+		getchar();
+		exit(status);
+	}
 
 #if _WIN32
 	status = SetReleaseVersion(L"1.2.3");
@@ -77,10 +106,28 @@ void LA_CC LicenseCallback(uint32_t status)
 	printf("\nLicense status: %d\n", status);
 }
 
-// Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
-void LA_CC SoftwareReleaseUpdateCallback(uint32_t status)
+// Software release update callback is invoked when CheckReleaseUpdate() gets a response from the server
+void LA_CC SoftwareReleaseUpdateCallback(int status, Release* release, void* custom_data)
 {
-	printf("\nRelease status: %d\n", status);
+	switch (status)
+	{
+	case LA_RELEASE_UPDATE_AVAILABLE:
+		printf("A new update is available for the app.\n");
+		printf("Release notes: %s\n", release->notes);
+		break;
+
+	case LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED:
+		printf("A new update is available for the app but it's not allowed.\n");
+		printf("Release notes: %s\n", release->notes);
+		break;
+
+	case LA_RELEASE_UPDATE_NOT_AVAILABLE:
+		printf("Current version is already latest.\n");
+		break;
+
+	default:
+		printf("Error code: %d\n", status);
+	}
 }
 
 // Ideally on a button click inside a dialog
@@ -114,7 +161,7 @@ void activate()
 	status = ActivateLicense();
 	if (LA_OK == status || LA_EXPIRED == status || LA_SUSPENDED == status)
 	{
-		printf("License activated successfully: %d", status);
+		printf("License activated successfully: %d\n", status);
 	}
 	else
 	{
@@ -157,6 +204,8 @@ void activateTrial()
 int main()
 {
 	init();
+	// Setting release params is required if CheckReleaseUpdate() is used, otherwise optional
+	setReleaseParams();
 	// Setting license callback is recommended for floating licenses
 	// SetLicenseCallback(LicenseCallback);
 	int status = IsLicenseGenuine();
@@ -166,10 +215,10 @@ int main()
 		GetLicenseExpiryDate(&expiryDate);
 		int daysLeft = (expiryDate - time(NULL)) / 86400;
 		printf("Days left: %d\n", daysLeft);
-		printf("License is genuinely activated!");
+		printf("License is genuinely activated!\n");
 
 		// Checking for software release update
-		// status = CheckForReleaseUpdate("windows", "1.0.0", "stable", SoftwareReleaseUpdateCallback);
+		// status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
 		// if (LA_OK != status)
 		// {
 		// 	printf("Error checking for software release update: %d", status);
