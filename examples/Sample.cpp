@@ -218,11 +218,11 @@ int main()
 		printf("License is genuinely activated!\n");
 
 		// Checking for software release update
-		status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
-		if (LA_OK != status)
-		{
-			printf("Error checking for software release update: %d", status);
-		}
+		// status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
+		// if (LA_OK != status)
+		// {
+		// 	printf("Error checking for software release update: %d", status);
+		// }
 	}
 	else if (LA_EXPIRED == status)
 	{
