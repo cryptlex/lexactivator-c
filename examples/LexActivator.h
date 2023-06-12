@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "LexStatusCodes.h"
+#include "LexTypes.h"
 #if __ANDROID__
 #include <jni.h>
 #endif
@@ -62,10 +63,14 @@
 #endif
 
 typedef void (LA_CC *CallbackType)(uint32_t);
+typedef void (LA_CC *ReleaseCallbackType)(int, Release*, void*);
 
 #define LA_USER ((uint32_t)1)
 #define LA_SYSTEM ((uint32_t)2)
 #define LA_IN_MEMORY ((uint32_t)4)
+
+#define LA_RELEASES_ALL ((uint32_t)1)
+#define LA_RELEASES_ALLOWED ((uint32_t)2)
 
 /*
     FUNCTION: SetProductFile()
@@ -119,7 +124,7 @@ LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
     * productId - the unique product id of your application as mentioned
       on the product page in the dashboard.
 
-    * flag - depending upon whether your application requires admin/root
+    * flags - depending upon whether your application requires admin/root
       permissions to run or not, this parameter can have one of the following
       values: LA_SYSTEM, LA_USER, LA_IN_MEMORY
 
@@ -129,7 +134,7 @@ LEXACTIVATOR_API int LA_CC SetProductData(CSTRTYPE productData);
     NOTE: If this function fails to set the product id, none of the other
     functions will work.
 */
-LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flag);
+LEXACTIVATOR_API int LA_CC SetProductId(CSTRTYPE productId, uint32_t flags);
 
 /*
     FUNCTION: SetDataDirectory()
@@ -229,7 +234,7 @@ LEXACTIVATOR_API int LA_CC SetLicenseUserCredential(CSTRTYPE email, CSTRTYPE pas
     LA_OK, LA_EXPIRED, LA_SUSPENDED,
     LA_E_REVOKED, LA_E_ACTIVATION_NOT_FOUND, LA_E_MACHINE_FINGERPRINT
     LA_E_AUTHENTICATION_FAILED, LA_E_COUNTRY, LA_E_INET, LA_E_SERVER,
-    LA_E_RATE_LIMIT, LA_E_IP
+    LA_E_RATE_LIMIT, LA_E_IP, LA_E_RELEASE_VERSION_NOT_ALLOWED, LA_E_RELEASE_VERSION_FORMAT
 
     PARAMETERS:
     * callback - name of the callback function
@@ -542,7 +547,7 @@ LEXACTIVATOR_API int LA_CC GetLicenseTotalActivations(uint32_t *totalActivations
     PARAMETERS:
     * expiryDate - pointer to the integer that receives the value
 
-    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
 */
 LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
 
@@ -628,6 +633,33 @@ LEXACTIVATOR_API int LA_CC GetLicenseUserCompany(STRTYPE company, uint32_t lengt
 LEXACTIVATOR_API int LA_CC GetLicenseUserMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*
+    FUNCTION: GetLicenseOrganizationName()
+
+    PURPOSE: Gets the name associated with the license organization.
+
+    PARAMETERS:
+    * organizationName - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the organizationName parameter
+     
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseOrganizationName(STRTYPE organizationName, uint32_t length);
+
+/*
+    FUNCTION: GetLicenseOrganizationAddress()
+
+    PURPOSE: Gets the address associated with the license organization.
+
+    PARAMETERS:
+    * organizationAddress - pointer to the struct that receives the value of the organization's address
+ 
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseOrganizationAddress(OrganizationAddress *organizationAddress);
+
+/*
     FUNCTION: GetLicenseType()
 
     PURPOSE: Gets the license type (node-locked or hosted-floating).
@@ -658,7 +690,7 @@ LEXACTIVATOR_API int LA_CC GetActivationMetadata(CSTRTYPE key, STRTYPE value, ui
 /*
     FUNCTION: GetActivationMode()
 
-    PURPOSE: Gets the initial and current mode of activation (online or offline).
+    PURPOSE: Gets the mode of activation (online or offline).
 
     PARAMETERS:
     * initialMode - pointer to a buffer that receives the initial mode of activation
@@ -781,6 +813,42 @@ LEXACTIVATOR_API int LA_CC GetLibraryVersion(STRTYPE libraryVersion, uint32_t le
 LEXACTIVATOR_API int LA_CC CheckForReleaseUpdate(CSTRTYPE platform, CSTRTYPE version, CSTRTYPE channel, CallbackType releaseUpdateCallback);
 
 /*
+    FUNCTION: CheckReleaseUpdate()
+
+    PURPOSE: Checks whether a new release is available for the product.
+
+    This function should only be used if you manage your releases through
+    Cryptlex release management API.
+
+    When this function is called the release update callback function gets invoked 
+    which passes the following parameters:
+
+    * status - determines if any update is available or not. It also determines whether 
+      an update is allowed or not. Expected values are LA_RELEASE_UPDATE_AVAILABLE,
+      LA_RELEASE_UPDATE_NOT_AVAILABLE, LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED.
+
+    * release - pointer to the release struct that receives the latest available release, depending on the 
+      flag LA_RELEASES_ALLOWED or LA_RELEASES_ALL passed to the CheckReleaseUpdate().
+
+    * userData - pointer to user-defined data that was passed to the callback function when it was registered
+      using the CheckReleaseUpdate function. This parameter is optional and can be NULL if no user data 
+      was passed to the callback.
+
+    PARAMETERS:
+    * releaseUpdateCallback - name of the callback function.
+    * releaseFlags - If an update only related to the allowed release is required, 
+      then use LA_RELEASES_ALLOWED. Otherwise, if an update for all the releases is
+      required, then use LA_RELEASES_ALL.
+    * userData - pointer to user-defined data that will be passed to the releaseUpdateCallback
+      function when it is called. This parameter is optional and can be set to NULL 
+      if no user data needs to be passed to the callback.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_RELEASE_VERSION_FORMAT, LA_E_RELEASE_VERSION,
+    LA_E_RELEASE_PLATFORM, LA_E_RELEASE_CHANNEL
+*/
+LEXACTIVATOR_API int LA_CC CheckReleaseUpdate(ReleaseCallbackType releaseUpdateCallback, uint32_t releaseFlags, void* userData);
+
+/*
     FUNCTION: ActivateLicense()
 
     PURPOSE: Activates the license by contacting the Cryptlex servers. It
@@ -792,7 +860,8 @@ LEXACTIVATOR_API int LA_CC CheckForReleaseUpdate(CSTRTYPE platform, CSTRTYPE ver
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED, LA_FAIL, LA_E_PRODUCT_ID,
     LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACTIVATION_LIMIT, LA_E_SERVER, LA_E_CLIENT,
-    LA_E_AUTHENTICATION_FAILED, LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY
+    LA_E_AUTHENTICATION_FAILED, LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY,
+    LA_E_RELEASE_VERSION_NOT_ALLOWED, LA_E_RELEASE_VERSION_FORMAT
 */
 LEXACTIVATOR_API int LA_CC ActivateLicense();
 
@@ -832,7 +901,8 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineActivationRequest(CSTRTYPE filePath);
     a button click.
 
     RETURN CODES: LA_OK, LA_E_DEACTIVATION_LIMIT, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME
-    LA_E_LICENSE_KEY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_TIME_MODIFIED
+    LA_E_LICENSE_KEY, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_TIME_MODIFIED,
+    LA_E_MACHINE_FINGERPRINT, LA_E_RELEASE_VERSION_NOT_ALLOWED, LA_E_ACTIVATION_NOT_FOUND
 */
 LEXACTIVATOR_API int LA_CC DeactivateLicense();
 
@@ -870,7 +940,8 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath)
     of your app.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT,
+    LA_E_RELEASE_VERSION_NOT_ALLOWED
 
     NOTE: If application was activated offline using ActivateLicenseOffline() function, you
     may want to set grace period to 0 to ignore grace period.
