@@ -414,6 +414,19 @@ LEXACTIVATOR_API int LA_CC SetNetworkProxy(CSTRTYPE proxy);
 LEXACTIVATOR_API int LA_CC SetCryptlexHost(CSTRTYPE host);
 
 /*
+    FUNCTION: SetTwoFactorAuthenticationCode()
+
+    PURPOSE: Sets the two-factor authentication code for the user authentication.
+
+    PARAMETERS:
+    * twoFactorAuthenticationCode - the 2FA code
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_TWO_FACTOR_AUTHENTICATION_CODE_INVALID
+*/
+LEXACTIVATOR_API int LA_CC SetTwoFactorAuthenticationCode(CSTRTYPE twoFactorAuthenticationCode);
+
+
+/*
     FUNCTION: GetProductMetadata()
 
     PURPOSE: Gets the product metadata as set in the dashboard.
@@ -660,6 +673,25 @@ LEXACTIVATOR_API int LA_CC GetLicenseOrganizationName(STRTYPE organizationName, 
 LEXACTIVATOR_API int LA_CC GetLicenseOrganizationAddress(OrganizationAddress *organizationAddress);
 
 /*
+    FUNCTION: GetUserLicenses()
+
+    PURPOSE: Gets the user licenses for the product. 
+    
+    This function sends a network request to Cryptlex servers to get the licenses. 
+    
+    Make sure AuthenticateUser() function is called before calling this function.
+
+    PARAMETERS: 
+    * userLicensesPtr - pointer to the array of structs that receives the values of the users' licenses.
+    * length - size of the userLicensesPtr array.
+    
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT
+    LA_E_USER_NOT_AUTHENTICATED, LA_E_BUFFER_SIZE
+
+*/
+LEXACTIVATOR_API int LA_CC GetUserLicenses(UserLicense* userLicensesPtr, uint32_t length);
+
+/*
     FUNCTION: GetLicenseType()
 
     PURPOSE: Gets the license type (node-locked or hosted-floating).
@@ -847,6 +879,17 @@ LEXACTIVATOR_API int LA_CC CheckForReleaseUpdate(CSTRTYPE platform, CSTRTYPE ver
     LA_E_RELEASE_PLATFORM, LA_E_RELEASE_CHANNEL
 */
 LEXACTIVATOR_API int LA_CC CheckReleaseUpdate(ReleaseCallbackType releaseUpdateCallback, uint32_t releaseFlags, void* userData);
+
+/*
+    FUNCTION: AuthenticateUser()
+
+    PURPOSE: It sends the request to the Cryptlex servers to authenticate the user.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, 
+    LA_E_TWO_FACTOR_AUTHENTICATION_CODE_MISSING, LA_E_AUTHENTICATION_FAILED, 
+    LA_E_TWO_FACTOR_AUTHENTICATION_CODE_INVALID, LA_E_LOGIN_TEMPORARILY_LOCKED
+*/
+LEXACTIVATOR_API int LA_CC AuthenticateUser(CSTRTYPE email, CSTRTYPE password);
 
 /*
     FUNCTION: ActivateLicense()

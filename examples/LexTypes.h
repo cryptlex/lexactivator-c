@@ -53,4 +53,12 @@ typedef struct
     CHARTYPE country[BUFFER_SIZE];
     CHARTYPE postalCode[BUFFER_SIZE];
 } OrganizationAddress;
+
+typedef struct
+{
+    int allowedActivations;
+    int allowedDeactivations;
+    CHARTYPE key[BUFFER_SIZE];
+    CHARTYPE type[BUFFER_SIZE];
+} UserLicense;
 #endif // LEX_TYPES_H
