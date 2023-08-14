@@ -56,35 +56,6 @@ void init()
 		getchar();
 		exit(status);
 	}
-}
-
-void setReleaseParams()
-{
-	int status;
-	// Ensure that platform, channel and release actually exist for the release.
-#if _WIN32
-	status = SetReleasePlatform(L"RELEASE_PLATFORM");
-#else
-	status = SetReleasePlatform("RELEASE_PLATFORM"); // set the actual platform of the release e.g windows, macos, linux
-#endif
-	if (LA_OK != status)
-	{
-		printf("Error code: %d", status);
-		getchar();
-		exit(status);
-	}
-
-#if _WIN32
-	status = SetReleaseChannel(L"RELEASE_CHANNEL");
-#else
-	status = SetReleaseChannel("RELEASE_CHANNEL"); // set the actual channel of the release e.g stable
-#endif
-	if (LA_OK != status)
-	{
-		printf("Error code: %d", status);
-		getchar();
-		exit(status);
-	}
 
 #if _WIN32
 	status = SetReleaseVersion(L"1.2.3");
@@ -204,8 +175,6 @@ void activateTrial()
 int main()
 {
 	init();
-	// Setting release params is required if CheckReleaseUpdate() is used, otherwise optional
-	setReleaseParams();
 	// Setting license callback is recommended for floating licenses
 	// SetLicenseCallback(LicenseCallback);
 	int status = IsLicenseGenuine();
