@@ -3,6 +3,7 @@
 
 #define BUFFER_SIZE 256
 #define MAX_RELEASE_PLATFORMS 10
+#define MAX_LICENSE_KEYS 100
 #define MAX_RELEASE_FILES 10
 
 #ifdef _WIN32
@@ -56,9 +57,10 @@ typedef struct
 
 typedef struct
 {
-    int allowedActivations;
-    int allowedDeactivations;
+    int64_t allowedActivations;
+    int64_t allowedDeactivations;
     CHARTYPE key[BUFFER_SIZE];
     CHARTYPE type[BUFFER_SIZE];
 } UserLicense;
+
 #endif // LEX_TYPES_H
