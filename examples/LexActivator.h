@@ -67,6 +67,7 @@ typedef void (LA_CC *ReleaseCallbackType)(int, Release*, void*);
 
 #define LA_USER ((uint32_t)1)
 #define LA_SYSTEM ((uint32_t)2)
+#define LA_ALL_USERS ((uint32_t)3)
 #define LA_IN_MEMORY ((uint32_t)4)
 
 #define LA_RELEASES_ALL ((uint32_t)1)
@@ -177,6 +178,24 @@ LEXACTIVATOR_API int LA_CC SetJniEnv(JNIEnv* env);
 #endif
 
 /*
+    FUNCTION: SetDebugMode()
+
+    PURPOSE: Enables network logs.
+
+    This function should be used for network testing only in case of network errors.
+    By default logging is disabled.
+
+    This function generates the lexactivator-logs.log file in the same directory
+    where the application is running.
+
+    PARAMETERS :
+    *enable - 0 or 1 to disable or enable logging.
+
+    RETURN CODES : LA_OK
+*/
+LEXACTIVATOR_API int LA_CC SetDebugMode(uint32_t enable);
+
+/*
     FUNCTION: SetCustomDeviceFingerprint()
 
     PURPOSE: In case you don't want to use the LexActivator's advanced
@@ -252,11 +271,11 @@ LEXACTIVATOR_API int LA_CC SetLicenseCallback(CallbackType callback);
     lease duration property is enabled.
 
     PARAMETERS:
-    * leaseDuration - value of the lease duration.
+    * leaseDuration - value of the lease duration. A value of -1 indicates unlimited lease duration.
 
     RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY
 */
-LEXACTIVATOR_API int LA_CC SetActivationLeaseDuration(uint32_t leaseDuration);
+LEXACTIVATOR_API int LA_CC SetActivationLeaseDuration(int64_t leaseDuration);
 
 /*
     FUNCTION: SetActivationMetadata()
@@ -268,7 +287,7 @@ LEXACTIVATOR_API int LA_CC SetActivationLeaseDuration(uint32_t leaseDuration);
 
     PARAMETERS:
     * key - string of maximum length 256 characters.
-    * value - string of maximum length 256 characters.
+    * value - string of maximum length 4096 characters.
 
     RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_METADATA_KEY_LENGTH,
     LA_E_METADATA_VALUE_LENGTH, LA_E_ACTIVATION_METADATA_LIMIT
@@ -285,7 +304,7 @@ LEXACTIVATOR_API int LA_CC SetActivationMetadata(CSTRTYPE key, CSTRTYPE value);
 
     PARAMETERS:
     * key - string of maximum length 256 characters.
-    * value - string of maximum length 256 characters.
+    * value - string of maximum length 4096 characters.
 
     RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_LENGTH,
     LA_E_METADATA_VALUE_LENGTH, LA_E_TRIAL_ACTIVATION_METADATA_LIMIT
@@ -425,6 +444,20 @@ LEXACTIVATOR_API int LA_CC SetCryptlexHost(CSTRTYPE host);
 */
 LEXACTIVATOR_API int LA_CC SetTwoFactorAuthenticationCode(CSTRTYPE twoFactorAuthenticationCode);
 
+/*
+    FUNCTION: SetCacheMode()
+
+    PURPOSE: Enables or disables in-memory caching for LexActivator. This function is designed to control caching
+    behavior to suit specific application requirements. Caching is enabled by default to enhance performance.
+
+    Disabling caching is recommended in environments where multiple processes access the same license on a 
+    single machine and require real-time updates to the license state.
+
+    * enable - 0 or 1 to disable or enable in-memory caching.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID
+*/
+LEXACTIVATOR_API int LA_CC SetCacheMode(uint32_t enable);
 
 /*
     FUNCTION: GetProductMetadata()
@@ -507,13 +540,13 @@ LEXACTIVATOR_API int LA_CC GetLicenseMetadata(CSTRTYPE key, STRTYPE value, uint3
 
     PARAMETERS:
     * name - name of the meter attribute
-    * allowedUses - pointer to the integer that receives the value
+    * allowedUses - pointer to the integer that receives the value. A value of -1 indicates unlimited allowed uses.
     * totalUses - pointer to the integer that receives the value
     * grossUses - pointer to the integer that receives the value
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_METER_ATTRIBUTE_NOT_FOUND
 */
-LEXACTIVATOR_API int LA_CC GetLicenseMeterAttribute(CSTRTYPE name, uint32_t *allowedUses, uint32_t *totalUses, uint32_t *grossUses);
+LEXACTIVATOR_API int LA_CC GetLicenseMeterAttribute(CSTRTYPE name, int64_t *allowedUses, uint64_t *totalUses, uint64_t *grossUses);
 
 /*
     FUNCTION: GetLicenseKey()
@@ -534,11 +567,12 @@ LEXACTIVATOR_API int LA_CC GetLicenseKey(STRTYPE licenseKey, uint32_t length);
     PURPOSE: Gets the allowed activations of the license.
 
     PARAMETERS:
-    * allowedActivations - pointer to the integer that receives the value
+    * allowedActivations - pointer to the integer that receives the value.
+      A value of -1 indicates unlimited number of activations.
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
 */
-LEXACTIVATOR_API int LA_CC GetLicenseAllowedActivations(uint32_t *allowedActivations);
+LEXACTIVATOR_API int LA_CC GetLicenseAllowedActivations(int64_t *allowedActivations);
 
 /*
     FUNCTION: GetLicenseTotalActivations()
@@ -553,12 +587,62 @@ LEXACTIVATOR_API int LA_CC GetLicenseAllowedActivations(uint32_t *allowedActivat
 LEXACTIVATOR_API int LA_CC GetLicenseTotalActivations(uint32_t *totalActivations);
 
 /*
+    FUNCTION: GetLicenseAllowedDeactivations()
+
+    PURPOSE: Gets the allowed deactivations of the license.
+
+    PARAMETERS:
+    * allowedDeactivations - pointer to the integer that receives the value.
+      A value of -1 indicates unlimited number of deactivations.
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseAllowedDeactivations(int64_t *allowedDeactivations);
+
+/*
+    FUNCTION: GetLicenseTotalDeactivations()
+
+    PURPOSE: Gets the total deactivations of the license.
+
+    PARAMETERS:
+    * totalDeactivations - pointer to the integer that receives the value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseTotalDeactivations(uint32_t *totalDeactivations);
+
+/*
+    FUNCTION: GetLicenseCreationDate()
+
+    PURPOSE: Gets the license creation date timestamp.
+
+    PARAMETERS:
+    * creationDate - pointer to the integer that receives the value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseCreationDate(uint32_t *creationDate);
+
+/*
+    FUNCTION: GetLicenseActivationDate()
+
+    PURPOSE: Gets the activation creation date timestamp.
+
+    PARAMETERS:
+    * activationDate - pointer to the integer that receives the value
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
+*/
+LEXACTIVATOR_API int LA_CC GetLicenseActivationDate(uint32_t *activationDate);
+
+/*
     FUNCTION: GetLicenseExpiryDate()
 
     PURPOSE: Gets the license expiry date timestamp.
 
     PARAMETERS:
-    * expiryDate - pointer to the integer that receives the value
+    * expiryDate - pointer to the integer that receives the value.
+      A value of 0 indicates it has no expiry i.e a lifetime license.
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
 */
@@ -570,7 +654,8 @@ LEXACTIVATOR_API int LA_CC GetLicenseExpiryDate(uint32_t *expiryDate);
     PURPOSE: Gets the license maintenance expiry date timestamp.
 
     PARAMETERS:
-    * maintenanceExpiryDate - pointer to the integer that receives the value
+    * maintenanceExpiryDate - pointer to the integer that receives the value.
+      A value of 0 indicates an unlimited maintenance period.
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED
 */
@@ -706,6 +791,20 @@ LEXACTIVATOR_API int LA_CC GetUserLicenses(UserLicense* userLicensesPtr, uint32_
 LEXACTIVATOR_API int LA_CC GetLicenseType(STRTYPE licenseType, uint32_t length);
 
 /*
+    FUNCTION: GetActivationId()
+
+    PURPOSE: Gets the activation id.
+
+    PARAMETERS:
+    * id - pointer to a buffer that receives the value of the string
+    * length - size of the buffer pointed to by the id parameter
+
+    RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED,
+    LA_E_BUFFER_SIZE
+*/
+LEXACTIVATOR_API int LA_CC GetActivationId(STRTYPE id, uint32_t length);
+
+/*
     FUNCTION: GetActivationMetadata()
 
     PURPOSE: Gets the activation metadata.
@@ -754,7 +853,8 @@ LEXACTIVATOR_API int LA_CC GetActivationMeterAttributeUses(CSTRTYPE name, uint32
     PURPOSE: Gets the server sync grace period expiry date timestamp.
 
     PARAMETERS:
-    * expiryDate - pointer to the integer that receives the value
+    * expiryDate - pointer to the integer that receives the value.
+      A value of 0 indicates an unlimited server sync grace period.
 
     RETURN CODES: LA_OK, LA_FAIL, LA_E_PRODUCT_ID, LA_E_TIME, LA_E_TIME_MODIFIED
 */
@@ -885,11 +985,28 @@ LEXACTIVATOR_API int LA_CC CheckReleaseUpdate(ReleaseCallbackType releaseUpdateC
 
     PURPOSE: It sends the request to the Cryptlex servers to authenticate the user.
 
+    PARAMETERS:
+    * email - user email address.
+    * password - user password.
+
     RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, 
     LA_E_TWO_FACTOR_AUTHENTICATION_CODE_MISSING, LA_E_AUTHENTICATION_FAILED, 
     LA_E_TWO_FACTOR_AUTHENTICATION_CODE_INVALID, LA_E_LOGIN_TEMPORARILY_LOCKED
 */
 LEXACTIVATOR_API int LA_CC AuthenticateUser(CSTRTYPE email, CSTRTYPE password);
+
+/*
+    FUNCTION: AuthenticateUserWithIdToken()
+
+    PURPOSE: Authenticates the user via OIDC Id token.
+
+    PARAMETER:
+    * idToken - The id token obtained from the OIDC provider.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_INET, LA_E_SERVER, LA_E_RATE_LIMIT, 
+    LA_E_AUTHENTICATION_ID_TOKEN_INVALID, LA_E_OIDC_SSO_NOT_ENABLED, LA_E_USERS_LIMIT_REACHED
+*/
+LEXACTIVATOR_API int LA_CC AuthenticateUserWithIdToken(CSTRTYPE idToken);
 
 /*
     FUNCTION: ActivateLicense()
@@ -905,6 +1022,7 @@ LEXACTIVATOR_API int LA_CC AuthenticateUser(CSTRTYPE email, CSTRTYPE password);
     LA_E_INET, LA_E_VM, LA_E_TIME, LA_E_ACTIVATION_LIMIT, LA_E_SERVER, LA_E_CLIENT,
     LA_E_AUTHENTICATION_FAILED, LA_E_LICENSE_TYPE, LA_E_COUNTRY, LA_E_IP, LA_E_RATE_LIMIT, LA_E_LICENSE_KEY,
     LA_E_RELEASE_VERSION_NOT_ALLOWED, LA_E_RELEASE_VERSION_FORMAT
+
 */
 LEXACTIVATOR_API int LA_CC ActivateLicense();
 
@@ -984,7 +1102,7 @@ LEXACTIVATOR_API int LA_CC GenerateOfflineDeactivationRequest(CSTRTYPE filePath)
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
     LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT,
-    LA_E_RELEASE_VERSION_NOT_ALLOWED
+    LA_E_RELEASE_VERSION_NOT_ALLOWED, LA_E_OS_USER
 
     NOTE: If application was activated offline using ActivateLicenseOffline() function, you
     may want to set grace period to 0 to ignore grace period.
@@ -1002,7 +1120,8 @@ LEXACTIVATOR_API int LA_CC IsLicenseGenuine();
     want to skip the server sync.
 
     RETURN CODES: LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_GRACE_PERIOD_OVER, LA_FAIL,
-    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT
+    LA_E_PRODUCT_ID, LA_E_LICENSE_KEY, LA_E_TIME, LA_E_TIME_MODIFIED, LA_E_MACHINE_FINGERPRINT,
+    LA_E_RELEASE_VERSION_NOT_ALLOWED, LA_E_OS_USER
 
     NOTE: You may want to set grace period to 0 to ignore grace period.
 */
