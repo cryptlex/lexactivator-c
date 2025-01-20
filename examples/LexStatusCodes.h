@@ -505,6 +505,13 @@ enum LexStatusCodes
         MESSAGE: Invalid permission flag.
     */
     LA_E_INVALID_PERMISSION_FLAG = 105,
+
+    /*
+        CODE: LA_E_FREE_PLAN_ACTIVATION_LIMIT_REACHED
+
+        MESSAGE: The free plan has reached it's activation limit.
+    */
+    LA_E_FREE_PLAN_ACTIVATION_LIMIT_REACHED = 106,
 };
 
 #endif // LEX_STATUS_CODES_H
