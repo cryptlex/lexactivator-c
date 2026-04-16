@@ -547,6 +547,34 @@ enum LexStatusCodes
         MESSAGE: The license cannot be activated before its effective date.
     */
     LA_E_LICENSE_NOT_EFFECTIVE = 110,
+
+    /*
+        CODE: LA_E_DEVICE_NOT_FOUND
+
+        MESSAGE: Device not found.
+    */
+    LA_E_DEVICE_NOT_FOUND = 111,
+
+    /*
+        CODE: LA_E_DEVICE_VALIDATION_FAILED
+
+        MESSAGE: Device validation failed.
+    */
+    LA_E_DEVICE_VALIDATION_FAILED = 112,
+
+    /*
+        CODE: LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER
+
+        MESSAGE: Fingerprint validation grace period is over. Please connect to internet and restart the application.
+    */
+    LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER = 113,
+
+    /*
+        CODE: LA_E_ACTIVATION_CLONE_DETECTED
+
+        MESSAGE: Activation clone detected.
+    */
+    LA_E_ACTIVATION_CLONE_DETECTED = 114,
 };
 
 #endif // LEX_STATUS_CODES_H
