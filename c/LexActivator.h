@@ -491,6 +491,7 @@ LEXACTIVATOR_API int LA_CC SetCacheMode(uint32_t enable);
 
     RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_METADATA_KEY_NOT_FOUND, LA_E_BUFFER_SIZE
 */
+
 LEXACTIVATOR_API int LA_CC GetProductMetadata(CSTRTYPE key, STRTYPE value, uint32_t length);
 
 /*

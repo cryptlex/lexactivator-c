@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Uncomment following for Windows static build
+// For a Windows static build, uncomment the block below AND comment out the
+// dynamic-link block that follows it (otherwise LexActivator gets linked twice).
 /*
 #if _WIN32
 #define LEXACTIVATOR_STATIC
 #pragma comment(lib, "winhttp")
+#pragma comment(lib, "crypt32")
 #if _WIN64
 #pragma comment(lib, "x64/libcurl_MD")
 #pragma comment(lib, "x64/LexActivator")
@@ -17,6 +19,7 @@
 #endif
 */
 
+// Dynamic-link block (comment this out when using the static build above)
 #if _WIN32
 #if _WIN64
 #pragma comment(lib, "x64/LexActivator")
@@ -185,13 +188,6 @@ int main()
 		int daysLeft = (expiryDate - time(NULL)) / 86400;
 		printf("Days left: %d\n", daysLeft);
 		printf("License is genuinely activated!\n");
-
-		// Checking for software release update
-		// status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
-		// if (LA_OK != status)
-		// {
-		// 	printf("Error checking for software release update: %d", status);
-		// }
 	}
 	else if (LA_EXPIRED == status)
 	{
@@ -230,6 +226,15 @@ int main()
 			activateTrial();
 		}
 	}
+
+	// Checking for software release update
+	// Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+	// Release platform and channel must be set before checking for an update
+	// status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
+	// if (LA_OK != status)
+	// {
+	// 	printf("Error checking for software release update: %d", status);
+	// }
 	getchar();
 	return 0;
 }
