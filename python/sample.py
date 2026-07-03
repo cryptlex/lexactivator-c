@@ -90,8 +90,9 @@ def main():
 
         # Checking for software release update
         # Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-        # LexActivator.SetReleasePlatform("RELEASE_PLATFORM") # Set the actual platform of the release e.g windows
-        # LexActivator.SetReleaseChannel("RELEASE_CHANNEL") # Set the actual channel of the release e.g stable
+        # Release platform and channel must be set before checking for an update
+        # LexActivator.SetReleasePlatform("RELEASE_PLATFORM")
+        # LexActivator.SetReleaseChannel("RELEASE_CHANNEL")
         # LexActivator.CheckReleaseUpdate(software_release_update_callback, ReleaseFlags.LA_RELEASES_ALL, None)
     except LexActivatorException as exception:
         print('Error code:', exception.code, exception.message)
