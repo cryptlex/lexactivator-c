@@ -40,7 +40,17 @@ module LexStatusCodes
   # CODE: LA_RELEASE_NO_UPDATE_AVAILABLE
   # MESSAGE: No new update is available for the product. The current version is latest.
 
-  LA_RELEASE_NO_UPDATE_AVAILABLE = 31
+  LA_RELEASE_NO_UPDATE_AVAILABLE = 31 # deprecated
+
+  # CODE: LA_RELEASE_UPDATE_NOT_AVAILABLE
+  # MESSAGE: No new update is available for the product. The current version is latest.
+
+  LA_RELEASE_UPDATE_NOT_AVAILABLE = 31
+
+  # CODE: LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED
+  # MESSAGE: The update available is not allowed for this license.
+
+  LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED = 32
 
   # CODE: LA_E_FILE_PATH
   # MESSAGE: Invalid file path.
@@ -307,4 +317,20 @@ module LexStatusCodes
   # CODE: LA_E_LICENSE_NOT_EFFECTIVE
   # MESSAGE: The license cannot be activated before its effective date.
   LA_E_LICENSE_NOT_EFFECTIVE = 110
+
+  # CODE: LA_E_DEVICE_NOT_FOUND
+  # MESSAGE: Device not found.
+  LA_E_DEVICE_NOT_FOUND = 111
+
+  # CODE: LA_E_DEVICE_VALIDATION_FAILED
+  # MESSAGE: Device validation failed.
+  LA_E_DEVICE_VALIDATION_FAILED = 112
+
+  # CODE: LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER
+  # MESSAGE: Fingerprint validation grace period is over. Please connect to internet and restart the application.
+  LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER = 113
+
+  # CODE: LA_E_ACTIVATION_CLONE_DETECTED
+  # MESSAGE: Activation clone detected.
+  LA_E_ACTIVATION_CLONE_DETECTED = 114
 end
