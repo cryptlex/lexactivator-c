@@ -2015,6 +2015,14 @@ type
     constructor Create;
   end;
     (*
+        CODE: LA_E_RELEASE_VERSION_NOT_ALLOWED
+        MESSAGE: The release version is not allowed.
+    *)
+  ELAReleaseVersionNotAllowedException = class(ELAException)
+  public
+    constructor Create;
+  end;
+    (*
         CODE: LA_E_RELEASE_PLATFORM_LENGTH
         MESSAGE: Release platform length is more than 256 characters.
     *)
@@ -2073,6 +2081,40 @@ type
     *)
 
   ELAContainerException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
+    (*
+        CODE: LA_E_RELEASE_VERSION
+
+        MESSAGE: Invalid release version. Make sure the release version
+        uses the following formats: x.x, x.x.x, x.x.x.x (where x is a number).
+    *)
+
+  ELAReleaseVersionException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
+    (*
+        CODE: LA_E_RELEASE_PLATFORM
+
+        MESSAGE: Release platform not set.
+    *)
+
+  ELAReleasePlatformException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
+    (*
+        CODE: LA_E_RELEASE_CHANNEL
+
+        MESSAGE: Release channel not set.
+    *)
+
+  ELAReleaseChannelException = class(ELAException)
   public
     constructor Create;
   end;
@@ -2276,6 +2318,50 @@ type
     constructor Create;
   end;
 
+    (*
+        CODE: LA_E_DEVICE_NOT_FOUND
+
+        MESSAGE: Device not found.
+    *)
+
+  ELADeviceNotFoundException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
+    (*
+        CODE: LA_E_DEVICE_VALIDATION_FAILED
+
+        MESSAGE: Device validation failed.
+    *)
+
+  ELADeviceValidationFailedException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
+    (*
+        CODE: LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER
+
+        MESSAGE: Fingerprint validation grace period is over. Please connect to internet and restart the application.
+    *)
+
+  ELAFingerprintValidationGracePeriodOverException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
+    (*
+        CODE: LA_E_ACTIVATION_CLONE_DETECTED
+
+        MESSAGE: Activation clone detected.
+    *)
+
+  ELAActivationCloneDetectedException = class(ELAException)
+  public
+    constructor Create;
+  end;
+
 implementation
 
 uses
@@ -2394,7 +2480,23 @@ const
         MESSAGE: No new update is available for the product. The current version is latest.
     *)
 
-  LA_RELEASE_NO_UPDATE_AVAILABLE = TLAStatusCode(31);
+  LA_RELEASE_NO_UPDATE_AVAILABLE = TLAStatusCode(31); // deprecated
+
+    (*
+        CODE: LA_RELEASE_UPDATE_NOT_AVAILABLE
+
+        MESSAGE: No new update is available for the product. The current version is latest.
+    *)
+
+  LA_RELEASE_UPDATE_NOT_AVAILABLE = TLAStatusCode(31);
+
+    (*
+        CODE: LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED
+
+        MESSAGE: The update available is not allowed for this license.
+    *)
+
+  LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED = TLAStatusCode(32);
 
     (*
         CODE: LA_E_FILE_PATH
@@ -2699,6 +2801,14 @@ const
   LA_E_FEATURE_FLAG_NOT_FOUND = TLAStatusCode(76);
 
     (*
+        CODE: LA_E_RELEASE_VERSION_NOT_ALLOWED
+
+        MESSAGE: The release version is not allowed.
+    *)
+
+  LA_E_RELEASE_VERSION_NOT_ALLOWED = TLAStatusCode(77);
+
+    (*
         CODE: LA_E_RELEASE_PLATFORM_LENGTH
 
         MESSAGE: Release platform length is more than 256 characters.
@@ -2747,6 +2857,31 @@ const
     *)
 
   LA_E_CONTAINER = TLAStatusCode(83);
+
+    (*
+        CODE: LA_E_RELEASE_VERSION
+
+        MESSAGE: Invalid release version. Make sure the release version
+        uses the following formats: x.x, x.x.x, x.x.x.x (where x is a number).
+    *)
+
+  LA_E_RELEASE_VERSION = TLAStatusCode(84);
+
+    (*
+        CODE: LA_E_RELEASE_PLATFORM
+
+        MESSAGE: Release platform not set.
+    *)
+
+  LA_E_RELEASE_PLATFORM = TLAStatusCode(85);
+
+    (*
+        CODE: LA_E_RELEASE_CHANNEL
+
+        MESSAGE: Release channel not set.
+    *)
+
+  LA_E_RELEASE_CHANNEL = TLAStatusCode(86);
 
     (*
         CODE: LA_E_USER_NOT_AUTHENTICATED
@@ -2891,6 +3026,38 @@ const
     *)
 
   LA_E_LICENSE_NOT_EFFECTIVE = TLAStatusCode(110);
+
+    (*
+        CODE: LA_E_DEVICE_NOT_FOUND
+
+        MESSAGE: Device not found.
+    *)
+
+  LA_E_DEVICE_NOT_FOUND = TLAStatusCode(111);
+
+    (*
+        CODE: LA_E_DEVICE_VALIDATION_FAILED
+
+        MESSAGE: Device validation failed.
+    *)
+
+  LA_E_DEVICE_VALIDATION_FAILED = TLAStatusCode(112);
+
+    (*
+        CODE: LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER
+
+        MESSAGE: Fingerprint validation grace period is over. Please connect to internet and restart the application.
+    *)
+
+  LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER = TLAStatusCode(113);
+
+    (*
+        CODE: LA_E_ACTIVATION_CLONE_DETECTED
+
+        MESSAGE: Activation clone detected.
+    *)
+
+  LA_E_ACTIVATION_CLONE_DETECTED = TLAStatusCode(114);
 
 (*********************************************************************************)
 
@@ -4940,6 +5107,7 @@ begin
     LA_LOCAL_TRIAL_EXPIRED: Result := ELALocalTrialExpiredError.Create;
     LA_RELEASE_UPDATE_AVAILABLE: Result := ELAUnknownErrorCodeException.Create(ErrorCode);
     LA_RELEASE_NO_UPDATE_AVAILABLE: Result := ELAUnknownErrorCodeException.Create(ErrorCode);
+    LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED: Result := ELAUnknownErrorCodeException.Create(ErrorCode);
     LA_E_FILE_PATH: Result := ELAFilePathException.Create;
     LA_E_PRODUCT_FILE: Result := ELAProductFileException.Create;
     LA_E_PRODUCT_DATA: Result := ELAProductDataException.Create;
@@ -4977,12 +5145,16 @@ begin
     LA_E_CUSTOM_FINGERPRINT_LENGTH: Result := ELACustomFingerprintLengthException.Create;
     LA_E_PRODUCT_VERSION_NOT_LINKED: Result := ELAProductVersionNotLinkedException.Create;
     LA_E_FEATURE_FLAG_NOT_FOUND: Result := ELAFeatureFlagNotFoundException.Create;
+    LA_E_RELEASE_VERSION_NOT_ALLOWED: Result := ELAReleaseVersionNotAllowedException.Create;
     LA_E_RELEASE_PLATFORM_LENGTH: Result := ELAReleasePlatformLengthException.Create;
     LA_E_RELEASE_CHANNEL_LENGTH: Result := ELAReleaseChannelLengthException.Create;
     LA_E_VM: Result := ELAVMException.Create;
     LA_E_COUNTRY: Result := ELACountryException.Create;
     LA_E_IP: Result := ELAIPException.Create;
     LA_E_CONTAINER: Result := ELAContainerException.Create;
+    LA_E_RELEASE_VERSION: Result := ELAReleaseVersionException.Create;
+    LA_E_RELEASE_PLATFORM: Result := ELAReleasePlatformException.Create;
+    LA_E_RELEASE_CHANNEL: Result := ELAReleaseChannelException.Create;
     LA_E_USER_NOT_AUTHENTICATED: Result := ELAUserNotAuthenticatedException.Create;
     LA_E_TWO_FACTOR_AUTHENTICATION_CODE_MISSING: Result := ELATwoFactorAuthenticationCodeMissingException.Create;
     LA_E_TWO_FACTOR_AUTHENTICATION_CODE_INVALID: Result := ELATwoFactorAuthenticationCodeInvalidException.Create;
@@ -5001,6 +5173,10 @@ begin
     LA_E_FEATURE_ENTITLEMENT_NOT_FOUND: Result := ELAFeatureEntitlementNotFoundException.Create;
     LA_E_ENTITLEMENT_SET_NOT_LINKED: Result := ELAEntitlementSetNotLinkedException.Create;
     LA_E_LICENSE_NOT_EFFECTIVE: Result := ELALicenseNotEffectiveException.Create;
+    LA_E_DEVICE_NOT_FOUND: Result := ELADeviceNotFoundException.Create;
+    LA_E_DEVICE_VALIDATION_FAILED: Result := ELADeviceValidationFailedException.Create;
+    LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER: Result := ELAFingerprintValidationGracePeriodOverException.Create;
+    LA_E_ACTIVATION_CLONE_DETECTED: Result := ELAActivationCloneDetectedException.Create;
   else
     Result := ELAUnknownErrorCodeException.Create(ErrorCode);
   end;
@@ -5354,6 +5530,12 @@ begin
   FErrorCode := LA_E_FEATURE_FLAG_NOT_FOUND;
 end;
 
+constructor ELAReleaseVersionNotAllowedException.Create;
+begin
+  inherited Create('The release version is not allowed');
+  FErrorCode := LA_E_RELEASE_VERSION_NOT_ALLOWED;
+end;
+
 constructor ELAReleasePlatformLengthException.Create;
 begin
   inherited Create('Release platform length is more than 256 characters..');
@@ -5390,6 +5572,25 @@ begin
   inherited Create('Application is being run inside a container and ' +
     'activation has been disallowed in the container');
   FErrorCode := LA_E_CONTAINER;
+end;
+
+constructor ELAReleaseVersionException.Create;
+begin
+  inherited Create('Invalid release version. Make sure the release version ' +
+    'uses the following formats: x.x, x.x.x, x.x.x.x (where x is a number)');
+  FErrorCode := LA_E_RELEASE_VERSION;
+end;
+
+constructor ELAReleasePlatformException.Create;
+begin
+  inherited Create('Release platform not set');
+  FErrorCode := LA_E_RELEASE_PLATFORM;
+end;
+
+constructor ELAReleaseChannelException.Create;
+begin
+  inherited Create('Release channel not set');
+  FErrorCode := LA_E_RELEASE_CHANNEL;
 end;
 
 constructor ELAUserNotAuthenticatedException.Create;
@@ -5498,6 +5699,30 @@ constructor ELALicenseNotEffectiveException.Create;
 begin
   inherited Create('The license cannot be activated before its effective date');
   FErrorCode := LA_E_LICENSE_NOT_EFFECTIVE;
+end;
+
+constructor ELADeviceNotFoundException.Create;
+begin
+  inherited Create('Device not found');
+  FErrorCode := LA_E_DEVICE_NOT_FOUND;
+end;
+
+constructor ELADeviceValidationFailedException.Create;
+begin
+  inherited Create('Device validation failed');
+  FErrorCode := LA_E_DEVICE_VALIDATION_FAILED;
+end;
+
+constructor ELAFingerprintValidationGracePeriodOverException.Create;
+begin
+  inherited Create('Fingerprint validation grace period is over. Please connect to internet and restart the application');
+  FErrorCode := LA_E_FINGERPRINT_VALIDATION_GRACE_PERIOD_OVER;
+end;
+
+constructor ELAActivationCloneDetectedException.Create;
+begin
+  inherited Create('Activation clone detected');
+  FErrorCode := LA_E_ACTIVATION_CLONE_DETECTED;
 end;
 
 initialization
