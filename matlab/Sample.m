@@ -62,13 +62,13 @@ else
 end
 
 % Checking for software release update
-% Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-% Release platform and channel must be set before checking for an update
+% Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+% Release version, platform and channel must be set before checking for an update
 % status = calllib(sSharedLibrary,'CheckReleaseUpdate',releaseUpdateCallback,uint32(2),[]);
 
 function output = toString(input)
     if ispc
-        output = [int8(input) 0];
+        output = [uint16(input) 0];
     else
         output = input;
     end
