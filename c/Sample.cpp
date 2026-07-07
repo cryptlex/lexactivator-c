@@ -228,8 +228,8 @@ int main()
 	}
 
 	// Checking for software release update
-	// Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-	// Release platform and channel must be set before checking for an update
+	// Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+	// Release version, platform and channel must be set before checking for an update
 	// status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
 	// if (LA_OK != status)
 	// {
