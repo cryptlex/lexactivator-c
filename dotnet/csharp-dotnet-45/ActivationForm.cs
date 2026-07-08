@@ -44,8 +44,8 @@ namespace Sample
                 }
 
                 // Checking for software release update
-                // Call SetReleasePlatform() and SetReleaseChannel() before calling CheckForReleaseUpdate()
-                // Release platform and channel must be set before checking for an update
+                // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckForReleaseUpdate()
+                // Release version, platform and channel must be set before checking for an update
                 // LexActivator.SetReleasePlatform("RELEASE_PLATFORM");
                 // LexActivator.SetReleaseChannel("RELEASE_CHANNEL");
                 // LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", SoftwareReleaseUpdateCallback);
