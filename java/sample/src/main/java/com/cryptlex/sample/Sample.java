@@ -2,13 +2,10 @@ package com.cryptlex.sample;
 
 import com.cryptlex.lexactivator.LexActivator;
 import com.cryptlex.lexactivator.LicenseCallbackEvent;
-import com.cryptlex.lexactivator.ReleaseCallbackEvent;
 import com.cryptlex.lexactivator.ReleaseUpdateCallbackEvent;
 import com.cryptlex.lexactivator.Release;
 import com.cryptlex.lexactivator.LexActivatorException;
-import java.io.File;
 import java.time.Instant;
-import java.io.UnsupportedEncodingException;
 
 public class Sample {
 
@@ -66,8 +63,8 @@ public class Sample {
             }
 
             // Checking for software release update
-            // Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-            // Release platform and channel must be set before checking for an update
+            // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+            // Release version, platform and channel must be set before checking for an update
             // LexActivator.SetReleasePlatform("RELEASE_PLATFORM");
             // LexActivator.SetReleaseChannel("RELEASE_CHANNEL");
             // ReleaseUpdateCallbackEventListener releaseUpdateEventListener = new ReleaseUpdateCallbackEventListener();
@@ -113,7 +110,7 @@ class ReleaseUpdateCallbackEventListener implements ReleaseUpdateCallbackEvent {
                 System.out.println("Release notes: " + release.notes);
                 break;
             case LexActivator.LA_RELEASE_NO_UPDATE_AVAILABLE:
-                System.out.println("Current version is already latest....!\n");
+                System.out.println("Current version is already the latest!\n");
                 break;
             default:
                 System.out.println("Error code: " + status);
