@@ -1,6 +1,8 @@
 use std::io::{self, BufRead}; // for user input (pause)
 
-use lexactivator::*;
+use lexactivator::{
+    LexActivatorCode, LexActivatorError, LexActivatorStatus, PermissionFlags,
+};
 
 fn main() {
     let product_data: String = "Product.dat_content".to_string();
@@ -14,7 +16,7 @@ fn main() {
     println!("SetProductId: {:?}", result);
 
     result = lexactivator::set_license_key(license_key);
-    println!("Set_License_Key: {:?}", result);
+    println!("SetLicenseKey: {:?}", result);
 
     let activation_result: Result<LexActivatorStatus, LexActivatorError> =
         lexactivator::activate_license();
@@ -61,14 +63,6 @@ fn main() {
             println!("License validation failed: {:?}", error);
         }
     }
-
-    // Set the release platform and channel before checking for a release update
-    // Set the actual platform of the release e.g windows
-    result = lexactivator::set_release_platform("RELEASE_PLATFORM".to_string());
-    println!("SetReleasePlatform: {:?}", result);
-    // Set the actual channel of the release e.g stable
-    result = lexactivator::set_release_channel("RELEASE_CHANNEL".to_string());
-    println!("SetReleaseChannel: {:?}", result);
 
     println!("Program paused.");
     let stdin = io::stdin();

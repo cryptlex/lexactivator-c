@@ -5,7 +5,7 @@ Example demonstrating license activation with the [LexActivator Rust SDK](https:
 ## Running
 
 ```bash
-cargo run --example license-activation
+cargo run --manifest-path rust/Cargo.toml --example license-activation
 ```
 
 Before running, edit [license-activation.rs](license-activation.rs) and replace the
