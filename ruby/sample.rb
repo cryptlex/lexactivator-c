@@ -7,13 +7,13 @@ require "./LexStatusCodes"
 
 def init()
   
-  status = LexActivator.SetProductData(LexActivator::encode_utf16("QjUyQUI2MEZBNjkxMTkxNEUzODU3NDlDNjhERUIwMEQ=.hsxt2GEhlK2eJTHu0EDfPSOyVajGrg3a8drLojLLT8IftRPoL1GC1lVduol5X5OcDcNw5xgjnhRctesGdkldkKnamhMg6VKuUgJ3771T07ghyWRxnhPGGuHGyAB47x6SwSZfxtR3RMVH4I2kwN33T+LAVnPgaOIRMnl3Vt+yL1kcANUtJSzfvuxOwToLbF1aLYAfvLeI8wNbMGL6usVibjn4nDrme/dTXwqMl4g9kQfkYT/zm1bLgUv6xg6SUhZPaKHLjoNOqJ3xojHxrJ/n4kJ+2j6WWedfepqL1wnR+vu1VRNxNkkVxgHCM0HkeJ5qYf8L+RNAp8qISgILp4dsTX18HXSADXXK4YrTjAJItM+x6SxeL2kmhllB5/VLtjIOfJHz9y0QDrHJrq5O370zHC2CDiB+1Qj8wIbA/S+ej+nOgb29CFhezk+nACIjAnbF3w9Rdj7xBIsROVWXljVVwitRZE6Fdp44a3uPlJ3c8IVHOFDy/IJ+aQgeVKsOwlHwVMiS2p8uVlrJyNLTpZU3QDBBh14avbbusZ+EUvEp9SHo8tLTwOvrzppudcCpe+TT9OcwlXl72+IUabzaBUXD/Q81XVF1LgA/7GVECI8b+W+/IRAKo+qXWgw2TbBr66wigYeX9E4EEx2/NHWx+a7Q2Cu617UB9Da9lzJiQF8GzK15NXtl/vu/bxqGMskyytsfZJ8Xx2Z9AfVAwgZHINj19W1xf1Z+nYxrb8LExVTRe5lNNGCcHelXNfJE+TDx8OupI3pnLWCUX+x2m1AQbq2RJiXM5ORc7M41mZc6aS8oH/iXhPHJEXNAe5gaLdR4WXEO"))
+  status = LexActivator.SetProductData(LexActivator::encode_utf16("PASTE_CONTENT_OF_PRODUCT.DAT_FILE"))
   if LexStatusCodes::LA_OK != status
     puts "Error Code: #{status}"
     exit(status)
   end
 
-  status = LexActivator.SetProductId(LexActivator::encode_utf16("01997b28-eeb0-7fcb-aab2-a6bf4a2f6fc3"), LexActivator::PermissionFlags::LA_USER)
+  status = LexActivator.SetProductId(LexActivator::encode_utf16("PASTE_PRODUCT_ID"), LexActivator::PermissionFlags::LA_USER)
   if LexStatusCodes::LA_OK != status
     puts "Error Code: #{status}"
     exit(status)
@@ -27,7 +27,7 @@ def init()
 end
 
 def activate()
-  status = LexActivator.SetLicenseKey(LexActivator::encode_utf16("2430B5-3FFBAA-49D881-311BC2-D1A748-E2DDEB"))
+  status = LexActivator.SetLicenseKey(LexActivator::encode_utf16("PASTE_LICENSE_KEY"))
   if LexStatusCodes::LA_OK != status
     puts "Error Code: #{status}"
     exit(status)
@@ -76,7 +76,6 @@ end
 
 # Run it
 init()
-activate() # uncomment this to activate the license
 LexActivator.SetLicenseCallback(LicenseCallback)
 status = LexActivator.IsLicenseGenuine()
 if LexStatusCodes::LA_OK == status
@@ -87,7 +86,7 @@ if LexStatusCodes::LA_OK == status
   puts "Days left: #{daysLeft}"
   tier = FFI::MemoryPointer.new(:int64)
   LexActivator.GetLicenseEntitlementSetTier(tier)
-  puts "tier: #{tier.read_int}" 
+  puts "tier: #{tier.read_int64}"
   # get license user email
   buffer = FFI::MemoryPointer.new(:char, 256)
   LexActivator.GetLicenseUserEmail(buffer, buffer.size)
@@ -106,7 +105,7 @@ else
     # get days left for expiry
     trialExpiryDate = FFI::MemoryPointer.new(:uint)
     LexActivator.GetTrialExpiryDate(trialExpiryDate)
-    daysLeft = (trialExpiryDate.read_int - Time.now.to_i) / 86500
+    daysLeft = (trialExpiryDate.read_int - Time.now.to_i) / 86400
     puts "Trial days left: #{daysLeft}"
   elsif LexStatusCodes::LA_TRIAL_EXPIRED == trialStatus
     puts "Trial has expired!"

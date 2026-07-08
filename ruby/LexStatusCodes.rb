@@ -190,7 +190,7 @@ module LexStatusCodes
   LA_E_METER_ATTRIBUTE_NOT_FOUND = 72
 
   # CODE: LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED
-  # MESSAGE: The meter attribute has reached it's usage limit.
+  # MESSAGE: The meter attribute has reached its usage limit.
   LA_E_METER_ATTRIBUTE_USES_LIMIT_REACHED = 73    
   
   # CODE: LA_E_CUSTOM_FINGERPRINT_LENGTH

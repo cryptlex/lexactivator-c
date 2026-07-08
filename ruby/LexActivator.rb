@@ -276,6 +276,12 @@ module LexActivator
   # @scope class
   attach_function :GetLicenseEntitlementSetDisplayName, :GetLicenseEntitlementSetDisplayName, [:pointer, :uint], :int
 
+  # @method GetLicenseEntitlementSetTier(tier)
+  # @param [FFI::Pointer(*Int64T)] tier
+  # @return [Integer]
+  # @scope class
+  attach_function :GetLicenseEntitlementSetTier, :GetLicenseEntitlementSetTier, [:pointer], :int
+
   # @method GetFeatureEntitlements(featureEntitlements, length)
   # @param [FFI::Pointer(*FeatureEntitlement)] featureEntitlements - Pointer to an array of FeatureEntitlement structs
   # @param [Integer] length - The number of FeatureEntitlement structs in the array
