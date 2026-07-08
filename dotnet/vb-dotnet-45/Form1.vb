@@ -15,8 +15,8 @@ Public Class Form1
 
             If status = LexStatusCodes.LA_OK OrElse status = LexStatusCodes.LA_EXPIRED OrElse status = LexStatusCodes.LA_SUSPENDED OrElse status = LexStatusCodes.LA_GRACE_PERIOD_OVER Then
                 Dim expiryDate As UInteger = LexActivator.GetLicenseExpiryDate()
-                Dim daysLeft As Integer = CInt((expiryDate - unixTimestamp())) / 86400
-                Me.statusLabel.Text = "License genuinely activated! Activation Status: " & status.ToString()
+                Dim daysLeft As Integer = CInt((CLng(expiryDate) - CLng(unixTimestamp())) \ 86400)
+                Me.statusLabel.Text = "License activation status: " & status.ToString()
                 Me.activateBtn.Text = "Deactivate"
                 Me.activateTrialBtn.Enabled = False
                 Return
@@ -26,7 +26,7 @@ Public Class Form1
 
             If status = LexStatusCodes.LA_OK Then
                 Dim trialExpiryDate As UInteger = LexActivator.GetTrialExpiryDate()
-                Dim daysLeft As Integer = CInt((trialExpiryDate - unixTimestamp())) / 86400
+                Dim daysLeft As Integer = CInt((CLng(trialExpiryDate) - CLng(unixTimestamp())) \ 86400)
                 Me.statusLabel.Text = "Trial period! Days left:" & daysLeft.ToString()
                 Me.activateTrialBtn.Enabled = False
             ElseIf status = LexStatusCodes.LA_TRIAL_EXPIRED Then
@@ -93,7 +93,7 @@ Public Class Form1
                 Me.statusLabel.Text = "Error activating the trial: " & status.ToString()
                 Return
             Else
-                Me.statusLabel.Text = "Trial started Successful"
+                Me.statusLabel.Text = "Trial started successfully"
             End If
 
         Catch ex As LexActivatorException
@@ -119,7 +119,7 @@ Public Class Form1
         Select Case status
             Case LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE
                 Me.statusLabel.Text = "An update is available for the app."
-            Case LexStatusCodes.LA_RELEASE_NO_UPDATE_AVAILABLE
+            Case LexStatusCodes.LA_RELEASE_UPDATE_NOT_AVAILABLE
                 ' Current version is latest
             Case Else
                 Me.statusLabel.Text = "Release status code: " & status.ToString()

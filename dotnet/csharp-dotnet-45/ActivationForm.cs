@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using System.Windows.Forms;
 using Cryptlex;
 
@@ -21,8 +20,8 @@ namespace Sample
                 if (status == LexStatusCodes.LA_OK || status == LexStatusCodes.LA_EXPIRED || status == LexStatusCodes.LA_SUSPENDED || status == LexStatusCodes.LA_GRACE_PERIOD_OVER)
                 {
                     uint expiryDate = LexActivator.GetLicenseExpiryDate();
-                    int daysLeft = (int)(expiryDate - unixTimestamp()) / 86400;
-                    this.statusLabel.Text = "License genuinely activated! Activation Status: " + status.ToString();
+                    int daysLeft = (int)(((long)expiryDate - (long)unixTimestamp()) / 86400);
+                    this.statusLabel.Text = "License activation status: " + status.ToString();
                     this.activateBtn.Text = "Deactivate";
                     this.activateTrialBtn.Enabled = false;
                     return;
@@ -31,7 +30,7 @@ namespace Sample
                 if (status == LexStatusCodes.LA_OK)
                 {
                     uint trialExpiryDate = LexActivator.GetTrialExpiryDate();
-                    int daysLeft = (int)(trialExpiryDate - unixTimestamp()) / 86400;
+                    int daysLeft = (int)(((long)trialExpiryDate - (long)unixTimestamp()) / 86400);
                     this.statusLabel.Text = "Trial period! Days left:" + daysLeft.ToString();
                     this.activateTrialBtn.Enabled = false;
                 }
@@ -109,7 +108,7 @@ namespace Sample
                 }
                 else
                 {
-                    this.statusLabel.Text = "Trial started Successful";
+                    this.statusLabel.Text = "Trial started successfully";
                 }
             }
             catch (LexActivatorException ex)
@@ -142,7 +141,7 @@ namespace Sample
                 case LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE:
                     this.statusLabel.Text = "An update is available for the app.";
                     break;
-                case LexStatusCodes.LA_RELEASE_NO_UPDATE_AVAILABLE:
+                case LexStatusCodes.LA_RELEASE_UPDATE_NOT_AVAILABLE:
                     // Current version is already latest.
                     break;
                 default:
