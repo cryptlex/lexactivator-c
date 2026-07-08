@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
 	"github.com/cryptlex/lexactivator-go"
 )
 
@@ -20,7 +21,7 @@ func licenseCallback(status int) {
 	}
 }
 
-func softwareReleaseUpdateCallback(status int, release *lexactivator.Release, userData interface{} ) {
+func softwareReleaseUpdateCallback(status int, release *lexactivator.Release, userData interface{}) {
 	if status == lexactivator.LA_RELEASE_UPDATE_AVAILABLE {
 		fmt.Println("A new update is available for the app!")
 		fmt.Println("Release notes: ", release.Notes)
@@ -106,9 +107,6 @@ func main() {
 		lexactivator.GetLicenseExpiryDate(&expiryDate)
 		fmt.Println("License expiry timestamp:", expiryDate)
 		fmt.Println("License is genuinely activated!")
-		var licenseKey string
-		lexactivator.GetLicenseKey(&licenseKey)
-		fmt.Println("License key:", licenseKey)
 	} else if lexactivator.LA_EXPIRED == status {
 		fmt.Println("License is genuinely activated but has expired!")
 	} else if lexactivator.LA_SUSPENDED == status {
@@ -134,24 +132,23 @@ func main() {
 		}
 	}
 	// Checking for software release update
-	// Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-	// Release platform and channel must be set before checking for an update
-	status = lexactivator.SetReleasePlatform("RELEASE_PLATFORM")
-	if lexactivator.LA_OK != status {
-		fmt.Println("Error Code:", status)
-		os.Exit(1)
-	}
-	status = lexactivator.SetReleaseChannel("RELEASE_CHANNEL")
-	if lexactivator.LA_OK != status {
-		fmt.Println("Error Code:", status)
-		os.Exit(1)
-	}
+	// Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+	// Release version, platform and channel must be set before checking for an update
+	// if lexactivator.LA_OK != status {
+	// 	fmt.Println("Error Code:", status)
+	// 	os.Exit(1)
+	// }
+	// status = lexactivator.SetReleaseChannel("RELEASE_CHANNEL")
+	// if lexactivator.LA_OK != status {
+	// 	fmt.Println("Error Code:", status)
+	// 	os.Exit(1)
+	// }
 	// status = lexactivator.CheckReleaseUpdate(softwareReleaseUpdateCallback, lexactivator.LA_RELEASES_ALL, nil);
 	// if lexactivator.LA_OK != status {
 	// 	fmt.Println("Error Code:", status)
 	// 	os.Exit(1)
 	// }
 
-	fmt.Println("Press any key to exit...")
-	bufio.NewReader(os.Stdin).ReadByte()
+	fmt.Println("Press Enter to exit...")
+	bufio.NewReader(os.Stdin).ReadString('\n')
 }
