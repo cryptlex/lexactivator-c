@@ -19,7 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void activateLicense(View view) {
         try {
-            LexActivator.SetLicenseKey(licenseKeyEditBox.getText().toString().trim());
+            String licenseKey = licenseKeyEditBox.getText() == null ? "" : licenseKeyEditBox.getText().toString().trim();
+            if (licenseKey.isEmpty()) {
+                statusTextView.setText("Please enter a license key.");
+                return;
+            }
+            LexActivator.SetLicenseKey(licenseKey);
             LexActivator.SetActivationMetadata("key1", "value1");
             LexActivator.SetActivationMetadata("key2", "value2");
             int status = LexActivator.ActivateLicense();
@@ -57,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Checking for software release update
-            // Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-            // Release platform and channel must be set before checking for an update
+            // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+            // Release version, platform and channel must be set before checking for an update
             // LexActivator.SetReleasePlatform("RELEASE_PLATFORM");
             // LexActivator.SetReleaseChannel("RELEASE_CHANNEL");
             // LexActivator.CheckReleaseUpdate(releaseUpdateCallback, LexActivator.LA_RELEASES_ALL, null);
