@@ -9,8 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  lexactivator: 
-    path: ../
+  lexactivator: ^3.42.1
 
 dev_dependencies:
   flutter_test:

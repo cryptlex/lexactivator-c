@@ -4,7 +4,6 @@ import 'package:lexactivator/lexactivator.dart';
 void main() {
   try {
     initializeLexActivator();
-    activateLicense(); // Call it once to activate the license
     LexActivator.SetLicenseCallback(callback: licenseCallback);
     final status = LexActivator.IsLicenseGenuine();
     if (LexStatusCodes.LA_OK == status) {
