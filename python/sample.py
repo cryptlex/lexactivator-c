@@ -1,4 +1,3 @@
-import sys
 import time
 
 from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, ReleaseFlags, LexActivatorException
@@ -43,7 +42,7 @@ def activate():
         print("License activation failed: ", status)
 
 
-def activateTrial():
+def activate_trial():
     LexActivator.SetTrialActivationMetadata("key1", "value1")
     status = LexActivator.ActivateTrial()
     if LexStatusCodes.LA_OK == status:
@@ -86,11 +85,11 @@ def main():
             else:
                 print("Either trial has not started or has been tampered: ", trialStatus)
                 # Activating the trial
-                activateTrial()
+                activate_trial()
 
         # Checking for software release update
-        # Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-        # Release platform and channel must be set before checking for an update
+        # Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+        # Release version, platform and channel must be set before checking for an update
         # LexActivator.SetReleasePlatform("RELEASE_PLATFORM")
         # LexActivator.SetReleaseChannel("RELEASE_CHANNEL")
         # LexActivator.CheckReleaseUpdate(software_release_update_callback, ReleaseFlags.LA_RELEASES_ALL, None)
@@ -98,5 +97,6 @@ def main():
         print('Error code:', exception.code, exception.message)
 
 
-main()
-input("Press Enter to continue...")
+if __name__ == "__main__":
+    main()
+    input("Press Enter to continue...")
