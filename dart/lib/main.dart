@@ -44,8 +44,9 @@ void main() {
     }
 
     // Checking for software release update
-    // Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-    // Release platform and channel must be set before checking for an update
+    // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+    // Release version, platform and channel must be set before checking for an update
+    LexActivator.SetReleaseVersion(releaseVersion: 'PASTE_YOUR_RELEASE_VERSION');
     LexActivator.SetReleasePlatform(releasePlatform: 'RELEASE_PLATFORM');
     LexActivator.SetReleaseChannel(releaseChannel: 'RELEASE_CHANNEL');
     // LexActivator.CheckReleaseUpdate(releaseUpdateCallback: releaseUpdateCallback, flag: LexActivator.LA_RELEASES_ALL, userData: null);
