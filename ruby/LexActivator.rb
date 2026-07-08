@@ -37,36 +37,43 @@ module LexActivator
 
   BUFFER_SIZE_256 = 256
   BUFFER_SIZE_4096 = 4096
-  MAX_METADATA_SIZE = 100 
+  MAX_METADATA_SIZE = 100
+
+  # Helper to select correct type for wide strings
+  if FFI::Platform::IS_WINDOWS
+    CHAR = :ushort # wchar_t is 2 bytes (UTF-16LE) on Windows
+  else
+    CHAR = :char   # char for non-Windows
+  end
 
   class OrganizationAddress < FFI::Struct
-    layout :addressLine1, [:char, BUFFER_SIZE_256],
-           :addressLine2, [:char, BUFFER_SIZE_256],
-           :city, [:char, BUFFER_SIZE_256],
-           :state, [:char, BUFFER_SIZE_256],
-           :country, [:char, BUFFER_SIZE_256],
-           :postalCode, [:char, BUFFER_SIZE_256]
+    layout :addressLine1, [CHAR, BUFFER_SIZE_256],
+           :addressLine2, [CHAR, BUFFER_SIZE_256],
+           :city, [CHAR, BUFFER_SIZE_256],
+           :state, [CHAR, BUFFER_SIZE_256],
+           :country, [CHAR, BUFFER_SIZE_256],
+           :postalCode, [CHAR, BUFFER_SIZE_256]
   end
 
   class Metadata < FFI::Struct
-    layout :key, [:char, BUFFER_SIZE_256],
-           :value, [:char, BUFFER_SIZE_4096]
+    layout :key, [CHAR, BUFFER_SIZE_256],
+           :value, [CHAR, BUFFER_SIZE_4096]
   end
 
   class UserLicense < FFI::Struct
     layout :allowedActivations, :int64,
            :allowedDeactivations, :int64,
-           :key, [:char, BUFFER_SIZE_256],
+           :key, [CHAR, BUFFER_SIZE_256],
            :totalActivations, :uint32,
            :totalDeactivations, :uint32,
-           :type, [:char, BUFFER_SIZE_256],
-           :metadata, [Metadata, MAX_METADATA_SIZE] 
+           :type, [CHAR, BUFFER_SIZE_256],
+           :metadata, [Metadata, MAX_METADATA_SIZE]
   end
 
   class FeatureEntitlement < FFI::Struct
-    layout :featureName, [:char, BUFFER_SIZE_256],
-           :featureDisplayName, [:char, BUFFER_SIZE_256],
-           :value, [:char, BUFFER_SIZE_256],
+    layout :featureName, [CHAR, BUFFER_SIZE_256],
+           :featureDisplayName, [CHAR, BUFFER_SIZE_256],
+           :value, [CHAR, BUFFER_SIZE_256],
            :expiresAt, :int64
   end
 
