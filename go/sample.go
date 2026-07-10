@@ -134,15 +134,6 @@ func main() {
 	// Checking for software release update
 	// Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
 	// Release version, platform and channel must be set before checking for an update
-	// if lexactivator.LA_OK != status {
-	// 	fmt.Println("Error Code:", status)
-	// 	os.Exit(1)
-	// }
-	// status = lexactivator.SetReleaseChannel("RELEASE_CHANNEL")
-	// if lexactivator.LA_OK != status {
-	// 	fmt.Println("Error Code:", status)
-	// 	os.Exit(1)
-	// }
 	// status = lexactivator.CheckReleaseUpdate(softwareReleaseUpdateCallback, lexactivator.LA_RELEASES_ALL, nil);
 	// if lexactivator.LA_OK != status {
 	// 	fmt.Println("Error Code:", status)
