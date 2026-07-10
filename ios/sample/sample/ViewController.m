@@ -36,11 +36,11 @@
     self.licenseStatusLabel.text = [NSString stringWithFormat:@"License Status: %d",status];
 
     // Checking for software release update
-    // Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+    // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
     // Set the actual platform of the release e.g macos
-    status = SetReleasePlatform("RELEASE_PLATFORM");
+    // status = SetReleasePlatform("RELEASE_PLATFORM");
     // Set the actual channel of the release e.g stable
-    status = SetReleaseChannel("RELEASE_CHANNEL");
+    // status = SetReleaseChannel("RELEASE_CHANNEL");
     // status = CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LA_RELEASES_ALL, NULL);
 }
 - (IBAction)onActivateClick:(id)sender {
