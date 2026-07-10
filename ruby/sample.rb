@@ -119,8 +119,8 @@ else
 end
 
 # Checking for software release update
-# Call SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
-# Release platform and channel must be set before checking for an update
+# Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
+# Release version, platform and channel must be set before checking for an update
 # status = LexActivator.SetReleasePlatform(LexActivator::encode_utf16("windows"))
 # status = LexActivator.SetReleaseChannel(LexActivator::encode_utf16("1.0.0"))
 # status = LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", SoftwareReleaseUpdateCallback)
