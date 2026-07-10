@@ -7,7 +7,6 @@ namespace Sample
     {
         static void Init()
         {
-            // LexActivator.SetProductFile ("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE");
             LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
             LexActivator.SetProductId("PASTE_PRODUCT_ID", LexActivator.PermissionFlags.LA_USER);
             LexActivator.SetReleaseVersion("1.0.0");  // Set this to the release version of your app
@@ -110,8 +109,14 @@ namespace Sample
             // NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
             switch (status)
             {
+                case LexStatusCodes.LA_EXPIRED:
+                    Console.WriteLine("The license has expired.");
+                    break;
                 case LexStatusCodes.LA_SUSPENDED:
                     Console.WriteLine("The license has been suspended.");
+                    break;
+                case LexStatusCodes.LA_GRACE_PERIOD_OVER:
+                    Console.WriteLine("The license grace period is over.");
                     break;
                 default:
                     Console.WriteLine("License status code: " + status.ToString());
