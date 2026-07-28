@@ -76,13 +76,9 @@ function main() {
 		const status = LexActivator.IsLicenseGenuine();
 		if (LexStatusCodes.LA_OK == status) {
 			console.log('License is genuinely activated!');
-
 			const expiryDate = LexActivator.GetLicenseExpiryDate();
 			const daysLeft = (expiryDate - (new Date().getTime() / 1000)) / 86400;
 			console.log('Days left:', daysLeft);
-
-			const userName = LexActivator.GetLicenseUserName();
-			console.log('License user name: %s\n', userName);
 		} else if (LexStatusCodes.LA_EXPIRED == status) {
 			console.log('License is genuinely activated but has expired!');
 		} else if (LexStatusCodes.LA_SUSPENDED == status) {
