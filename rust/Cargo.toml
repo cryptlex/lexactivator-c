@@ -1,0 +1,13 @@
+[package]
+name = "lexactivator-example"
+version = "0.1.0"
+edition = "2021"
+description = "Example demonstrating license activation with the LexActivator Rust SDK"
+publish = false
+
+[dependencies]
+lexactivator = "3"
+
+[[example]]
+name = "license-activation"
+path = "license-activation.rs"
