@@ -1,7 +1,6 @@
 import time
 
 from cryptlex.lexactivator import LexActivator, LexStatusCodes, PermissionFlags, ReleaseFlags, LexActivatorException
-# from cryptlex.lexactivator import *
 
 
 def init():
@@ -10,14 +9,10 @@ def init():
     LexActivator.SetReleaseVersion("1.0.0") # Set this to the release version of your app
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
-
-
 def license_callback(status):
     print("License status: ", status)
 
 # Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
-
-
 def software_release_update_callback(status, release, user_data):
     try:
         if status == LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE:
