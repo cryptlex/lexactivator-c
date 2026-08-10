@@ -12,6 +12,6 @@ from the MATLAB console.
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator
 
 https://in.mathworks.com/help/compiler/matlab-library-loading.html

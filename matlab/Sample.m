@@ -5,10 +5,11 @@ sReleaseVersion = '1.0.0';
 %Loads the C library of LexActivator
 sHeaderFile = './LexActivator.h';
 sStatusHeaderFile = './LexStatusCodes.h';
+sTypesHeaderFile = './LexTypes.h';
 sSharedLibrary = 'LexActivator';
 %unloadlibrary(sSharedLibrary)
 if not(libisloaded(sSharedLibrary))
-   loadlibrary(sSharedLibrary,sHeaderFile, 'addheader',sStatusHeaderFile);
+   loadlibrary(sSharedLibrary,sHeaderFile, 'addheader',sStatusHeaderFile, 'addheader',sTypesHeaderFile);
 end
 %Creates and prints the list of the functions of the library with their arguments
 %list = libfunctions(sSharedLibrary,'-full');
