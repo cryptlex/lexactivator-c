@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private void initLexActivator() throws LexActivatorException {
         LexActivator.SetProductData("PASTE_PRODUCT_DATA_HERE");
         LexActivator.SetProductId("PASTE_PRODUCT_ID_HERE", LexActivator.LA_USER);
+        LexActivator.SetReleaseVersion("1.0.0");
     }
 
     public void activateLicense(View view) {
