@@ -2,8 +2,6 @@
 //  ViewController.m
 //  sample
 //
-//  Created by Adnan Kamili on 30/06/21.
-//
 
 #import "ViewController.h"
 #import <LexActivator/LexActivator.h>
