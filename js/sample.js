@@ -38,6 +38,9 @@ function licenseCallback(status) {
 		case LexStatusCodes.LA_SUSPENDED:
 			console.log('License is genuinely activated!', status);
 			break;
+		case LexStatusCodes.LA_E_ACTIVATION_NOT_FOUND:
+			console.log('The license activation was deleted on the server!', status);
+			break;
 		default:
 			throw new LexActivatorException(status);
 		}

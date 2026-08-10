@@ -118,11 +118,8 @@ namespace Sample
                 case LexStatusCodes.LA_SUSPENDED:
                     Console.WriteLine("The license has been suspended.");
                     break;
-                case LexStatusCodes.LA_GRACE_PERIOD_OVER:
-                    Console.WriteLine("The license grace period is over.");
-                    break;
-                case LexStatusCodes.LA_E_REVOKED:
-                    Console.WriteLine("The license has been revoked.");
+                case LexStatusCodes.LA_E_ACTIVATION_NOT_FOUND:
+                    Console.WriteLine("The license activation was deleted on the server.");
                     break;
                 default:
                     Console.WriteLine("License status code: " + status.ToString());

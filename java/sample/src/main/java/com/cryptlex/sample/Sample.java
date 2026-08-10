@@ -99,14 +99,8 @@ class LicenseCallbackEventListener implements LicenseCallbackEvent {
             case LexActivator.LA_SUSPENDED:
                 System.out.println("The license has been suspended.");
                 break;
-            case LexActivator.LA_GRACE_PERIOD_OVER:
-                System.out.println("The license grace period is over.");
-                break;
-            case LexActivatorException.LA_E_REVOKED:
-                System.out.println("The license has been revoked.");
-                break;
-            case LexActivatorException.LA_E_INET:
-                System.out.println("Network connection failure.");
+            case LexActivatorException.LA_E_ACTIVATION_NOT_FOUND:
+                System.out.println("The license activation was deleted on the server.");
                 break;
             default:
                 System.out.println("License status: " + status);

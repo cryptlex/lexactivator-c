@@ -47,9 +47,6 @@ fn main() {
                 LexActivatorStatus::LA_OK => println!("License is active!"),
                 LexActivatorStatus::LA_EXPIRED => println!("License has expired!"),
                 LexActivatorStatus::LA_SUSPENDED => println!("License has been suspended!"),
-                LexActivatorStatus::LA_GRACE_PERIOD_OVER => {
-                    println!("License grace period is over!")
-                }
                 _ => println!("Unknown license status"),
             },
             LexActivatorCode::Error(error) => match error {

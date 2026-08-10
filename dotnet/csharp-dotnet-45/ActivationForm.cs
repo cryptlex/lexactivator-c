@@ -132,11 +132,8 @@ namespace Sample
                 case LexStatusCodes.LA_SUSPENDED:
                     this.statusLabel.Text = "The license has been suspended.";
                     break;
-                case LexStatusCodes.LA_GRACE_PERIOD_OVER:
-                    this.statusLabel.Text = "The license grace period is over.";
-                    break;
-                case LexStatusCodes.LA_E_REVOKED:
-                    this.statusLabel.Text = "The license has been revoked.";
+                case LexStatusCodes.LA_E_ACTIVATION_NOT_FOUND:
+                    this.statusLabel.Text = "The license activation was deleted on the server.";
                     break;
                 default:
                     this.statusLabel.Text = "License status code: " + status.ToString();

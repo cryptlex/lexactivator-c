@@ -109,10 +109,8 @@ Public Class Form1
                 Me.statusLabel.Text = "The license has expired."
             Case LexStatusCodes.LA_SUSPENDED
                 Me.statusLabel.Text = "The license has been suspended."
-            Case LexStatusCodes.LA_GRACE_PERIOD_OVER
-                Me.statusLabel.Text = "The license grace period is over."
-            Case LexStatusCodes.LA_E_REVOKED
-                Me.statusLabel.Text = "The license has been revoked."
+            Case LexStatusCodes.LA_E_ACTIVATION_NOT_FOUND
+                Me.statusLabel.Text = "The license activation was deleted on the server."
             Case Else
                 Me.statusLabel.Text = "License status code: " & status.ToString()
         End Select

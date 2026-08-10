@@ -16,6 +16,8 @@ func licenseCallback(status int) {
 		fmt.Println("License is genuinely activated, but has expired")
 	} else if status == lexactivator.LA_SUSPENDED {
 		fmt.Println("License is genuinely activated, but has been suspended")
+	} else if status == lexactivator.LA_E_ACTIVATION_NOT_FOUND {
+		fmt.Println("The license activation was deleted on the server")
 	} else {
 		fmt.Println("License error status:", status)
 	}

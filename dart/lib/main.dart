@@ -103,8 +103,8 @@ void licenseCallback(int status) {
       case LexStatusCodes.LA_SUSPENDED:
         print('License is genuinely activated but has been suspended!');
         break;
-      case LexStatusCodes.LA_GRACE_PERIOD_OVER:
-        print('License is genuinely activated but grace period is over!');
+      case LexStatusCodes.LA_E_ACTIVATION_NOT_FOUND:
+        print('The license activation was deleted on the server!');
         break;
       default:
         throw LexActivatorException(status);
