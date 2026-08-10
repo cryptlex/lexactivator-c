@@ -74,6 +74,7 @@ module LexActivator
     layout :featureName, [CHAR, BUFFER_SIZE_256],
            :featureDisplayName, [CHAR, BUFFER_SIZE_256],
            :value, [CHAR, BUFFER_SIZE_256],
+           :baseValue, [CHAR, BUFFER_SIZE_256],
            :expiresAt, :int64
   end
 
