@@ -2,8 +2,6 @@
 //  AppDelegate.m
 //  sample
 //
-//  Created by Adnan Kamili on 30/06/21.
-//
 
 #import "AppDelegate.h"
 

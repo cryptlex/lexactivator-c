@@ -1,6 +1,6 @@
 # LexActivator Node.js Example
 
-Example demonstrating license activation with **LexActivator.js**, the Node.js wrapper
+Example demonstrating license activation with **LexActivator.js**, the Node.js binding
 for the LexActivator licensing library.
 
 ## Installation
@@ -29,4 +29,4 @@ node sample.js
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator/using-lexactivator-with-node.js
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

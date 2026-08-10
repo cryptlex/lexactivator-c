@@ -19,4 +19,4 @@ On Windows, open [Sample.sln](Sample.sln) in Visual Studio and build.
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

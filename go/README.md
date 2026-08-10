@@ -1,6 +1,6 @@
 # LexActivator Go Example
 
-Example demonstrating license activation with **lexactivator-go**, the Go wrapper for the
+Example demonstrating license activation with **lexactivator-go**, the Go binding for the
 LexActivator licensing library.
 
 ## Installation
@@ -34,4 +34,4 @@ go run sample.go
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

@@ -1,6 +1,6 @@
 # LexActivator Ruby Example
 
-Example demonstrating license activation with the LexActivator API wrapper for Ruby (licensing library).
+Example demonstrating license activation with the LexActivator API binding for Ruby (licensing library).
 
 ## Running
 
@@ -15,4 +15,4 @@ ruby sample.rb
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

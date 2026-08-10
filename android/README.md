@@ -22,4 +22,4 @@ dependency is declared in the app's `build.gradle`.
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

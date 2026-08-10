@@ -1,6 +1,6 @@
 # LexActivator .NET Example
 
-Example demonstrating license activation with **Cryptlex.LexActivator**, the .NET wrapper
+Example demonstrating license activation with **Cryptlex.LexActivator**, the .NET binding
 for the LexActivator licensing library.
 
 ## Supported platforms
@@ -29,4 +29,4 @@ dotnet run --project csharp-dotnet-core
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

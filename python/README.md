@@ -1,7 +1,7 @@
 # LexActivator Python Example
 
 Example demonstrating license activation with **cryptlex.lexactivator**, the Python
-wrapper for the LexActivator licensing library.
+binding for the LexActivator licensing library.
 
 ## Installation
 
@@ -28,4 +28,4 @@ python sample.py
 
 Refer to the following for documentation:
 
-https://docs.cryptlex.com/node-locked-licenses/using-lexactivator
+https://cryptlex.com/docs/sdks-and-apis/lexactivator

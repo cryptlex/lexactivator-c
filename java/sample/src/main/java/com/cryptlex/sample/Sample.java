@@ -18,7 +18,7 @@ public class Sample {
     static void activate() throws LexActivatorException {
         LexActivator.SetLicenseKey("PASTE_LICENSE_KEY");
         LexActivator.SetActivationMetadata("key1", "value1");
-        int status = LexActivator.ActivateLicense(); // Ideally on a button click inside a dialog
+        int status = LexActivator.ActivateLicense();
         if (LexActivator.LA_OK == status || LexActivator.LA_EXPIRED == status
                 || LexActivator.LA_SUSPENDED == status) {
             System.out.println("License activated successfully: " + status);
