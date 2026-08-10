@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.cryptlex.lexactivator</groupId>
             <artifactId>lexactivator</artifactId>
-            <version>3.32.3</version>
+            <version>3.42.2</version>
         </dependency>
     </dependencies>
 </project>
