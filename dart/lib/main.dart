@@ -14,9 +14,6 @@ void main() {
           .difference(DateTime.now())
           .inDays;
       print('Days left: $daysLeft');
-
-      final userName = LexActivator.GetLicenseUserName();
-      print('License user name: $userName');
     } else if (LexStatusCodes.LA_EXPIRED == status) {
       print('License is genuinely activated but has expired!');
     } else if (LexStatusCodes.LA_SUSPENDED == status) {
@@ -47,8 +44,8 @@ void main() {
     // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
     // Release version, platform and channel must be set before checking for an update
     LexActivator.SetReleaseVersion(releaseVersion: 'PASTE_YOUR_RELEASE_VERSION');
-    LexActivator.SetReleasePlatform(releasePlatform: 'RELEASE_PLATFORM');
-    LexActivator.SetReleaseChannel(releaseChannel: 'RELEASE_CHANNEL');
+    // LexActivator.SetReleasePlatform(releasePlatform: 'RELEASE_PLATFORM');
+    // LexActivator.SetReleaseChannel(releaseChannel: 'RELEASE_CHANNEL');
     // LexActivator.CheckReleaseUpdate(releaseUpdateCallback: releaseUpdateCallback, flag: LexActivator.LA_RELEASES_ALL, userData: null);
   } on LexActivatorException catch (e) {
     print(e);
