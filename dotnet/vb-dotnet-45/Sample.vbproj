@@ -72,7 +72,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cryptlex.LexActivator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Cryptlex.LexActivator.3.4.1\lib\net45\Cryptlex.LexActivator.dll</HintPath>
+      <HintPath>packages\Cryptlex.LexActivator.3.42.2\lib\net45\Cryptlex.LexActivator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -147,12 +147,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="packages\Cryptlex.LexActivator.3.4.1\build\Cryptlex.LexActivator.targets" Condition="Exists('packages\Cryptlex.LexActivator.3.4.1\build\Cryptlex.LexActivator.targets')" />
+  <Import Project="packages\Cryptlex.LexActivator.3.42.2\build\Cryptlex.LexActivator.targets" Condition="Exists('packages\Cryptlex.LexActivator.3.42.2\build\Cryptlex.LexActivator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Cryptlex.LexActivator.3.4.1\build\Cryptlex.LexActivator.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Cryptlex.LexActivator.3.4.1\build\Cryptlex.LexActivator.targets'))" />
+    <Error Condition="!Exists('packages\Cryptlex.LexActivator.3.42.2\build\Cryptlex.LexActivator.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Cryptlex.LexActivator.3.42.2\build\Cryptlex.LexActivator.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -109,6 +109,9 @@ namespace Sample
             // NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
             switch (status)
             {
+                case LexStatusCodes.LA_OK:
+                    Console.WriteLine("The license is genuinely activated.");
+                    break;
                 case LexStatusCodes.LA_EXPIRED:
                     Console.WriteLine("The license has expired.");
                     break;
@@ -117,6 +120,9 @@ namespace Sample
                     break;
                 case LexStatusCodes.LA_GRACE_PERIOD_OVER:
                     Console.WriteLine("The license grace period is over.");
+                    break;
+                case LexStatusCodes.LA_E_REVOKED:
+                    Console.WriteLine("The license has been revoked.");
                     break;
                 default:
                     Console.WriteLine("License status code: " + status.ToString());

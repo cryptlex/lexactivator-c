@@ -11,7 +11,6 @@ namespace Sample
             InitializeComponent();
             try
             {
-                // LexActivator.SetProductFile ("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE");
                 LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
                 LexActivator.SetProductId("PASTE_PRODUCT_ID", LexActivator.PermissionFlags.LA_USER);
                 // LexActivator.SetLicenseCallback(LicenseCallback);
@@ -44,11 +43,11 @@ namespace Sample
                 }
 
                 // Checking for software release update
-                // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckForReleaseUpdate()
+                // Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
                 // Release version, platform and channel must be set before checking for an update
                 // LexActivator.SetReleasePlatform("RELEASE_PLATFORM");
                 // LexActivator.SetReleaseChannel("RELEASE_CHANNEL");
-                // LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", SoftwareReleaseUpdateCallback);
+                // LexActivator.CheckReleaseUpdate(SoftwareReleaseUpdateCallback, LexActivator.ReleaseFlags.LA_RELEASES_ALL, null);
             }
             catch (LexActivatorException ex)
             {
@@ -124,8 +123,20 @@ namespace Sample
             // NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
             switch (status)
             {
+                case LexStatusCodes.LA_OK:
+                    this.statusLabel.Text = "The license is genuinely activated.";
+                    break;
+                case LexStatusCodes.LA_EXPIRED:
+                    this.statusLabel.Text = "The license has expired.";
+                    break;
                 case LexStatusCodes.LA_SUSPENDED:
                     this.statusLabel.Text = "The license has been suspended.";
+                    break;
+                case LexStatusCodes.LA_GRACE_PERIOD_OVER:
+                    this.statusLabel.Text = "The license grace period is over.";
+                    break;
+                case LexStatusCodes.LA_E_REVOKED:
+                    this.statusLabel.Text = "The license has been revoked.";
                     break;
                 default:
                     this.statusLabel.Text = "License status code: " + status.ToString();
@@ -133,13 +144,16 @@ namespace Sample
             }
         }
 
-        // Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
+        // Software release update callback is invoked when CheckReleaseUpdate() gets a response from the server
         private void SoftwareReleaseUpdateCallback(uint status)
         {
             switch (status)
             {
                 case LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE:
                     this.statusLabel.Text = "An update is available for the app.";
+                    break;
+                case LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED:
+                    this.statusLabel.Text = "An update is available for the app but it's not allowed.";
                     break;
                 case LexStatusCodes.LA_RELEASE_UPDATE_NOT_AVAILABLE:
                     // Current version is already latest.

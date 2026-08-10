@@ -7,7 +7,6 @@ Public Class Form1
         InitializeComponent()
 
         Try
-            'LexActivator.SetProductFile ("ABSOLUTE_PATH_OF_PRODUCT.DAT_FILE")
             LexActivator.SetProductData("PASTE_CONTENT_OF_PRODUCT.DAT_FILE")
             LexActivator.SetProductId("PASTE_PRODUCT_ID", LexActivator.PermissionFlags.LA_USER)
             'LexActivator.SetLicenseCallback(AddressOf LicenseCallback)
@@ -36,11 +35,11 @@ Public Class Form1
             End If
 
             'Checking for software release update
-            'Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckForReleaseUpdate()
+            'Call SetReleaseVersion(), SetReleasePlatform() and SetReleaseChannel() before calling CheckReleaseUpdate()
             'Release version, platform and channel must be set before checking for an update
             'LexActivator.SetReleasePlatform("RELEASE_PLATFORM")
             'LexActivator.SetReleaseChannel("RELEASE_CHANNEL")
-            'LexActivator.CheckForReleaseUpdate("windows", "1.0.0", "stable", AddressOf SoftwareReleaseUpdateCallback)
+            'LexActivator.CheckReleaseUpdate(AddressOf SoftwareReleaseUpdateCallback, LexActivator.ReleaseFlags.LA_RELEASES_ALL, Nothing)
 
         Catch ex As LexActivatorException
             Me.statusLabel.Text = "Error code: " & ex.Code.ToString() & " Error message: " + ex.Message
@@ -104,8 +103,16 @@ Public Class Form1
     Private Sub LicenseCallback(ByVal status As UInteger)
         ' NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
         Select Case status
+            Case LexStatusCodes.LA_OK
+                Me.statusLabel.Text = "The license is genuinely activated."
+            Case LexStatusCodes.LA_EXPIRED
+                Me.statusLabel.Text = "The license has expired."
             Case LexStatusCodes.LA_SUSPENDED
                 Me.statusLabel.Text = "The license has been suspended."
+            Case LexStatusCodes.LA_GRACE_PERIOD_OVER
+                Me.statusLabel.Text = "The license grace period is over."
+            Case LexStatusCodes.LA_E_REVOKED
+                Me.statusLabel.Text = "The license has been revoked."
             Case Else
                 Me.statusLabel.Text = "License status code: " & status.ToString()
         End Select
@@ -119,6 +126,8 @@ Public Class Form1
         Select Case status
             Case LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE
                 Me.statusLabel.Text = "An update is available for the app."
+            Case LexStatusCodes.LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED
+                Me.statusLabel.Text = "An update is available for the app but it's not allowed."
             Case LexStatusCodes.LA_RELEASE_UPDATE_NOT_AVAILABLE
                 ' Current version is latest
             Case Else
