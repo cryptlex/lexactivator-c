@@ -12,6 +12,7 @@ on-premise instance) and supports:
 
 - **Node-locked licenses** tied to a specific machine
 - **Hosted floating licenses** managed on the Cryptlex server (cloud or on-premise)
+- **Trials**, server-verified
 - **Offline activation** for air-gapped machines
 - License **features, metadata, and entitlements**
 
