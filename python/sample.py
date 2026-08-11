@@ -10,7 +10,16 @@ def init():
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
 def license_callback(status):
-    print("License status: ", status)
+    if status == LexStatusCodes.LA_OK:
+        print('The license is genuinely activated.')
+    elif status == LexStatusCodes.LA_EXPIRED:
+        print('The license has expired.')
+    elif status == LexStatusCodes.LA_SUSPENDED:
+        print('The license has been suspended.')
+    elif status == LexStatusCodes.LA_E_ACTIVATION_NOT_FOUND:
+        print('The license activation was deleted on the server.')
+    else:
+        print('License status: ', status)
 
 # Software release update callback is invoked when CheckForReleaseUpdate() gets a response from the server
 def software_release_update_callback(status, release, user_data):
