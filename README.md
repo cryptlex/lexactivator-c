@@ -1,0 +1,56 @@
+# lexactivator-examples
+
+Sample integrations showing how to add Cryptlex license activation and validation
+to your application using **LexActivator**, across a range of languages and platforms.
+
+## What is LexActivator?
+
+LexActivator is Cryptlex's client library for licensing your software. You embed it
+in your application to activate, validate, and manage licenses on your users' machines.
+It communicates with the Cryptlex server (either the Cryptlex cloud or a self-hosted
+on-premise instance) and supports:
+
+- **Node-locked licenses** tied to a specific machine
+- **Hosted floating licenses** managed on the Cryptlex server (cloud or on-premise)
+- **Trials**, both server-verified and local
+- **Offline activation** for air-gapped machines
+- License **features, metadata, and entitlements**
+
+If you're adding licensing to an application, LexActivator is the library you start with.
+
+> Need floating licenses served from within your own network, with no internet access
+> on client machines? See `lexfloatclient-examples`, which
+> uses **LexFloatClient** against an on-premise **LexFloatServer**.
+
+## What's in this directory
+
+Each subdirectory is a self-contained example for one language or platform and includes
+its own README with setup, build, and run instructions.
+
+| Language / Platform | Directory |
+| --- | --- |
+| C/C++ | [c/](c/) |
+| Python | [python/](python/) |
+| Node.js | [js/](js/) |
+| Go | [go/](go/) |
+| Rust | [rust/](rust/) |
+| .NET (C#, VB.NET) | [dotnet/](dotnet/) |
+| Java | [java/](java/) |
+| Android | [android/](android/) |
+| iOS | [ios/](ios/) |
+| Dart / Flutter | [dart/](dart/) |
+| Ruby | [ruby/](ruby/) |
+| Delphi | [delphi/](delphi/) |
+| MATLAB | [matlab/](matlab/) |
+
+## Getting started
+
+1. Open the subdirectory for your language or platform.
+2. Follow that directory's README for build and run steps.
+3. Replace the placeholder product data / license key with your own values from the
+Cryptlex dashboard.
+
+## Learn more
+
+- Documentation: https://docs.cryptlex.com
+- LexActivator reference: https://cryptlex.com/docs/sdks-and-apis/lexactivator
