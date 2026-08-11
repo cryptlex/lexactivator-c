@@ -10,6 +10,7 @@ def init():
 
 # License callback is invoked when IsLicenseGenuine() completes a server sync
 def license_callback(status):
+    # NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
     if status == LexStatusCodes.LA_OK:
         print('The license is genuinely activated.')
     elif status == LexStatusCodes.LA_EXPIRED:

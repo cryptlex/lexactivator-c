@@ -77,7 +77,27 @@ void init()
 void LA_CC LicenseCallback(uint32_t status)
 {
 	// NOTE: Don't invoke IsLicenseGenuine(), ActivateLicense() or ActivateTrial() API functions in this callback
-	printf("\nLicense status: %d\n", status);
+	switch (status)
+	{
+	case LA_OK:
+		printf("The license is genuinely activated.\n");
+		break;
+
+	case LA_EXPIRED:
+		printf("The license has expired.\n");
+		break;
+
+	case LA_SUSPENDED:
+		printf("The license has been suspended.\n");
+		break;
+
+	case LA_E_ACTIVATION_NOT_FOUND:
+		printf("The license activation was deleted on the server.\n");
+		break;
+
+	default:
+		printf("License status: %d\n", status);
+	}
 }
 
 // Software release update callback is invoked when CheckReleaseUpdate() gets a response from the server
