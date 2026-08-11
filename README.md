@@ -12,7 +12,6 @@ on-premise instance) and supports:
 
 - **Node-locked licenses** tied to a specific machine
 - **Hosted floating licenses** managed on the Cryptlex server (cloud or on-premise)
-- **Trials**, both server-verified and local
 - **Offline activation** for air-gapped machines
 - License **features, metadata, and entitlements**
 
@@ -51,5 +50,5 @@ its own README with setup, build, and run instructions.
 
 ## Learn more
 
-- Documentation: https://docs.cryptlex.com
+- Documentation: https://cryptlex.com/docs
 - LexActivator reference: https://cryptlex.com/docs/sdks-and-apis/lexactivator
