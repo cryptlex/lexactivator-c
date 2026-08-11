@@ -47,8 +47,7 @@ its own README with setup, build, and run instructions.
 
 1. Open the subdirectory for your language or platform.
 2. Follow that directory's README for build and run steps.
-3. Replace the placeholder product data / license key with your own values from the
-Cryptlex dashboard.
+3. Replace the placeholder product data / license key with your own values from the Cryptlex dashboard.
 
 ## Learn more
 
