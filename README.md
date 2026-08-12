@@ -19,8 +19,8 @@ on-premise instance) and supports:
 If you're adding licensing to an application, LexActivator is the library you start with.
 
 > Need floating licenses served from within your own network, with no internet access
-> on client machines? See `lexfloatclient-examples`, which
-> uses **LexFloatClient** against an on-premise **LexFloatServer**.
+> on client machines? See [lexfloatclient-examples](https://github.com/cryptlex/lexfloatclient-examples), which
+> uses [LexFloatClient](https://cryptlex.com/docs/sdks-and-apis/lexfloatclient) against an on-premise [LexFloatServer](https://cryptlex.com/docs/sdks-and-apis/lexfloatserver/overview).
 
 ## What's in this directory
 
