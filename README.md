@@ -24,24 +24,21 @@ If you're adding licensing to an application, LexActivator is the library you st
 
 ## What's in this directory
 
-Each subdirectory is a self-contained example for one language or platform and includes
-its own README with setup, build, and run instructions.
+Each subdirectory is a self-contained example for one language or platform and
+includes its own README with setup, build, and run instructions: `c/` (C and
+C++), `python/`, `js/` (Node.js), `go/`, `rust/`, `dotnet/` (C# and VB.NET),
+`java/`, `android/`, `ios/`, `dart/` (Dart and Flutter), `ruby/`, `delphi/`,
+and `matlab/`.
 
-| Language / Platform | Directory |
-| --- | --- |
-| C/C++ | [c/](c/) |
-| Python | [python/](python/) |
-| Node.js | [js/](js/) |
-| Go | [go/](go/) |
-| Rust | [rust/](rust/) |
-| .NET (C#, VB.NET) | [dotnet/](dotnet/) |
-| Java | [java/](java/) |
-| Android | [android/](android/) |
-| iOS | [ios/](ios/) |
-| Dart / Flutter | [dart/](dart/) |
-| Ruby | [ruby/](ruby/) |
-| Delphi | [delphi/](delphi/) |
-| MATLAB | [matlab/](matlab/) |
+## Getting started
+
+Clone just the example you need - a sparse checkout skips every other language:
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/cryptlex/lexactivator-examples.git
+cd lexactivator-examples
+git sparse-checkout set js
+```
 
 ## Getting started
 
